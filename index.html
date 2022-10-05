@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Know Your Karma</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Know Your Karma</h1>
+    <h2>
+        <input type="datetime-local" id="msg">
+        <button onclick="Fortune()">입력</button>
+    </h2>
+    <h3>
+        <!-- <div id="test"></div> -->
+        <div id="SKY"></div>
+        <div id="LAND"></div>
+    </h3>
+    
+    
+
+    <script>
+        
+        var msg = document.getElementById('msg').value;
+        var sky = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
+        var land = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
+        var point = [5, 5, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7]
+        
+        
+        function Fortune(){
+            var temp = document.getElementById("msg").value;
+            var yyyy = temp[0] + temp[1] + temp[2] + temp[3];
+            var mm = temp[5] + temp[6];
+            var dd = temp[8]+temp[9];
+            var hh = temp[11] + temp[12];
+            var min = temp[14] + temp[15];
+            
+            var a = zy(yyyy, mm)[0];
+            var b = zy(yyyy, mm)[1];
+            var c = zm(yyyy, mm, dd)[0];
+            var d = zm(yyyy, mm, dd)[1];
+            var e = zd(yyyy, mm, dd, hh, min)[0];
+            var f = zd(yyyy, mm, dd, hh, min)[1];
+            var g = zt(e, hh, min)[0];
+            var h = zt(e, hh, min)[1];
+            // var x = zm(yyyy, mm, dd);
+            // document.getElementById("test").innerHTML = x;
+
+            var skyline = [sky[g], sky[e], sky[c], sky[a]];
+            var landline = [land[h], land[f], land[d], land[b]];
+
+            document.getElementById("SKY").innerHTML = skyline[0] + skyline[1] + skyline[2] + skyline[3];
+            document.getElementById("LAND").innerHTML = landline[0] + landline[1] + landline[2] + landline[3];
+        }
+
+        function zy(year, month){
+            var y = year;
+            var m = month;
+            var zodiac= (y-3)%60;
+	        var pointYear = 21 * parseInt(y/4)  + 55;
+            if (y%4 !== 0){
+                pointYear =+ 5 * (y%4) + 1;
+            }
+	        
+	        var deltaMonth = parseInt(m);
+	        var cycleYear=zodiac; 
+            if (deltaMonth < 3){
+                cycleYear -= 1;
+            }
+            var temp = cycleYear;
+            result = [((temp-1) % 10), ((temp-1) % 12)]
+            return result;
+        }
+
+        function zm(year, month, day){
+
+            var y = year;
+            var m = month;
+            var d = day;
+            var deltaMonth = parseInt(m);
+            var zodiac= (y-3)%60;
+            if(d >= point[m-1]){
+                deltaMonth += 1;
+            }
+            var temp = 12*((zodiac-1) % 5) + deltaMonth;        
+            result = [((temp-1) % 10), ((temp-1) % 12)]
+            return result;
+        }
+
+        function zd(y, m, d, h, s){
+            zodiac= (y-3)%60;
+            pointYear= 21 * parseInt((y%80)/4) + 55;
+            if ((y % 80) % 4 !== 0){
+                pointYear = pointYear + 5 * (y % 4) + 1;
+            }
+
+            var endDays = 0;
+            var end = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30];
+	        if (y%4 === 0){
+                end = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
+            }
+
+            for (var i = 0; i < m; i++){
+                endDays = endDays + end[i];
+            }
+            
+            t = 0;
+            if(h == 23){
+                if (s >= 33){
+                    t = 1;
+                }
+            }
+
+            var cycleDay = pointYear + endDays + parseInt(d) + t - 1
+            var temp = cycleDay % 60;
+            result = [((temp-1) % 10), ((temp-1) % 12)];
+            return result;
+        }
+
+        function zt(cday, hour, minute){
+
+            var h = hour; 
+            if (hour%2!==0){
+                if(minute < 33){ 
+                    h = h-1;
+                }
+                else{
+                    if (h==23){
+                    h = 0;
+                    }
+                }
+            }
+            var temp = 12*(cday % 5)+ parseInt(h/2) + 1;
+            var result = [((temp-1) % 10), ((temp-1) % 12)]
+            return result;
+        }
+
+
+
+    </script>
+    
+</body>
+</html>

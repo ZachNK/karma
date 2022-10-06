@@ -1,0 +1,27 @@
+h1 {
+    text-align: center;
+    font-size: 50px;
+    margin-top: 100px;
+}
+
+h2{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+table{
+    width: 80%;
+    margin-left: 10%;
+    font-size: 20px;
+}
+
+th{
+    text-align: center;
+}
+
+td{
+    text-align: center;
+    font-size: 100px;
+    font-weight: 100;
+}

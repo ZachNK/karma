@@ -11,20 +11,31 @@
         <input type="datetime-local" id="msg">
         <button onclick="Fortune()">입력</button>
     </h2>
-    <h3>
-        <!-- <div id="test"></div> -->
-        <div id="SKY"></div>
-        <div id="LAND"></div>
-    </h3>
-    
-    
 
+    <table>
+        <thead>
+            <tr>
+                <th id="LIST0">時</th><th id="LIST1">日</th><th id="LIST2">月</th><th id="LIST3">年</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr>
+                <td id="SKY0"></td><td id="SKY1"></td><td id="SKY2"></td><td id="SKY3"></td>
+            </tr>
+            <tr>
+                <td id="LAND0"></td><td id="LAND1"></td><td id="LAND2"></td><td id="LAND3"></td>
+            </tr>
+        </tbody>
+    </table>
+    
     <script>
         
         var msg = document.getElementById('msg').value;
         var sky = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
         var land = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
         var point = [5, 5, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7]
+        
         
         
         function Fortune(){
@@ -43,14 +54,45 @@
             var f = zd(yyyy, mm, dd, hh, min)[1];
             var g = zt(e, hh, min)[0];
             var h = zt(e, hh, min)[1];
-            // var x = zm(yyyy, mm, dd);
-            // document.getElementById("test").innerHTML = x;
+
 
             var skyline = [sky[g], sky[e], sky[c], sky[a]];
             var landline = [land[h], land[f], land[d], land[b]];
 
-            document.getElementById("SKY").innerHTML = skyline[0] + skyline[1] + skyline[2] + skyline[3];
-            document.getElementById("LAND").innerHTML = landline[0] + landline[1] + landline[2] + landline[3];
+            document.getElementById("SKY0").innerHTML = skyline[0];
+            document.getElementById("SKY1").innerHTML = skyline[1];
+            document.getElementById("SKY2").innerHTML = skyline[2];
+            document.getElementById("SKY3").innerHTML = skyline[3];
+            document.getElementById("LAND0").innerHTML = landline[0];
+            document.getElementById("LAND1").innerHTML = landline[1];
+            document.getElementById("LAND2").innerHTML = landline[2];
+            document.getElementById("LAND3").innerHTML = landline[3];
+
+            document.getElementById("SKY0").style.color = skycolor(g);
+            document.getElementById("SKY1").style.color = skycolor(e);
+            document.getElementById("SKY2").style.color = skycolor(c);
+            document.getElementById("SKY3").style.color = skycolor(a);
+
+            document.getElementById("LAND0").style.color = landcolor(h);
+            document.getElementById("LAND1").style.color = landcolor(f);
+            document.getElementById("LAND2").style.color = landcolor(d);
+            document.getElementById("LAND3").style.color = landcolor(b);
+        }
+
+        function skycolor(x){
+            var result = '';
+            var code = ['#008000', '#008000', '#B22222', '#B22222', '#ff8800', '#ff8800', '#696969', '#696969', '#0022ff', '#0022ff']
+            var result = code[x];
+
+            return result
+        }
+
+        function landcolor(x){
+            var result = '';
+            var code = ['#0022ff', '#ff8800', '#008000', '#008000', '#ff8800', '#B22222', '#B22222', '#ff8800', '#696969', '#696969', '#ff8800', '#0022ff']
+            var result = code[x];
+            
+            return result;
         }
 
         function zy(year, month){

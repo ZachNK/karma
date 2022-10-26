@@ -5,23 +5,43 @@ h1 {
 }
 
 h2{
+    text-align: center;
     margin-top: 50px;
     margin-bottom: 50px;
-    text-align: center;
 }
 
-table{
+
+
+table.source{
     width: 80%;
     margin-left: 10%;
+    margin-right: 10%;
     font-size: 20px;
+}
+
+table.variety{
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 th{
     text-align: center;
 }
 
+
 td{
     text-align: center;
     font-size: 100px;
     font-weight: 100;
 }
+
+
+
+
+
+
+
+
+
+

@@ -132,9 +132,7 @@
             
 
             /****************************************************debugging***************************************************************/
-            //document.getElementById("debug1").innerHTML =Number(yyyy) + num -1;
-            
-
+            document.getElementById("debug1").innerHTML =num;
             /****************************************************debugging***************************************************************/
 
             //window.onload = change_Color(startNum);
@@ -332,14 +330,15 @@
                 span = span+length[Number(month)];
             }
 
-            if(span > 4){
+            if(span >= 3){
                 result = span/3;
                 if(span%3 == 2) result = result + 1;
             }
             else{
                 result = span;
             }
-           
+            
+            result = Math.floor(result);
             return result;
         }
 

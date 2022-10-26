@@ -23,8 +23,8 @@ table.source{
 
 table.variety{
     width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 th{
@@ -37,13 +37,3 @@ td{
     font-size: 100px;
     font-weight: 100;
 }
-
-
-
-
-
-
-
-
-
-

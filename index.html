@@ -72,13 +72,13 @@
 
         function i_img(x){
             var num = x;
-            var src = "images/" + "i" + num + ".gif";
+            var src = "img/" + "i" + num + ".png";
             return src;
         }
 
         function p_img(x){
             var num = x;
-            var src = "images/" + "p" + num + ".gif";
+            var src = "img/" + "p" + num + ".png";
             return src;
         }
 
@@ -411,11 +411,8 @@
             var f = zd(yyyy, mm, dd, hh, min)[1];
             var g = zt(e, hh, min)[0];
             var h = zt(e, hh, min)[1];
-
-
             var skyline = [sky[g], sky[e], sky[c], sky[a]];
             var landline = [land[h], land[f], land[d], land[b]];
-
             document.getElementById("SKY0").innerHTML = skyline[0];
             document.getElementById("SKY1").innerHTML = skyline[1];
             document.getElementById("SKY2").innerHTML = skyline[2];
@@ -424,26 +421,21 @@
             document.getElementById("LAND1").innerHTML = landline[1];
             document.getElementById("LAND2").innerHTML = landline[2];
             document.getElementById("LAND3").innerHTML = landline[3];
-
             document.getElementById("SKY0").style.color = skycolor(g);
             document.getElementById("SKY1").style.color = skycolor(e);
             document.getElementById("SKY2").style.color = skycolor(c);
             document.getElementById("SKY3").style.color = skycolor(a);
-
             document.getElementById("LAND0").style.color = landcolor(h);
             document.getElementById("LAND1").style.color = landcolor(f);
             document.getElementById("LAND2").style.color = landcolor(d);
             document.getElementById("LAND3").style.color = landcolor(b);
         }
-
         function skycolor(x){
             var result = '';
             var code = ['#008000', '#008000', '#B22222', '#B22222', '#ff8800', '#ff8800', '#696969', '#696969', '#0022ff', '#0022ff']
             var result = code[x];
-
             return result
         }
-
         function landcolor(x){
             var result = '';
             var code = ['#0022ff', '#ff8800', '#008000', '#008000', '#ff8800', '#B22222', '#B22222', '#ff8800', '#696969', '#696969', '#ff8800', '#0022ff']
@@ -451,7 +443,6 @@
             
             return result;
         }
-
         function zy(year, month){
             var y = year;
             var m = month;
@@ -470,9 +461,7 @@
             result = [((temp-1) % 10), ((temp-1) % 12)]
             return result;
         }
-
         function zm(year, month, day){
-
             var y = year;
             var m = month;
             var d = day;
@@ -485,20 +474,17 @@
             result = [((temp-1) % 10), ((temp-1) % 12)]
             return result;
         }
-
         function zd(y, m, d, h, s){
             zodiac= (y-3)%60;
             pointYear= 21 * parseInt((y%80)/4) + 55;
             if ((y % 80) % 4 !== 0){
                 pointYear = pointYear + 5 * (y % 4) + 1;
             }
-
             var endDays = 0;
             var end = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30];
 	        if (y%4 === 0){
                 end = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
             }
-
             for (var i = 0; i < m; i++){
                 endDays = endDays + end[i];
             }
@@ -509,15 +495,12 @@
                     t = 1;
                 }
             }
-
             var cycleDay = pointYear + endDays + parseInt(d) + t - 1
             var temp = cycleDay % 60;
             result = [((temp-1) % 10), ((temp-1) % 12)];
             return result;
         }
-
         function zt(cday, hour, minute){
-
             var h = hour; 
             if (hour%2!==0){
                 if(minute < 33){ 
@@ -533,7 +516,6 @@
             var result = [((temp-1) % 10), ((temp-1) % 12)]
             return result;
         }
-
         
     </script> -->
     

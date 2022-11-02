@@ -131,13 +131,17 @@
             var g = zt(e, hh, min)[0];
             var h = zt(e, hh, min)[1];
 
+            //대운 리스트
             var seasons = great_luck(sexVar, a, c, d);
+            //대운수
             var num = when_num(sexVar, b, d, mm, dd); 
+            //초대운 초년
             var startNum = Starting(num, yyyy, nowYear);
             
 
             /****************************************************debugging***************************************************************/
-            //document.getElementById("debug1").innerHTML = num;
+            
+            // document.getElementById("debug1").innerHTML = num;
             
             /****************************************************debugging***************************************************************/
 
@@ -193,7 +197,7 @@
             var m = month;
             var zodiac= (y-3)%60;
 	        var pointYear = 21 * parseInt(y/4)  + 55;
-            if (y%4 !== 0){
+            if (y%4 != 0){
                 pointYear =+ 5 * (y%4) + 1;
             }
 	        
@@ -203,8 +207,8 @@
                 cycleYear -= 1;
             }
             var temp = cycleYear;
-            if(temp == 0){
-                temp = 60;
+            if(temp <= 0){
+                temp += 60;
             }
             result = [((temp-1) % 10), ((temp-1) % 12)];
             return result;
@@ -221,28 +225,68 @@
                 deltaMonth += 1;
             }
             var temp = 12*((zodiac-1) % 5) + deltaMonth;
-            if(temp == 0){
-                temp = 60;
+            if(temp <= 0){
+                temp += 60;
             }        
             result = [((temp-1) % 10), ((temp-1) % 12)]
             return result;
         }
 
         function zd(y, m, d, h, s){
-            zodiac= (y-3)%60;
-            pointYear= 21 * parseInt((y%80)/4) + 55;
-            if ((y % 80) % 4 !== 0){
-                pointYear = pointYear + 5 * (y % 4) + 1;
-            }
-
+            var leap = false;
+            var leapCount = 0;
+            var year = parseInt(y);
+            var month = parseInt(m);
+            var day = parseInt(d);
+            var hour = parseInt(h);
+            var sec = parseInt(s);
+            var lastYear = year-1;
             var endDays = 0;
             var end = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30];
-	        if (y%4 === 0){
-                end = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
+	        if (year%4 == 0){
+                if(year%100 == 0){
+                    if(year%400 == 0){
+                        leap = true;
+                    }
+                    else{
+                        leap = false;
+                    }
+                }
+                else{
+                    leap = true;
+                }
+            }
+            else{
+                leap = false;
             }
 
-            for (var i = 0; i < m; i++){
-                endDays = endDays + end[i];
+            for(var i=1; i<=lastYear; i++){
+                if (i%4 == 0){
+                    if(i%100 == 0){
+                        if(i%400 == 0){
+                            leapCount += 1;
+                        }
+                        else{
+                            leapCount += 0;
+                        }
+                    }
+                    else{
+                        leapCount += 1;
+                    }
+                }
+                else{
+                    leapCount += 0;
+                }
+            }
+                
+
+            if(leap == true){
+                end = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
+            }
+            
+
+            for (var i = 1; i <= month; i++){
+                endDays += end[(i-1)];
             }
             
             t = 0;
@@ -251,11 +295,10 @@
                     t = 1;
                 }
             }
-
-            var cycleDay = pointYear + endDays + parseInt(d) + t - 1;
+            var cycleDay = (365*lastYear) + leapCount + endDays + day + 15 + t;
             var temp = cycleDay % 60;
-            if(temp == 0){
-                temp = 60;
+            if(temp <= 0){
+                temp += 60;
             }
             result = [((temp-1) % 10), ((temp-1) % 12)];
             return result;
@@ -275,8 +318,8 @@
                 }
             }
             var temp = 12*(cday % 5)+ parseInt(h/2) + 1;
-            if(temp == 0){
-                temp = 60;
+            if(temp <= 0){
+                temp += 60;
             }
             var result = [((temp-1) % 10), ((temp-1) % 12)]
             return result;

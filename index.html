@@ -44,7 +44,12 @@
     </table>
 
     <table class="variety">
-        <thead></thead>
+        <thead>
+            <tr>
+                <th id="t12"></th><th id="t11"></th><th id="t10"></th><th id="t09"></th><th id="t08"></th><th id="t07"></th>
+                <th id="t06"></th><th id="t05"></th><th id="t04"></th><th id="t03"></th><th id="t02"></th><th id="t01"></th>
+            </tr>
+        </thead>
         <tbody>
             <tr>
                 <td id="sky012"><img id="012i" src=""/></td><td id="sky011"><img id="011i" src=""/></td><td id="sky010"><img id="010i" src=""/></td><td id="sky009"><img id="009i" src=""/></td>
@@ -132,7 +137,8 @@
             
 
             /****************************************************debugging***************************************************************/
-            document.getElementById("debug1").innerHTML =num;
+            //document.getElementById("debug1").innerHTML = num;
+            
             /****************************************************debugging***************************************************************/
 
             //window.onload = change_Color(startNum);
@@ -148,15 +154,21 @@
             document.getElementById("LAND3").src = p_img(land_tag[b]);
 
             for(i=0; i<12; i++){
-                var num = String(i + 1);
-                var idTag = num.padStart(3, '0') + "i"; 
+                var n = String(i + 1);
+                var idTag = n.padStart(3, '0') + "i"; 
                 document.getElementById(idTag).src = i_img(sky_tag[seasons[i][0]]);
             }
             
             for(i=0; i<12; i++){
-                var num = String(i + 1);
-                var idTag = num.padStart(3, '0') + "p"; 
+                var n = String(i + 1);
+                var idTag = n.padStart(3, '0') + "p"; 
                 document.getElementById(idTag).src = p_img(land_tag[seasons[i][1]]);
+            }
+
+            for(i=0; i<12; i++){
+                var t_n = (10*i) + num;
+                var idTag = "t" + String(i+1).padStart(2, '0');
+                document.getElementById(idTag).innerHTML = String(t_n);
             }
 
             var tag = String(startNum);
@@ -311,14 +323,15 @@
 
         function when_num(check_sex, z_year, z_month, month, day){
             var result = 0;
+            var xspan = 0;
             var span = 0;
+            var real_month = Number(month);
+            var real_day = Number(day);
             if(check_sex == z_year%2){
-                result = "역행"
-                span = day - point[z_month];
+                xspan = day - point[z_month];
             }
             else{
-                result = "순행"
-                span = point[Number(month)] - Number(day);
+                xspan = point[real_month-1] - real_day;
             }
 
             var length = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30];
@@ -326,8 +339,11 @@
                 length = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
             }
 
-            if(span < 0){
-                span = span+length[Number(month)];
+            if(xspan < 0){
+                span = xspan+length[real_month-1];
+            }
+            else{
+                span = xspan;
             }
 
             if(span >= 3){

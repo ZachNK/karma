@@ -14,7 +14,12 @@
             <input type="radio" id="Choice2" name="sex" value="female">
             <label for="Choice2">Female</label>
         </div>
-        <input type="datetime-local" id="msg">
+        <!-- <input type="datetime-local" id="msg"> -->
+        <input type="number" min="1" max="9999" id="year_msg" />
+        <input type="number" min="1" max="12" id="month_msg" />
+        <input type="number" min="1" max="31" id="day_msg" />
+        <input type="number" min="0" max="23" id="hour_msg" />
+        <input type="number" min="0" max="59" id="min_msg"/>
         <!-- <button onclick="Fortune()">입력</button> -->
         <button onclick="Fortune_img()">입력</button>
         
@@ -65,7 +70,7 @@
     </table>
 
     <script>
-        var msg = document.getElementById('msg').value;
+        //var msg = document.getElementById('msg').value;
         var sky_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         var land_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         var point = [5, 5, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7];
@@ -112,15 +117,13 @@
 
             let today = new Date();
             var nowYear = today.getFullYear();
-            var temp = document.getElementById("msg").value;
+            //var temp = document.getElementById("msg").value;
+            var yyyy = document.getElementById("year_msg").value;
+            var mm = document.getElementById("month_msg").value;
+            var dd = document.getElementById("day_msg").value;
+            var hh = document.getElementById("hour_msg").value;
+            var min = document.getElementById("min_msg").value;
             var sexVar = document.querySelector('input[name="sex"]').checked;
-            
-
-            var yyyy = temp[0] + temp[1] + temp[2] + temp[3];
-            var mm = temp[5] + temp[6];
-            var dd = temp[8]+temp[9];
-            var hh = temp[11] + temp[12];
-            var min = temp[14] + temp[15];
             
             var a = zy(yyyy, mm)[0];
             var b = zy(yyyy, mm)[1];
@@ -140,8 +143,8 @@
             
 
             /****************************************************debugging***************************************************************/
-            
-            // document.getElementById("debug1").innerHTML = num;
+
+            document.getElementById("debug1").innerHTML = startNum;
             
             /****************************************************debugging***************************************************************/
 
@@ -180,17 +183,7 @@
             var landTag = 'land' + tag.padStart(3, '0');
             document.getElementById(skyTag).style.background = '#EFEFEF';
             document.getElementById(landTag).style.background = '#EFEFEF';
-
         }
-
-        // function change_Color(startNum) {
-        //     var tag = String(startNum);
-        //     var skyTag = 'sky' + tag.padStart(3, '0');
-        //     var landTag = 'land' + tag.padStart(3, '0');
-        //     document.getElementById(skyTag).style.background = '#EFEFEF';
-        //     document.getElementById(landTag).style.background = '#EFEFEF';
-        // }
-        
 
         function zy(year, month){
             var y = year;
@@ -284,7 +277,6 @@
                 end = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
             }
             
-
             for (var i = 1; i <= month; i++){
                 endDays += end[(i-1)];
             }

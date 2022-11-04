@@ -159,13 +159,13 @@
             //대운 번째
             var startNum = Starting(num, yyyy, nowYear);
 
-            var sY = parseInt(yyyy) + 10*(startNum-1) + num + 57;
-            var sCycle = sY%60;
+            var sY = parseInt(yyyy) + 10*(startNum-1) + num;
+            
             
 
             /****************************************************debugging***************************************************************/
 
-            document.getElementById("debug1").innerHTML = sCycle
+            document.getElementById("debug1").innerHTML = sY;
             
             /****************************************************debugging***************************************************************/
 

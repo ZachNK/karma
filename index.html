@@ -15,13 +15,28 @@
             <label for="Choice2">Female</label>
         </div>
         <!-- <input type="datetime-local" id="msg"> -->
-        <input type="number" min="1" max="9999" id="year_msg" />
-        <input type="number" min="1" max="12" id="month_msg" />
-        <input type="number" min="1" max="31" id="day_msg" />
-        <input type="number" min="0" max="23" id="hour_msg" />
-        <input type="number" min="0" max="59" id="min_msg"/>
-        <!-- <button onclick="Fortune()">입력</button> -->
-        <button onclick="Fortune_img()">입력</button>
+        <table class="input_date">
+            <tbody>
+                <thead>
+                    <tr>
+                        <td>Gregorian</td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>YEAR</td><td>MONTH</td><td>DAY</td><td>HOUR</td><td>MINNUTE</td>
+                </tr>
+                <tr>
+                    <td><input type="number" min="1" max="9999" id="year_msg" /></td>
+                    <td><input type="number" min="1" max="12" id="month_msg" /></td>
+                    <td><input type="number" min="1" max="31" id="day_msg" /></td>
+                    <td><input type="number" min="0" max="23" id="hour_msg" /></td>
+                    <td><input type="number" min="0" max="59" id="min_msg"/></td>
+                    <td><button onclick="Fortune_img()">입력</button></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
         
     </h2>
 
@@ -69,11 +84,14 @@
         </tbody>
     </table>
 
+    
     <script>
         //var msg = document.getElementById('msg').value;
         var sky_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         var land_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         var point = [5, 5, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7];
+        var sky = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
+        var land = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
 
         function i_img(x){
             var num = x;
@@ -138,13 +156,16 @@
             var seasons = great_luck(sexVar, a, c, d);
             //대운수
             var num = when_num(sexVar, b, d, mm, dd); 
-            //초대운 초년
+            //대운 번째
             var startNum = Starting(num, yyyy, nowYear);
+
+            var sY = parseInt(yyyy) + 10*(startNum-1) + num + 57;
+            var sCycle = sY%60;
             
 
             /****************************************************debugging***************************************************************/
 
-            document.getElementById("debug1").innerHTML = startNum;
+            document.getElementById("debug1").innerHTML = sCycle
             
             /****************************************************debugging***************************************************************/
 
@@ -178,11 +199,13 @@
                 document.getElementById(idTag).innerHTML = String(t_n);
             }
 
+
             var tag = String(startNum);
             var skyTag = 'sky' + tag.padStart(3, '0');
             var landTag = 'land' + tag.padStart(3, '0');
             document.getElementById(skyTag).style.background = '#EFEFEF';
             document.getElementById(landTag).style.background = '#EFEFEF';
+            
         }
 
         function zy(year, month){

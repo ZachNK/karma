@@ -332,7 +332,7 @@
                     }
                 }
             }
-            var temp = 12*(cday % 5)+ parseInt(h/2) + 1;
+            var temp = 12*(cday % 5)+ parseInt(h/2) + (h%2) + 1;
             if(temp <= 0){
                 temp += 60;
             }

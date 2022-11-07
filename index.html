@@ -9,48 +9,48 @@
 <body>
     <h1>Know Your Karma</h1>
     <h2>
-        <!-- <div>
-            <input type="radio" id="Choice1" name="sex" value="male" checked>
-            <label for="Choice1">Male</label>
-            <input type="radio" id="Choice2" name="sex" value="female">
-            <label for="Choice2">Female</label>
-        </div> -->
-        <!-- <input type="datetime-local" id="msg"> -->
         <table class="input_date">
             <thead>
                 <tr>
-                    <th></th><th colspan="3" style="font-size: 10px; text-align: center;">Gregorian Calendar</th><th></th>
+                    <th></th><th colspan="3" style="font-size: 14px; text-align: center;"></th><th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">YEAR</td>
-                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">MONTH</td>
-                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">DAY</td>
-                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">HOUR</td>
-                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">MINUTE</td>
+                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">년 (양력)</td>
+                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">월</td>
+                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">일</td>
+                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">시</td>
+                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">분</td>
                 </tr>
                 <tr>
-                    <td><input type="number" min="1" max="9999" id="year_msg" style="text-align:center; width:40px; height:20px;"/></td>
-                    <td><input type="number" min="1" max="12" id="month_msg" style="text-align:center; width:40px; height:20px;"/></td>
-                    <td><input type="number" min="1" max="31" id="day_msg" style="text-align:center; width:40px; height:20px;"/></td>
-                    <td><input type="number" min="0" max="23" id="hour_msg" style="text-align:center; width:40px; height:20px;"/></td>
-                    <td><input type="number" min="0" max="59" id="min_msg" style="text-align:center; width:40px; height:20px;"/></td>
+                    <td style="font-size: 12px; text-align:center; width:70px; height:20px;">1 ~ 9999</td>
+                    <td style="font-size: 12px; text-align:center; width:70px; height:20px;">1 ~ 12</td>
+                    <td style="font-size: 12px; text-align:center; width:70px; height:20px;">1 ~ 31</td>
+                    <td style="font-size: 12px; text-align:center; width:70px; height:20px;">0 ~ 23</td>
+                    <td style="font-size: 12px; text-align:center; width:70px; height:20px;">0 ~ 59</td>
+                </tr>
+                <tr>
+                    <td><input type="number" min="1" max="9999" id="year_msg" style="text-align:center; width:90px; height:20px;"/></td>
+                    <td><input type="number" min="1" max="12" id="month_msg" style="text-align:center; width:90px; height:20px;"/></td>
+                    <td><input type="number" min="1" max="31" id="day_msg" style="text-align:center; width:90px; height:20px;"/></td>
+                    <td><input type="number" min="0" max="23" id="hour_msg" style="text-align:center; width:90px; height:20px;"/></td>
+                    <td><input type="number" min="0" max="59" id="min_msg" style="text-align:center; width:90px; height:20px;"/></td>
                 </tr>
                 <tr>
                 </tr>
                 <tr>
                     <td style="font-size: 14px;">
                         <input type="radio" id="Choice1" name="sex" value="male" checked>
-                        <label for="Choice1">乾</label>
+                        <label for="Choice1">남성</label>
                     </td>
                     <td style="font-size: 14px;">
                         <input type="radio" id="Choice2" name="sex" value="female">
-                        <label for="Choice2">坤</label>
+                        <label for="Choice2">여성</label>
                     </td>
-                    <td style="font-size: 10px;"><input type="checkbox" id="today_check" onclick="is_checked()"/>TODAY</td>
-                    <td style="font-size: 14px;"><button onclick="Fortune_img_Today()">일진</button></td>
-                    <td style="font-size: 14px;"><button onclick="Fortune_img()">입력</button></td>
+                    <td style="font-size: 14px;"><input type="checkbox" id="today_check" onclick="is_checked()"/>오늘</td>
+                    <td style="font-size: 14px;"><button onclick="Fortune_img_Today()">일진 검색</button></td>
+                    <td style="font-size: 14px;"><button onclick="Fortune_img()">사주 조회</button></td>
                 </tr>
             </tbody>
         </table>

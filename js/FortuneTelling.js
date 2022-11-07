@@ -77,7 +77,7 @@ function Fortune_img(){
 
     /****************************************************debugging***************************************************************/
     
-    // document.getElementById("debug1").innerHTML = sY;
+    document.getElementById("debug1").innerHTML = "";
     
     /****************************************************debugging***************************************************************/
 
@@ -367,6 +367,7 @@ function great_luck_refresh(flag){
 
     if(flag == true){
         // 일진 보기
+        ten_years_refresh();
         for(i=0; i<12; i++){
             var idTag = "t" + String(i+1).padStart(2, '0');
             document.getElementById(idTag).innerHTML = "";

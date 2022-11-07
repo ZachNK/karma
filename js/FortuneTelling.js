@@ -10,8 +10,8 @@ var nowYear = today.getFullYear();
 function is_checked(){
     let today = new Date();
     var tYear = today.getFullYear();
-    var tMonth = today.getMonth();
-    var tDay = today.getDay();
+    var tMonth = today.getMonth()+1;
+    var tDay = today.getDate();
     var tHour = today.getHours();
     var tMin = today.getMinutes();
     const checkbox = document.getElementById('today_check');
@@ -77,7 +77,7 @@ function Fortune_img(){
 
     /****************************************************debugging***************************************************************/
     
-    document.getElementById("debug1").innerHTML = "";
+    document.getElementById("debug1").innerHTML = today.getDate();
     
     /****************************************************debugging***************************************************************/
 

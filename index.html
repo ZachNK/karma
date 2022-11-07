@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="js/jspdf.min.js"></script>
+<script src="js/html2canvas.min.js"></script>
+<script src="js/html2pdf.bundle.js"></script>
+<script src="js/FortuneTelling.js"></script>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -12,7 +17,7 @@
         <table class="input_date">
             <thead>
                 <tr>
-                    <th></th><th colspan="3" style="font-size: 14px; text-align: center;"></th><th></th>
+                    <th colspan="5" style="font-size: 14px; text-align: center;"><button type="button" class="btn_download">이미지 저장하기</button></th>
                 </tr>
             </thead>
             <tbody>
@@ -55,79 +60,78 @@
             </tbody>
         </table>
     </h2>
-
-    <h3>
-        <div id="debug1"></div>
-    </h3>
-    
-    <table class="source">
-        <thead>
-            <tr>
-                <th id="LIST0">時</th><th id="LIST1">日</th><th id="LIST2">月</th><th id="LIST3">年</th>
-            </tr>
-        </thead>
+    <div id="capture" style="padding: 10px; background: #fff">
+        <h3>
+            <div id="debug1"></div>
+        </h3>
         
-        <tbody>
-            <tr>
-                <td id="time_sky"><img id="SKY0" src=""/></td><td id="day_sky"><img id="SKY1" src=""/></td><td id="month_sky"><img id="SKY2" src=""/></td><td id="year_sky"><img id="SKY3" src=""/></td>
-            </tr>
-            <tr>
-                <td id="time_land"><img id="LAND0" src=""/></td><td id="day_land"><img id="LAND1" src=""/></td><td id="month_land"><img id="LAND2" src=""/></td><td id="year_land"><img id="LAND3" src=""/></td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="source">
+            <thead>
+                <tr>
+                    <th id="LIST0">時</th><th id="LIST1">日</th><th id="LIST2">月</th><th id="LIST3">年</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td id="time_sky"><img id="SKY0" src=""/></td><td id="day_sky"><img id="SKY1" src=""/></td><td id="month_sky"><img id="SKY2" src=""/></td><td id="year_sky"><img id="SKY3" src=""/></td>
+                </tr>
+                <tr>
+                    <td id="time_land"><img id="LAND0" src=""/></td><td id="day_land"><img id="LAND1" src=""/></td><td id="month_land"><img id="LAND2" src=""/></td><td id="year_land"><img id="LAND3" src=""/></td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <table class="variety" id='testTable'>
+            <thead>
+                <tr>
+                    <th id="t12"></th><th id="t11"></th>
+                    <th id="t10"></th><th id="t09"></th>
+                    <th id="t08"></th><th id="t07"></th>
+                    <th id="t06"></th><th id="t05"></th>
+                    <th id="t04"></th><th id="t03"></th>
+                    <th id="t02"></th><th id="t01"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="sky012"><img id="012i" src=""/></td><td id="sky011"><img id="011i" src=""/></td>
+                    <td id="sky010"><img id="010i" src=""/></td><td id="sky009"><img id="009i" src=""/></td>
+                    <td id="sky008"><img id="008i" src=""/></td><td id="sky007"><img id="007i" src=""/></td>
+                    <td id="sky006"><img id="006i" src=""/></td><td id="sky005"><img id="005i" src=""/></td>
+                    <td id="sky004"><img id="004i" src=""/></td><td id="sky003"><img id="003i" src=""/></td>
+                    <td id="sky002"><img id="002i" src=""/></td><td id="sky001"><img id="001i" src=""/></td>
+                </tr>
+                <tr>
+                    <td id="land012"><img id="012p" src=""/></td><td id="land011"><img id="011p" src=""/></td>
+                    <td id="land010"><img id="010p" src=""/></td><td id="land009"><img id="009p" src=""/></td>
+                    <td id="land008"><img id="008p" src=""/></td><td id="land007"><img id="007p" src=""/></td>
+                    <td id="land006"><img id="006p" src=""/></td><td id="land005"><img id="005p" src=""/></td>
+                    <td id="land004"><img id="004p" src=""/></td><td id="land003"><img id="003p" src=""/></td>
+                    <td id="land002"><img id="002p" src=""/></td><td id="land001"><img id="001p" src=""/></td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <table class="tenyears">
+            <thead>
+                <tr>
+                    <th id="j10"></th><th id="j09"></th><th id="j08"></th><th id="j07"></th><th id="j06"></th>
+                    <th id="j05"></th><th id="j04"></th><th id="j03"></th><th id="j02"></th><th id="j01"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="jsky010"><img id="010ji" src=""/></td><td id="jsky009"><img id="009ji" src=""/></td><td id="jsky008"><img id="008ji" src=""/></td><td id="jsky007"><img id="007ji" src=""/></td><td id="jsky006"><img id="006ji" src=""/></td>
+                    <td id="jsky005"><img id="005ji" src=""/></td><td id="jsky004"><img id="004ji" src=""/></td><td id="jsky003"><img id="003ji" src=""/></td><td id="jsky002"><img id="002ji" src=""/></td><td id="jsky001"><img id="001ji" src=""/></td>
+                </tr>
+                <tr>
+                    <td id="jland010"><img id="010jp" src=""/></td><td id="jland009"><img id="009jp" src=""/></td><td id="jland008"><img id="008jp" src=""/></td><td id="jland007"><img id="007jp" src=""/></td><td id="jland006"><img id="006jp" src=""/></td>
+                    <td id="jland005"><img id="005jp" src=""/></td><td id="jland004"><img id="004jp" src=""/></td><td id="jland003"><img id="003jp" src=""/></td><td id="jland002"><img id="002jp" src=""/></td><td id="jland001"><img id="001jp" src=""/></td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <table class="variety" id='testTable'>
-        <thead>
-            <tr>
-                <th id="t12"></th><th id="t11"></th>
-                <th id="t10"></th><th id="t09"></th>
-                <th id="t08"></th><th id="t07"></th>
-                <th id="t06"></th><th id="t05"></th>
-                <th id="t04"></th><th id="t03"></th>
-                <th id="t02"></th><th id="t01"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td id="sky012"><img id="012i" src=""/></td><td id="sky011"><img id="011i" src=""/></td>
-                <td id="sky010"><img id="010i" src=""/></td><td id="sky009"><img id="009i" src=""/></td>
-                <td id="sky008"><img id="008i" src=""/></td><td id="sky007"><img id="007i" src=""/></td>
-                <td id="sky006"><img id="006i" src=""/></td><td id="sky005"><img id="005i" src=""/></td>
-                <td id="sky004"><img id="004i" src=""/></td><td id="sky003"><img id="003i" src=""/></td>
-                <td id="sky002"><img id="002i" src=""/></td><td id="sky001"><img id="001i" src=""/></td>
-            </tr>
-            <tr>
-                <td id="land012"><img id="012p" src=""/></td><td id="land011"><img id="011p" src=""/></td>
-                <td id="land010"><img id="010p" src=""/></td><td id="land009"><img id="009p" src=""/></td>
-                <td id="land008"><img id="008p" src=""/></td><td id="land007"><img id="007p" src=""/></td>
-                <td id="land006"><img id="006p" src=""/></td><td id="land005"><img id="005p" src=""/></td>
-                <td id="land004"><img id="004p" src=""/></td><td id="land003"><img id="003p" src=""/></td>
-                <td id="land002"><img id="002p" src=""/></td><td id="land001"><img id="001p" src=""/></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <table class="tenyears">
-        <thead>
-            <tr>
-                <th id="j10"></th><th id="j09"></th><th id="j08"></th><th id="j07"></th><th id="j06"></th>
-                <th id="j05"></th><th id="j04"></th><th id="j03"></th><th id="j02"></th><th id="j01"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td id="jsky010"><img id="010ji" src=""/></td><td id="jsky009"><img id="009ji" src=""/></td><td id="jsky008"><img id="008ji" src=""/></td><td id="jsky007"><img id="007ji" src=""/></td><td id="jsky006"><img id="006ji" src=""/></td>
-                <td id="jsky005"><img id="005ji" src=""/></td><td id="jsky004"><img id="004ji" src=""/></td><td id="jsky003"><img id="003ji" src=""/></td><td id="jsky002"><img id="002ji" src=""/></td><td id="jsky001"><img id="001ji" src=""/></td>
-            </tr>
-            <tr>
-                <td id="jland010"><img id="010jp" src=""/></td><td id="jland009"><img id="009jp" src=""/></td><td id="jland008"><img id="008jp" src=""/></td><td id="jland007"><img id="007jp" src=""/></td><td id="jland006"><img id="006jp" src=""/></td>
-                <td id="jland005"><img id="005jp" src=""/></td><td id="jland004"><img id="004jp" src=""/></td><td id="jland003"><img id="003jp" src=""/></td><td id="jland002"><img id="002jp" src=""/></td><td id="jland001"><img id="001jp" src=""/></td> 
-            </tr>
-        </tbody>
-    </table>
-
-    <script src="js/FortuneTelling.js"></script>
- 
 </body>
 </html>

@@ -77,7 +77,7 @@ function Fortune_img(){
 
     /****************************************************debugging***************************************************************/
     
-    document.getElementById("debug1").innerHTML = today.getDate();
+    document.getElementById("debug1").innerHTML = "";
     
     /****************************************************debugging***************************************************************/
 

@@ -5,7 +5,7 @@ var sky = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
 var land = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
 let today = new Date();
 var nowYear = today.getFullYear();
-
+var fileName = "";
 
 function is_checked(){
     let today = new Date();
@@ -55,6 +55,10 @@ function Fortune_img(){
     var hh = document.getElementById("hour_msg").value;
     var min = document.getElementById("min_msg").value;
     var sexVar = document.querySelector('input[name="sex"]').checked;
+    var sex_tag = 'M';
+    if(sexVar == false){
+        sex_tag = 'F';
+    }
     
     var a = zy(yyyy, mm)[0];
     var b = zy(yyyy, mm)[1];
@@ -74,6 +78,7 @@ function Fortune_img(){
 
     var sY = parseInt(yyyy) + 10*(startNum-1) + num;
     
+    fileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min) + "_" + sex_tag;
 
     /****************************************************debugging***************************************************************/
     
@@ -106,7 +111,6 @@ function Fortune_img(){
         var t_name = '#t' + String(i+1).padStart(2, '0');
         $(t_name).click(function(){
             var x = $(this).text();
-            //console.log(parseInt(x));
             var picks = parseInt(x);
             var yyyy = document.getElementById("year_msg").value;
             var stYear = parseInt(yyyy) + 10*(parseInt(picks/10)) + (picks%10);
@@ -505,7 +509,8 @@ function Fortune_img_Today(){
     var hh = document.getElementById("hour_msg").value;
     var min = document.getElementById("min_msg").value;
     document.getElementById("debug1").innerHTML = String(yyyy) + "년 " + String(mm) + "월 " + String(dd) + "일 " + String(hh) + "시 " + String(min)+ "분";
-
+    fileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min);
+    
     var a = zy(yyyy, mm)[0];
     var b = zy(yyyy, mm)[1];
     var c = zm(yyyy, mm, dd)[0];
@@ -596,3 +601,34 @@ function this_year_coloring(startingYear, value_nowYear){
         document.getElementById('jland010').style.background = '#FFFFFF';
     }
 }
+
+$('#btn_download').click(function() {
+    html2canvas($('#capture')[0]).then(function(canvas) {
+        // 캔버스를 이미지로 변환
+        let imgData = canvas.toDataURL('image/png');
+
+        let margin = 10; // 출력 페이지 여백설정
+        let imgWidth = 210 - (10 * 2); // 이미지 가로 길이(mm) A4 기준
+        let pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+        let imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+
+        let doc = new jsPDF('p', 'mm');
+        let position = margin;
+
+        // 첫 페이지 출력
+        doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        // 한 페이지 이상일 경우 루프 돌면서 출력
+        while (heightLeft >= 20) {
+            position = heightLeft - imgHeight;
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            doc.addPage();
+            heightLeft -= pageHeight;
+        }
+
+        // 파일 저장
+        doc.save('sample.pdf');
+    });
+});

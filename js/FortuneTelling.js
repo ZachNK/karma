@@ -283,8 +283,6 @@ function great_luck(check_sex, x, sky, land){
             var unit = [newSky, newLand];
             result.push(unit);
         }
-
-        
     }
     return result;
 }
@@ -374,8 +372,6 @@ function great_luck_refresh(flag){
     document.getElementById('land012').style.background = '#FFFFFF';
 
     
-
-
     if(flag == true){
         // 일진 보기
         ten_years_refresh();
@@ -450,7 +446,6 @@ function great_luck_refresh(flag){
             document.getElementById(idTag).style.display = "";
         }
     }
-
 }
 
 function ten_years_refresh(){
@@ -512,7 +507,6 @@ function great_luck_show(value_seasons, value_num, value_startNum){
 
     greatLuckCopy = g_sky + "\n" + g_land;
 }
-
 
 function Fortune_img_Today(){
     great_luck_refresh(true);
@@ -619,8 +613,6 @@ function this_year_coloring(startingYear, value_nowYear){
         document.getElementById('jland010').style.background = '#FFFFFF';
     }
 }
-
-
 
 function copy(){
     var str = resultCopy + "\n" + "\n" + greatLuckCopy;

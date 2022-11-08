@@ -1,6 +1,6 @@
 var sky_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var land_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-var point = [5, 5, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7];
+var point = [5, 5, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7]; //丑月, 寅月, 卯月, 辰月, 巳月, 午月, 未月, 申月, 酉月, 戌月, 亥月, 子月
 var sky = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
 var land = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
 let today = new Date();
@@ -17,6 +17,7 @@ function is_checked(){
     const checkbox = document.getElementById('today_check');
     const is_checked = checkbox.checked;
     if(is_checked == true){
+        ten_years_refresh();
         document.getElementById('year_msg').value = tYear;
         document.getElementById('month_msg').value = tMonth;
         document.getElementById('day_msg').value = tDay;
@@ -24,6 +25,7 @@ function is_checked(){
         document.getElementById('min_msg').value = tMin;
     }
     else{
+        ten_years_refresh();
         document.getElementById('year_msg').value = "";
         document.getElementById('month_msg').value = "";
         document.getElementById('day_msg').value = "";
@@ -47,7 +49,6 @@ function p_img(x){
 
 function Fortune_img(){
     great_luck_refresh(false);
-    ten_years_refresh();
 
     var yyyy = document.getElementById("year_msg").value;
     var mm = document.getElementById("month_msg").value;
@@ -69,13 +70,13 @@ function Fortune_img(){
     var seasons = great_luck(sexVar, a, c, d);
     //대운수 (정수, 실수)
     var num = when_num(sexVar, b, d, mm, dd)[0];
+    
     var rnum =  when_num(sexVar, b, d, mm, dd)[1];
-    //대운 번째 (정수, 실수)
-    var startNum = Starting(rnum, yyyy, nowYear);
-
-    // 대운 시작년도 = 10*(대운번째정수-1) + (생년-1) +  대운정수
-    var sY = 10*(startNum-1) + (yyyy-1) + num;
-
+    console.log(num);
+    
+    // 첫 대운 세운년도, 현재 나이, 세운 번째, 대운 번째, 현재 대운 시작 년도
+    var starting = Starting(a, num, yyyy, nowYear);
+    
     /****************************************************debugging***************************************************************/
     
     document.getElementById("debug1").innerHTML = "";
@@ -94,12 +95,15 @@ function Fortune_img(){
     document.getElementById("LAND2").src = p_img(land_tag[d]);
     document.getElementById("LAND3").src = p_img(land_tag[b]);
 
-    great_luck_show(seasons, num, startNum);
+    
+    ten_years_refresh();
+
+    great_luck_show(seasons, num, starting[2]);
 
     
-    tenyears_img_show(sY);
+    tenyears_img_show(starting[3]);
 
-    this_year_coloring(sY, nowYear);
+    this_year_coloring(starting[3], nowYear);
     
 
     
@@ -107,9 +111,9 @@ function Fortune_img(){
         var t_name = '#t' + String(i+1).padStart(2, '0');
         $(t_name).click(function(){
             var x = $(this).text();
-            var picks = parseInt(x);
-            var yyyy = document.getElementById("year_msg").value;
-            var stYear = parseInt(yyyy) + 10*(parseInt(picks/10)) + (picks%10);
+            var picks = Number(Math.floor((parseInt(x)-1)/10))+1;
+            console.log(picks);
+            var stYear = 10*(picks-1) + starting[0];
             tenyears_img_show(stYear);
             this_year_coloring(stYear, nowYear);
         });
@@ -331,17 +335,18 @@ function when_num(check_sex, z_year, z_month, month, day){
     return result;
 }
 
-function Starting(s, year, nYear){
-    var xx = 0;
-    var y = Number(year);
-    var start = y + (s-1);
-    var sp = nYear - start;
-    xx = Number((sp/10).toFixed(2)) + 1;
-    var dici_start = Math.round(xx);
-    // var real_start = Math.floor(10*xx)/10;
-    // var result = [dici_start, real_start];
-
-    return dici_start;
+function Starting(yearCycle_sky, value_num, value_year, value_nowYear){
+    // 첫 대운 세운년도, 세운 번째, 대운 번째, 현재 대운 시작 년도
+    var bornYear = parseInt(value_year);
+    var param = ((bornYear+57)%10) - ((yearCycle_sky+1)%10);
+    var start = (bornYear-1) + param + value_num;
+    var age = value_nowYear - value_year - param + 1;
+    var n_years = (age - (value_num-1))%10;
+    var n_great = 1 + Math.floor((age - value_num)/10);
+    var startYear = 10*(n_great-1) + start;
+    var result = [start, n_years, n_great, startYear];
+    
+    return result;
 }
 
 function great_luck_refresh(flag){
@@ -568,7 +573,7 @@ function tenyears_img_show(startingYear){
         var idTag = n.padStart(3, '0') + "jp"; 
         var land_word = (land_start+i)%12;
         if(land_word <=0){
-            land_word +=10;
+            land_word +=12;
         }
         document.getElementById(idTag).src = p_img(land_tag[(land_word-1)]);
     }

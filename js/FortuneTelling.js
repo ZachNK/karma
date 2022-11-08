@@ -5,7 +5,8 @@ var sky = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
 var land = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
 let today = new Date();
 var nowYear = today.getFullYear();
-var fileName = "";
+var resultCopy = "";
+var greatLuckCopy = "";
 
 function is_checked(){
     let today = new Date();
@@ -83,7 +84,6 @@ function Fortune_img(){
     
     /****************************************************debugging***************************************************************/
 
-    //window.onload = change_Color(startNum);
 
     document.getElementById("SKY0").src = i_img(sky_tag[g]);
     document.getElementById("SKY1").src = i_img(sky_tag[e]);
@@ -95,18 +95,15 @@ function Fortune_img(){
     document.getElementById("LAND2").src = p_img(land_tag[d]);
     document.getElementById("LAND3").src = p_img(land_tag[b]);
 
-    
     ten_years_refresh();
-
     great_luck_show(seasons, num, starting[2]);
-
-    
     tenyears_img_show(starting[3]);
-
     this_year_coloring(starting[3], nowYear);
-    
 
-    
+    var resultSky = sky[sky_tag[g]-1] + " " + sky[sky_tag[e]-1] + " "  + sky[sky_tag[c]-1] + " " + sky[sky_tag[a]-1];
+    var resultLand = land[land_tag[h]-1] + " " + land[land_tag[f]-1] + " " + land[land_tag[d]-1] + " " + land[land_tag[b]-1];
+    resultCopy = resultSky + "\n" + resultLand;
+
     for(i=0; i<12; i++){
         var t_name = '#t' + String(i+1).padStart(2, '0');
         $(t_name).click(function(){
@@ -114,10 +111,10 @@ function Fortune_img(){
             var picks = Number(Math.floor((parseInt(x)-1)/10))+1;
             console.log(picks);
             var stYear = 10*(picks-1) + starting[0];
+            ten_years_refresh();
             tenyears_img_show(stYear);
             this_year_coloring(stYear, nowYear);
         });
-        
     }
 }
 
@@ -481,6 +478,10 @@ function ten_years_refresh(){
 }
 
 function great_luck_show(value_seasons, value_num, value_startNum){
+    // var g_num = "";
+    var g_sky = "";
+    var g_land = "";
+
     for(i=0; i<12; i++){
         var t_n = (10*i) + value_num;
         var idTag = "t" + String(i+1).padStart(2, '0');
@@ -491,12 +492,14 @@ function great_luck_show(value_seasons, value_num, value_startNum){
         var n = String(i + 1);
         var idTag = n.padStart(3, '0') + "i"; 
         document.getElementById(idTag).src = i_img(sky_tag[value_seasons[i][0]]);
+        g_sky += sky[value_seasons[11-i][0]] + " ";
     }
     
     for(i=0; i<12; i++){
         var n = String(i + 1);
         var idTag = n.padStart(3, '0') + "p"; 
         document.getElementById(idTag).src = p_img(land_tag[value_seasons[i][1]]);
+        g_land += land[value_seasons[11-i][1]] + " ";
     }
 
     if(value_startNum > 0 && value_startNum <=12){
@@ -506,8 +509,9 @@ function great_luck_show(value_seasons, value_num, value_startNum){
         document.getElementById(skyTag).style.background = '#EFEFEF';
         document.getElementById(landTag).style.background = '#EFEFEF';
     }
-}
 
+    greatLuckCopy = g_sky + "\n" + g_land;
+}
 
 
 function Fortune_img_Today(){
@@ -540,6 +544,10 @@ function Fortune_img_Today(){
     document.getElementById("LAND2").src = p_img(land_tag[d]);
     document.getElementById("LAND3").src = p_img(land_tag[b]);
 
+    var todaySky = sky[sky_tag[g]-1] + " " + sky[sky_tag[e]-1] + " "  + sky[sky_tag[c]-1] + " " + sky[sky_tag[a]-1];
+    var todayLand = land[land_tag[h]-1] + " " + land[land_tag[f]-1] + " " + land[land_tag[d]-1] + " " + land[land_tag[b]-1];
+    resultCopy = todaySky + "\n" + todayLand;
+    greatLuckCopy = "";
 }
 
 function tenyears_img_show(startingYear){
@@ -610,4 +618,22 @@ function this_year_coloring(startingYear, value_nowYear){
         document.getElementById('jland009').style.background = '#FFFFFF';
         document.getElementById('jland010').style.background = '#FFFFFF';
     }
+}
+
+
+
+function copy(){
+    var str = resultCopy + "\n" + "\n" + greatLuckCopy;
+    copyStringToClipboard(str);
+}
+
+function copyStringToClipboard (string) {
+    function handler (event){
+        event.clipboardData.setData('text/plain', string);
+        event.preventDefault();
+        document.removeEventListener('copy', handler, true);
+    }
+
+    document.addEventListener('copy', handler, true);
+    document.execCommand('copy');
 }

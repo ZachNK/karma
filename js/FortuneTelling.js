@@ -55,10 +55,6 @@ function Fortune_img(){
     var hh = document.getElementById("hour_msg").value;
     var min = document.getElementById("min_msg").value;
     var sexVar = document.querySelector('input[name="sex"]').checked;
-    var sex_tag = 'M';
-    if(sexVar == false){
-        sex_tag = 'F';
-    }
     
     var a = zy(yyyy, mm)[0];
     var b = zy(yyyy, mm)[1];
@@ -71,18 +67,18 @@ function Fortune_img(){
 
     //대운 리스트
     var seasons = great_luck(sexVar, a, c, d);
-    //대운수
-    var num = when_num(sexVar, b, d, mm, dd); 
-    //대운 번째
-    var startNum = Starting(num, yyyy, nowYear);
+    //대운수 (정수, 실수)
+    var num = when_num(sexVar, b, d, mm, dd)[0];
+    var rnum =  when_num(sexVar, b, d, mm, dd)[1];
+    //대운 번째 (정수, 실수)
+    var startNum = Starting(rnum, yyyy, nowYear);
 
-    var sY = parseInt(yyyy) + 10*(startNum-1) + num;
-    
-    fileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min) + "_" + sex_tag;
+    // 대운 시작년도 = 10*(대운번째정수-1) + (생년-1) +  대운정수
+    var sY = 10*(startNum-1) + (yyyy-1) + num;
 
     /****************************************************debugging***************************************************************/
     
-    document.getElementById("debug1").innerHTML = "";
+    document.getElementById("debug1").innerHTML = [num, rnum, startNum];
     
     /****************************************************debugging***************************************************************/
 
@@ -293,11 +289,14 @@ function great_luck(check_sex, x, sky, land){
 }
 
 function when_num(check_sex, z_year, z_month, month, day){
-    var result = 0;
+    var xx = 0;
     var xspan = 0;
     var span = 0;
     var real_month = Number(month);
     var real_day = Number(day);
+    if(real_month<=0){
+        real_month += 12;
+    }
     if(check_sex == z_year%2){
         xspan = day - point[z_month];
     }
@@ -305,12 +304,13 @@ function when_num(check_sex, z_year, z_month, month, day){
         xspan = point[real_month-1] - real_day;
     }
 
-    var length = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30];
+    var length = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     if((z_year+1)%4 == 0){
-        length = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
+        length = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     }
 
     if(xspan < 0){
+        
         span = xspan+length[real_month-1];
     }
     else{
@@ -318,25 +318,30 @@ function when_num(check_sex, z_year, z_month, month, day){
     }
 
     if(span >= 3){
-        result = span/3;
-        if(span%3 == 2) result = result + 1;
+        xx = span/3;
+        if(span%3 == 2) xx = xx + 1;
     }
     else{
-        result = span;
+        xx = span;
     }
     
-    result = Math.floor(result);
+    var dici_result = Math.floor(xx);
+    var real_result = Number((xx).toFixed(1));
+    var result = [dici_result, real_result];
     return result;
 }
 
 function Starting(s, year, nYear){
-    var result = 0;
+    var xx = 0;
     var y = Number(year);
     var start = y + (s-1);
     var sp = nYear - start;
-    result = Math.floor(sp/10)+1;
+    xx = Number((sp/10).toFixed(2)) + 1;
+    var dici_start = Math.round(xx);
+    // var real_start = Math.floor(10*xx)/10;
+    // var result = [dici_start, real_start];
 
-    return result;
+    return dici_start;
 }
 
 function great_luck_refresh(flag){

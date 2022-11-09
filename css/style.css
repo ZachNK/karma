@@ -51,8 +51,9 @@ table.variety{
     align-content: center;
     align-self: center;
     align-items: center;
-    margin-left: 12%;
-    margin-right: 12%;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
     table-layout: fixed;
 }
 
@@ -83,4 +84,3 @@ td{
 img{
     width: 75%;
 }
-

@@ -1,6 +1,6 @@
 var sky_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var land_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-var point = [5, 5, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7]; //丑月, 寅月, 卯月, 辰月, 巳月, 午月, 未月, 申月, 酉月, 戌月, 亥月, 子月
+var point = [6, 4, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7]; //丑月, 寅月, 卯月, 辰月, 巳月, 午月, 未月, 申月, 酉月, 戌月, 亥月, 子月
 var sky = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
 var land = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
 let today = new Date();
@@ -58,22 +58,19 @@ function Fortune_img(){
     var min = document.getElementById("min_msg").value;
     var sexVar = document.querySelector('input[name="sex"]').checked;
     
-    var a = zy(yyyy, mm)[0];
-    var b = zy(yyyy, mm)[1];
-    var c = zm(yyyy, mm, dd)[0];
-    var d = zm(yyyy, mm, dd)[1];
-    var e = zd(yyyy, mm, dd, hh, min)[0];
-    var f = zd(yyyy, mm, dd, hh, min)[1];
-    var g = zt(e, hh, min)[0];
-    var h = zt(e, hh, min)[1];
+    var a = zy(yyyy, mm)[0];//년간
+    var b = zy(yyyy, mm)[1];//년지
+    var c = zm(yyyy, mm, dd)[0];//월간
+    var d = zm(yyyy, mm, dd)[1];//월지
+    var e = zd(yyyy, mm, dd, hh, min)[0];//일간
+    var f = zd(yyyy, mm, dd, hh, min)[1];//일지
+    var g = zt(e, hh, min)[0];//시간
+    var h = zt(e, hh, min)[1];//시지
 
     //대운 리스트
     var seasons = great_luck(sexVar, a, c, d);
     //대운수 (정수, 실수)
-    var num = when_num(sexVar, b, d, mm, dd)[0];
-    
-    var rnum =  when_num(sexVar, b, d, mm, dd)[1];
-    console.log(num);
+    var num = when_num(sexVar, b, yyyy, mm, dd);
     
     // 첫 대운 세운년도, 현재 나이, 세운 번째, 대운 번째, 현재 대운 시작 년도
     var starting = Starting(a, num, yyyy, nowYear);
@@ -109,13 +106,34 @@ function Fortune_img(){
         $(t_name).click(function(){
             var x = $(this).text();
             var picks = Number(Math.floor((parseInt(x)-1)/10))+1;
-            console.log(picks);
+            // console.log(picks);
             var stYear = 10*(picks-1) + starting[0];
             ten_years_refresh();
             tenyears_img_show(stYear);
             this_year_coloring(stYear, nowYear);
         });
     }
+}
+
+function check_leap(year){
+    var checkLeap = false;
+    if (year%4 == 0){
+        if(year%100 == 0){
+            if(year%400 == 0){
+                checkLeap = true;
+            }
+            else{
+                checkLeap = false;
+            }
+        }
+        else{
+            checkLeap = true;
+        }
+    }
+    else{
+        checkLeap = false;
+    }
+    return checkLeap;
 }
 
 function zy(year, month){
@@ -160,6 +178,7 @@ function zm(year, month, day){
 
 function zd(y, m, d, h, s){
     var leap = false;
+    var count = 0;
     var leapCount = 0;
     var year = parseInt(y);
     var month = parseInt(m);
@@ -169,42 +188,13 @@ function zd(y, m, d, h, s){
     var lastYear = year-1;
     var endDays = 0;
     var end = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30];
-    if (year%4 == 0){
-        if(year%100 == 0){
-            if(year%400 == 0){
-                leap = true;
-            }
-            else{
-                leap = false;
-            }
-        }
-        else{
-            leap = true;
-        }
-    }
-    else{
-        leap = false;
-    }
 
-    for(var i=1; i<=lastYear; i++){
-        if (i%4 == 0){
-            if(i%100 == 0){
-                if(i%400 == 0){
-                    leapCount += 1;
-                }
-                else{
-                    leapCount += 0;
-                }
-            }
-            else{
-                leapCount += 1;
-            }
-        }
-        else{
-            leapCount += 0;
+    leap = check_leap(year);
+    for(var i=1; i<year; i++){
+        if(check_leap(i)==true){
+            leapCount += 1;
         }
     }
-        
 
     if(leap == true){
         end = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
@@ -251,11 +241,16 @@ function zt(cday, hour, minute){
 }
 
 function great_luck(check_sex, x, sky, land){
+    //x=년간, sky = 월간, land = 월지
     var check_year = x;
+    //month = 월주를 60갑자 숫자로
     var month = 12*(5-(((10+((land+1)-(sky+1)))%10)/2)) + land+1;
     month =month%60;
     var result = [];
+    
     if(check_sex == check_year%2){
+        //순행자
+        // 1대운 부터 12대운까지
         for(i = 1; i<=12; i++){
             var newSky = (sky-i)%10;
             var newLand = (land-i)%12;
@@ -270,7 +265,8 @@ function great_luck(check_sex, x, sky, land){
         }
     }
     else{
-
+        //역행자
+        // 1대운 부터 12대운까지
         for(i = 1; i<=12; i++){
             var newSky = (sky+i)%10;
             var newLand = (land+i)%12;
@@ -283,50 +279,100 @@ function great_luck(check_sex, x, sky, land){
             var unit = [newSky, newLand];
             result.push(unit);
         }
+
+        
     }
     return result;
 }
 
-function when_num(check_sex, z_year, z_month, month, day){
+// 대운수 구현 함수
+function when_num(check_sex, z_year, year, month, day){
+    //check_sex = 성별, z_year = 년지(子:0~亥:11), z_month = 월지(子:0~亥:11), year = 생년, month = 생월, day = 생일
+    
     var xx = 0;
-    var xspan = 0;
     var span = 0;
-    var real_month = Number(month);
+    var real_month = Number(month); //1월~12월
     var real_day = Number(day);
-    if(real_month<=0){
-        real_month += 12;
-    }
-    if(check_sex == z_year%2){
-        xspan = day - point[z_month];
-    }
-    else{
-        xspan = point[real_month-1] - real_day;
-    }
-
+    var isLeap = check_leap(year);
+    
+    // length = [0:1월 ~ 11:12월]까지
+    // 윤년 아닐때
     var length = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    if((z_year+1)%4 == 0){
+    if(isLeap == true){
         length = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     }
 
-    if(xspan < 0){
-        
-        span = xspan+length[real_month-1];
-    }
-    else{
-        span = xspan;
-    }
+    // * 순행: 이후 절입일 - 생일
 
-    if(span >= 3){
-        xx = span/3;
-        if(span%3 == 2) xx = xx + 1;
+    // <1992년 1월 16일 순행> 순행자 생월의 절입일 <= 생일
+    // 1월 6일~2월 4일
+    // 31(1월 날수) + 4(2월 4일) - 16(생일) 
+    // = 19일차
+    // 19일차/3 = 6.333
+
+    // <1979년 1월 4일 순행> 순행자 생월의 절입일 > 생일
+    // 12월 7일 ~1월 6일
+    // 6(1월 6일) - 4(생일)
+    // =2일차
+    // 2일차/3 = 0.66
+
+    // * 역행: 생일 - 이전 절입일
+
+    // <1989년 11월 28일 역행> 역행자 생월의 절입일 <= 생일
+    // 11월 7일~12월 7일
+    // 28(생일) - 7(11월 7일)
+    // = 21일차
+    // 21일차/3 = 7
+
+    // <1990년 1월 1일 역행> 역행자 생월의 절입일 > 생일
+    // 12월 7일 ~ 1월 5일
+    // 31(12월 날수) + 1(생일) - 7(12월 7일)
+    // =25일차
+    // 25일차/3 = 8.33
+
+    var debug = '';
+    if(check_sex != z_year%2){
+        var after_month = real_month + 1;
+        if(after_month > 12){
+            after_month -= 12;
+        }
+        // console.log("이후 월 ", point[parseInt(after_month-1)]);
+
+        // 순행자
+        if(point[real_month-1] <= real_day){
+            span = length[parseInt(real_month-1)] + point[parseInt(after_month-1)] - real_day;
+            // debug = '순행 중순';
+            // console.log(length[parseInt(real_month-1)], point[parseInt(after_month-1)], real_day);
+        }
+        else{
+            span = point[real_month-1] - real_day;
+            // debug = '순행 초순';
+            // console.log(point[parseInt(real_month-1)], real_day);
+        }
     }
     else{
-        xx = span;
+        var before_month = real_month - 1;
+        if(before_month <=0){
+            before_month +=12;
+        }
+        // console.log("이전 월 ", length[parseInt(before_month-1)]);
+
+        // 역행자
+        if(point[real_month-1] <= real_day){
+            span = real_day - point[parseInt(real_month-1)];
+            // debug = '역행 중순';
+            // console.log(real_day, point[parseInt(real_month-1)]);
+        }
+        else{
+            span = length[parseInt(before_month-1)] + real_day - point[parseInt(before_month-1)];
+            // debug = '역행 중순';
+            // console.log(length[parseInt(before_month-1)], real_day, point[parseInt(before_month-1)]);
+        }
+        
     }
-    
-    var dici_result = Math.floor(xx);
-    var real_result = Number((xx).toFixed(1));
-    var result = [dici_result, real_result];
+    // console.log(debug);
+    // console.log(span);
+    result = Number((span/3).toFixed());
     return result;
 }
 
@@ -372,6 +418,8 @@ function great_luck_refresh(flag){
     document.getElementById('land012').style.background = '#FFFFFF';
 
     
+
+
     if(flag == true){
         // 일진 보기
         ten_years_refresh();
@@ -446,6 +494,7 @@ function great_luck_refresh(flag){
             document.getElementById(idTag).style.display = "";
         }
     }
+
 }
 
 function ten_years_refresh(){
@@ -505,8 +554,9 @@ function great_luck_show(value_seasons, value_num, value_startNum){
         document.getElementById(landTag).style.background = '#EFEFEF';
     }
 
-    greatLuckCopy = g_sky + "\n" + g_land;
+    greatLuckCopy = "\n" + "\n" + g_sky + "\n" + g_land;
 }
+
 
 function Fortune_img_Today(){
     great_luck_refresh(true);
@@ -614,8 +664,10 @@ function this_year_coloring(startingYear, value_nowYear){
     }
 }
 
+
+
 function copy(){
-    var str = resultCopy + "\n" + "\n" + greatLuckCopy;
+    var str = resultCopy + greatLuckCopy;
     copyStringToClipboard(str);
 }
 

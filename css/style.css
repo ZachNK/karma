@@ -68,6 +68,14 @@ table.tenyears{
     table-layout: fixed;
 }
 
+table.Fortune_Say{
+    text-align: center;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+}
+
 th{
     text-align: center;
     display: table-cell;
@@ -84,4 +92,3 @@ td{
 img{
     width: 75%;
 }
-

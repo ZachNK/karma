@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
 <script defer src="js/FortuneTelling.js"></script>
+<script defer src="js/FortuneExplain.js"></script>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -123,5 +124,16 @@
             </tr>
         </tbody>
     </table>
+    <h3>
+        <div id="debug2"><button onclick="Explains()" style="text-align:center; width:100px; height: 30px;">통변</button></div>
+    </h3>
+    <table class="Fortune_Say">
+        <tbody>
+            <tr colspan="5">
+                <td style="font-size: 14px; text-align: center;"><div id="answer"></div></td>
+            </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>

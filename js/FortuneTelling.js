@@ -57,6 +57,13 @@ function Fortune_img(){
     var hh = document.getElementById("hour_msg").value;
     var min = document.getElementById("min_msg").value;
     var sexVar = document.querySelector('input[name="sex"]').checked;
+    var thisSex = "";
+    if(sexVar == true){
+        thisSex = "남성";
+    }
+    else{
+        thisSex = "여성";
+    }
     
     var a = zy(yyyy, mm)[0];//년간
     var b = zy(yyyy, mm)[1];//년지
@@ -72,16 +79,9 @@ function Fortune_img(){
     //대운수 (정수, 실수)
     var num = when_num(sexVar, b, yyyy, mm, dd);
     
-    // 첫 대운 세운년도, 현재 나이, 세운 번째, 대운 번째, 현재 대운 시작 년도
+    // 첫 대운 세운년도, 세운 번째, 대운 번째, 현재 대운 시작 년도
     var starting = Starting(a, num, yyyy, nowYear);
     
-    /****************************************************debugging***************************************************************/
-    
-    document.getElementById("debug1").innerHTML = "";
-    
-    /****************************************************debugging***************************************************************/
-
-
     document.getElementById("SKY0").src = i_img(sky_tag[g]);
     document.getElementById("SKY1").src = i_img(sky_tag[e]);
     document.getElementById("SKY2").src = i_img(sky_tag[c]);
@@ -93,9 +93,9 @@ function Fortune_img(){
     document.getElementById("LAND3").src = p_img(land_tag[b]);
 
     ten_years_refresh();
-    great_luck_show(seasons, num, starting[2]);
-    tenyears_img_show(starting[3]);
-    this_year_coloring(starting[3], nowYear);
+    great_luck_show(seasons, num, starting[1]);
+    tenyears_img_show(starting[2]);
+    this_year_coloring(starting[2], nowYear);
 
     var resultSky = sky[sky_tag[g]-1] + " " + sky[sky_tag[e]-1] + " "  + sky[sky_tag[c]-1] + " " + sky[sky_tag[a]-1];
     var resultLand = land[land_tag[h]-1] + " " + land[land_tag[f]-1] + " " + land[land_tag[d]-1] + " " + land[land_tag[b]-1];
@@ -113,6 +113,14 @@ function Fortune_img(){
             this_year_coloring(stYear, nowYear);
         });
     }
+
+    /****************************************************debugging***************************************************************/
+    
+    document.getElementById("debug1").innerHTML = yyyy+"년 "+mm+"월 "+dd+"일 "+hh+"시 "+min+"분생 "+starting[3]+"세 "+thisSex;
+
+    
+    /****************************************************debugging***************************************************************/
+
 }
 
 function check_leap(year){
@@ -377,16 +385,14 @@ function when_num(check_sex, z_year, year, month, day){
 }
 
 function Starting(yearCycle_sky, value_num, value_year, value_nowYear){
-    // 첫 대운 세운년도, 세운 번째, 대운 번째, 현재 대운 시작 년도
+    // start 첫 대운 세운년도, n_great 대운 번째, startYear 현재 대운 시작 년도
     var bornYear = parseInt(value_year);
     var param = ((bornYear+57)%10) - ((yearCycle_sky+1)%10);
-    var start = (bornYear-1) + param + value_num;
-    var age = value_nowYear - value_year - param + 1;
-    var n_years = (age - (value_num-1))%10;
+    var start = (bornYear-1) - param + value_num;
+    var age = value_nowYear - value_year + 1;
     var n_great = 1 + Math.floor((age - value_num)/10);
     var startYear = 10*(n_great-1) + start;
-    var result = [start, n_years, n_great, startYear];
-    
+    var result = [start, n_great, startYear, age];
     return result;
 }
 

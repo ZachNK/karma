@@ -37,13 +37,13 @@ function is_checked(){
 }
 
 function i_img(x){
-    var num = x;
+    var num = String(x).padStart(2, '0');
     var src = "img/" + "i" + num + ".png";
     return src;
 }
 
 function p_img(x){
-    var num = x;
+    var num = String(x).padStart(2, '0');
     var src = "img/" + "p" + num + ".png";
     return src;
 }

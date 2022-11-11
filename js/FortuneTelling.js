@@ -65,9 +65,11 @@ function Fortune_img(){
         thisSex = "여성";
     }
     
-    var a = zy(yyyy, mm)[0];//년간
-    var b = zy(yyyy, mm)[1];//년지
+    var a = zy(yyyy, mm, dd)[0];//년간 
+    
+    var b = zy(yyyy, mm, dd)[1];//년지
     var c = zm(yyyy, mm, dd)[0];//월간
+    
     var d = zm(yyyy, mm, dd)[1];//월지
     var e = zd(yyyy, mm, dd, hh, min)[0];//일간
     var f = zd(yyyy, mm, dd, hh, min)[1];//일지
@@ -144,24 +146,31 @@ function check_leap(year){
     return checkLeap;
 }
 
-function zy(year, month){
-    var y = year;
-    var m = month;
+function zy(year, month, day){
+    
+    var y = parseInt(year);
+    var m = parseInt(month);
+    var d = parseInt(day);
     var zodiac= (y-3)%60;
     var pointYear = 21 * parseInt(y/4)  + 55;
-    if (y%4 != 0){
+    
+    if (check_leap(y)==false){
         pointYear =+ 5 * (y%4) + 1;
     }
     
-    var deltaMonth = parseInt(m);
-    var cycleYear=zodiac; 
-    if (deltaMonth < 3){
-        cycleYear -= 1;
+    var deltaMonth = m;
+    
+    
+    if (deltaMonth == 1 || (deltaMonth == 2 &   d < point[1])){
+        zodiac -=1;
     }
-    var temp = cycleYear;
+    
+    var temp = zodiac;
+    
     if(temp <= 0){
         temp += 60;
     }
+
     result = [((temp-1) % 10), ((temp-1) % 12)];
     return result;
 }
@@ -575,8 +584,8 @@ function Fortune_img_Today(){
     document.getElementById("debug1").innerHTML = String(yyyy) + "년 " + String(mm) + "월 " + String(dd) + "일 " + String(hh) + "시 " + String(min)+ "분";
     fileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min);
     
-    var a = zy(yyyy, mm)[0];
-    var b = zy(yyyy, mm)[1];
+    var a = zy(yyyy, mm, dd)[0];
+    var b = zy(yyyy, mm, dd)[1];
     var c = zm(yyyy, mm, dd)[0];
     var d = zm(yyyy, mm, dd)[1];
     var e = zd(yyyy, mm, dd, hh, min)[0];

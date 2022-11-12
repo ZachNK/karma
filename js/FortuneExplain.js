@@ -64,7 +64,7 @@ var stems = [
     '남들에게 기분 좋게',
     '단기 코스로 완성을 더',
     '총대 매고 바지 사장',
-    '자기 능력치 과대 포장',
+    '능력대비 고성과를 내게',
     '아직 미완성인데 답답하게 살아서 힘겨워',
     '나 대신 집중해 줄 사람 마주',
     '문제를 대비하고 있는 그대로를 전달',
@@ -101,55 +101,42 @@ var stems = [
     '정신에 정신을 더'
 ]
 
-var resultSay = "";
+var answer = [];
+var code = [];
 
 
 function DecideTell(){
+    var times = Number(out('time_sky'));
+    var days = Number(out('day_sky'));
+    var months = Number(out('month_sky'));
+    var years = Number(out('year_sky'));
 
-    var x = Number(out('day_sky'));
-    var y = Number(out('month_sky'));
-    var z = Number(out('time_sky'));
-    var r = Number(out('year_sky'));
-    var hkey = String(x-1);
-    var gukey = String(y-1);
-    var grkey = String(z-1);
-    var gokey = String(r-1);
-    var key_1 = Number(hkey+gukey); //일->월 ~하는 역할 가진 사람 5)
-    var key_2 = Number(hkey+grkey); //일->시 ~하는 능력으로 3)
-    var key_3 = Number(hkey+gokey); //일->년 공적으로 ~하는 사람으로 보여지며 4)
-    var key_4 = Number(grkey+gokey); //시->년 ~하는 세상에서 1)
-    var key_5 = Number(gukey+gokey); //월->년 ~하는 환경에 가서 2)
+    answer = [times, days, months, years];
 
-    var result1 = "\""+stems[key_4]+"하는 세상에서 " + stems[key_5]+"하는 환경에 가서 " + stems[key_2]+"하는 능력을 가져서 \n";
-    var result2 = "공적으로 " + stems[key_3] + "하는 일에 " + stems[key_1] + "하는 역할을 가진 사람\"";
-    resultSay = result1 + result2;
-    
-    console.log("통변", resultSay);
-    if(answer != resultSay){
-        document.getElementById('answer').innerHTML = resultSay;
+    console.log("통변", answer);
+    if(code != answer){
+        var key_1 = 10*(answer[0]-1) + answer[3]-1; // 시->년 ~하는 세상에서 
+        var key_2 = 10*(answer[2]-1) + answer[3]-1; //월->년 ~하는 환경에 가서 2)
+        var key_3 = 10*(answer[1]-1) + answer[0]-1; //일->시 ~하는 능력으로 3)
+        var key_4 = 10*(answer[1]-1) + answer[3]-1; //일->년 공적으로 ~하는 사람으로 보여지며 4)
+        var key_5 = 10*(answer[1]-1) + answer[2]-1; //일->월 ~하는 역할 가진 사람 5)
+        
+        var result1 = "\""+stems[key_1]+"하는 세상에서 " + stems[key_2]+"하는 환경에 가서 " + stems[key_3]+"하는 능력을 가져서 \n";
+        var result2 = "공적으로 " + stems[key_4] + "하는 일에 " + stems[key_5] + "하는 역할을 가진 사람\"";
+        document.getElementById('answer').innerHTML = result1 + result2;
     }
 }
 
 function Explains(){
-    var x = Number(out('day_sky'));
-    var y = Number(out('month_sky'));
-    var z = Number(out('time_sky'));
+    var x = Number(out('time_sky'));
+    var y = Number(out('day_sky'));
+    var z = Number(out('month_sky'));
     var r = Number(out('year_sky'));
-    var hkey = String(x-1);
-    var gukey = String(y-1);
-    var grkey = String(z-1);
-    var gokey = String(r-1);
-    var key_1 = Number(hkey+gukey); //일->월 ~하는 역할 가진 사람 5)
-    var key_2 = Number(hkey+grkey); //일->시 ~하는 능력으로 3)
-    var key_3 = Number(hkey+gokey); //일->년 공적으로 ~하는 사람으로 보여지며 4)
-    var key_4 = Number(grkey+gokey); //시->년 ~하는 세상에서 1)
-    var key_5 = Number(gukey+gokey); //월->년 ~하는 환경에 가서 2)
+    var s = Number(out('time_land'));
 
-    var result1 = "\""+stems[key_4]+"하는 세상에서 " + stems[key_5]+"하는 환경에 가서 " + stems[key_2]+"하는 능력을 가져서 \n";
-    var result2 = "공적으로 " + stems[key_3] + "하는 일에 " + stems[key_1] + "하는 역할을 가진 사람\"";
-    var answer = result1 + result2;
+    code =[x, y, z, r];
 
-    if(answer != resultSay){
+    if(code != answer){
         document.getElementById('answer').innerHTML = "";
     }
 }

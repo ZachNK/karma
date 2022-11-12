@@ -110,8 +110,12 @@ function DecideTell(){
     var days = Number(out('day_sky'));
     var months = Number(out('month_sky'));
     var years = Number(out('year_sky'));
+    var timel = Number(out('time_land'));
+    var dayl = Number(out('day_land'));
+    var monthl = Number(out('month_land'));
+    var yearl = Number(out('year_land'));
 
-    answer = [times, days, months, years];
+    answer = [times, days, months, years, timel, dayl, monthl, yearl];
 
     console.log("통변", answer);
     if(code != answer){
@@ -133,8 +137,11 @@ function Explains(){
     var z = Number(out('month_sky'));
     var r = Number(out('year_sky'));
     var s = Number(out('time_land'));
+    var t = Number(out('day_land'));
+    var u = Number(out('month_land'));
+    var v = Number(out('year_land'));
 
-    code =[x, y, z, r];
+    code =[x, y, z, r, s, t, u, v];
 
     if(code != answer){
         document.getElementById('answer').innerHTML = "";

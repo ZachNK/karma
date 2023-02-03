@@ -2,6 +2,8 @@
 <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
 <script defer src="js/FortuneTelling.js"></script>
 <script defer src="js/FortuneExplain.js"></script>
+<script defer src="js/DownloadIMG.js"></script>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -126,15 +128,15 @@
     </table>
     <h3>
         <div id="debug2"><button onclick="DecideTell()" style="text-align:center; width:100px; height: 30px;">통변</button></div>
+        
+        <button onclick="convert2Image()" id="convert">Convert to image</button>
+        <div id="result"><!-- Result will appear be here --></div>
     </h3>
     <table class="Fortune_Say">
-        <thead>
-            <tr>
-                <th colspan="5" style="font-size: 14px; text-align: center;"><div id="answer"></div></th>
-            </tr>
-        </thead>
         <tbody>
-            <tr colspan="5"></tr>
+            <tr colspan="5">
+                <td style="font-size: 14px; text-align: center;"><div id="answer"></div></td>
+            </tr>
         </tbody>
     </table>
 

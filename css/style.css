@@ -92,3 +92,11 @@ td{
 img{
     width: 75%;
 }
+
+canvas.tutorial{
+    align-content: center;
+    align-self: center;
+    align-items: center;    
+    width: 100%;
+
+}

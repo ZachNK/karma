@@ -99,5 +99,15 @@ function convert2Image(){
     weather18.onload = function() {ctx.drawImage(weather18, 90, 300, 40, 40);}
     weather19.onload = function() {ctx.drawImage(weather19, 50, 300, 40, 40);}
 
+    var base64String = c.toDataURL('image/png');
+
+    
+
+    var link = document.createElement('a');
+
+    link.href = base64String;
+    link.download = 'print-js-img';
+    link.click();
+
 }
 

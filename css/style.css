@@ -47,13 +47,32 @@ table.source{
     table-layout: fixed;
 }
 
+table.mens{
+    align-content: center;
+    align-self: center;
+    align-items: center;    
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 2%;
+    table-layout: fixed;
+}
+#ms{
+    
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+
 table.variety{
     align-content: center;
     align-self: center;
     align-items: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
     table-layout: fixed;
 }
 

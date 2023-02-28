@@ -7,6 +7,15 @@ let today = new Date();
 var nowYear = today.getFullYear();
 var resultCopy = "";
 var greatLuckCopy = "";
+var result_data = [];
+
+var nameText = "";
+var fullName = "";
+let base64String = null;
+let today_date = (today.getMonth()+1).toString().padStart(2, '0') + today.getDate().toString().padStart(2, '0') + '_' + today.getHours().toString().padStart(2, '0') + today.getMinutes().toString().padStart(2, '0');
+var c = null;
+var image = null;
+
 
 function is_checked(){
     let today = new Date();
@@ -33,7 +42,6 @@ function is_checked(){
         document.getElementById('hour_msg').value = "";
         document.getElementById('min_msg').value = "";
     }
-    
 }
 
 function i_img(x){
@@ -50,7 +58,7 @@ function p_img(x){
 
 function Fortune_img(){
     great_luck_refresh(false);
-
+    nameText = document.getElementById("name").value;
     var yyyy = document.getElementById("year_msg").value;
     var mm = document.getElementById("month_msg").value;
     var dd = document.getElementById("day_msg").value;
@@ -75,7 +83,8 @@ function Fortune_img(){
     var f = zd(yyyy, mm, dd, hh, min)[1];//일지
     var g = zt(e, hh, min)[0];//시간
     var h = zt(e, hh, min)[1];//시지
-
+    result_data = [a, b, c, d, e, f, g, h];
+    
     //대운 리스트
     var seasons = great_luck(sexVar, a, c, d);
     //대운수 (정수, 실수)
@@ -93,6 +102,22 @@ function Fortune_img(){
     document.getElementById("LAND1").src = p_img(land_tag[f]);
     document.getElementById("LAND2").src = p_img(land_tag[d]);
     document.getElementById("LAND3").src = p_img(land_tag[b]);
+
+    document.getElementById("time0").src = i_img(sky_tag[mens(result_data, 4)[0]]);
+    document.getElementById("time1").src = i_img(sky_tag[mens(result_data, 4)[1]]);
+    document.getElementById("time2").src = i_img(sky_tag[mens(result_data, 4)[2]]);
+
+    document.getElementById("day0").src = i_img(sky_tag[mens(result_data, 3)[0]]);
+    document.getElementById("day1").src = i_img(sky_tag[mens(result_data, 3)[1]]);
+    document.getElementById("day2").src = i_img(sky_tag[mens(result_data, 3)[2]]);
+
+    document.getElementById("month0").src = i_img(sky_tag[mens(result_data, 2)[0]]);
+    document.getElementById("month1").src = i_img(sky_tag[mens(result_data, 2)[1]]);
+    document.getElementById("month2").src = i_img(sky_tag[mens(result_data, 2)[2]]);
+
+    document.getElementById("year0").src = i_img(sky_tag[mens(result_data, 1)[0]]);
+    document.getElementById("year1").src = i_img(sky_tag[mens(result_data, 1)[1]]);
+    document.getElementById("year2").src = i_img(sky_tag[mens(result_data, 1)[2]]);
 
     ten_years_refresh();
     great_luck_show(seasons, num, starting[1]);
@@ -117,12 +142,21 @@ function Fortune_img(){
     }
 
     /****************************************************debugging***************************************************************/
-    
-    document.getElementById("debug1").innerHTML = yyyy+"년 "+mm+"월 "+dd+"일 "+hh+"시 "+min+"분생 "+starting[3]+"세 "+thisSex;
-
+    fullName = nameText + " " + yyyy+"년 "+mm+"월 "+dd+"일 "+hh+"시 "+min+"분생 "+starting[3]+"세 "+thisSex;
+    document.getElementById("debug1").innerHTML = fullName;
     
     /****************************************************debugging***************************************************************/
 
+}
+
+function ShowRow(){
+    const row = document.getElementById('source_men');
+    if(row.style.display == ''){
+        row.style.display = 'none';
+    }
+    else{
+        row.style.display = '';
+    }
 }
 
 function check_leap(year){
@@ -306,7 +340,6 @@ function great_luck(check_sex, x, sky, land){
 function when_num(check_sex, z_year, year, month, day){
     //check_sex = 성별, z_year = 년지(子:0~亥:11), z_month = 월지(子:0~亥:11), year = 생년, month = 생월, day = 생일
     
-    var xx = 0;
     var span = 0;
     var real_month = Number(month); //1월~12월
     var real_day = Number(day);
@@ -347,7 +380,7 @@ function when_num(check_sex, z_year, year, month, day){
     // =25일차
     // 25일차/3 = 8.33
 
-    var debug = '';
+    
     if(check_sex != z_year%2){
         var after_month = real_month + 1;
         if(after_month > 12){
@@ -568,14 +601,20 @@ function great_luck_show(value_seasons, value_num, value_startNum){
         document.getElementById(skyTag).style.background = '#EFEFEF';
         document.getElementById(landTag).style.background = '#EFEFEF';
     }
-
     greatLuckCopy = "\n" + "\n" + g_sky + "\n" + g_land;
 }
 
+//지장간: 甲=0 ~ 癸=9, list = result_data, 년(x=1), 월(x=2), 일(x=3), 시(x=4)
+function mens(list, x){
+    
+    var k = [8, 9, 9, 9, 7, 5, 4, 2, 0, 0, 1, 1, 1, 9, 4, 4, 6, 2, 2, 5, 3, 3, 1, 5, 4, 8, 6, 6, 7, 7, 7, 3, 4, 4, 0, 8];
+    var x_men = [k[list[(2*x-1)]*3], k[1+list[(2*x-1)]*3], k[2+list[(2*x-1)]*3]];
+    
+    return [x_men[0], x_men[1], x_men[2]];
+}
 
 function Fortune_img_Today(){
     great_luck_refresh(true);
-    
     var yyyy = document.getElementById("year_msg").value;
     var mm = document.getElementById("month_msg").value;
     var dd = document.getElementById("day_msg").value;
@@ -681,12 +720,12 @@ function this_year_coloring(startingYear, value_nowYear){
 
 
 
-function copy(){
+function Copy(){
     var str = resultCopy + greatLuckCopy;
-    copyStringToClipboard(str);
+    CopyStringToClipboard(str);
 }
 
-function copyStringToClipboard (string) {
+function CopyStringToClipboard (string) {
     function handler (event){
         event.clipboardData.setData('text/plain', string);
         event.preventDefault();
@@ -695,4 +734,207 @@ function copyStringToClipboard (string) {
 
     document.addEventListener('copy', handler, true);
     document.execCommand('copy');
+}
+
+// function Convert2Image(){
+//     let c = document.getElementById('result');
+//     let ctx = c.getContext('2d');
+//     ctx.reset();
+//     ctx.fillStyle = 'rgb(255, 255, 255)';
+//     ctx.fillRect(0, 0, 500, 750);
+
+//     ctx.font = '10pt 맑은고딕';
+//     ctx.fillStyle = 'rgb(0, 0, 0)';
+//     ctx.fillText(fullName, 75, 30);
+
+    
+//     ctx.fillText(resultCopy, 100, 100);
+//     base64String = c.toDataURL('image/jpeg');
+//     console.log(base64String);
+
+//     var link = document.createElement('a');
+//     link.href = base64String;
+//     link.download = today_date;
+//     link.click();
+//     //이름 초기화
+//     nameText = "";
+//     fullName = "";
+
+// }
+
+
+function Convert2Image(){
+    let c = document.getElementById('canvas_result');
+    let ctx = c.getContext("2d");
+    
+    ctx.reset();
+    ctx.fillStyle = "rgba(255,255,255,1)";
+    ctx.fillRect(0, 0, 500, 750);
+    
+    ctx.font = "10pt 맑은고딕";
+    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    ctx.fillText(fullName, 50, 30);
+
+    var m = [8];
+    for (i=0; i<8; i++){
+        m[i] = new Image();
+        
+        var k = i%4;
+        var idN = '';
+        if(i<4){
+            idN = 'SKY';
+        }
+        else{
+            idN = 'LAND'
+        }
+
+        idN += k.toString();
+        m[i].src = document.getElementById(idN).src.split('karma/')[1];
+        
+    }
+
+    m[0].onload = function() {ctx.drawImage(m[0], 50, 50, 80, 80);}
+    m[1].onload = function() {ctx.drawImage(m[1], 150, 50, 80, 80);}
+    m[2].onload = function() {ctx.drawImage(m[2], 250, 50, 80, 80);}
+    m[3].onload = function() {ctx.drawImage(m[3], 350, 50, 80, 80);}
+    m[4].onload = function() {ctx.drawImage(m[4], 50, 140, 80, 80);}
+    m[5].onload = function() {ctx.drawImage(m[5], 150, 140, 80, 80);}
+    m[6].onload = function() {ctx.drawImage(m[6], 250, 140, 80, 80);}
+    m[7].onload = function() {ctx.drawImage(m[7], 350, 140, 80, 80);}
+
+    
+
+    var luck = [20];
+    for(i=0; i<20; i++){
+        luck[i] = new Image();
+        var k = '';
+        if(i<10){
+            k = 'i';
+        }
+        else{
+            k = 'p';
+        }
+        var n = (i%10)+1;
+        luck[i].src = document.getElementById(n.toString().padStart(3, '0') + k).src.split('karma/')[1];
+        
+    }
+
+    luck[0].onload = function() {ctx.drawImage(luck[0], 410, 250, 40, 40);}
+    luck[1].onload = function() {ctx.drawImage(luck[1], 370, 250, 40, 40);}
+    luck[2].onload = function() {ctx.drawImage(luck[2], 330, 250, 40, 40);}
+    luck[3].onload = function() {ctx.drawImage(luck[3], 290, 250, 40, 40);}
+    luck[4].onload = function() {ctx.drawImage(luck[4], 250, 250, 40, 40);}
+    luck[5].onload = function() {ctx.drawImage(luck[5], 210, 250, 40, 40);}
+    luck[6].onload = function() {ctx.drawImage(luck[6], 170, 250, 40, 40);}
+    luck[7].onload = function() {ctx.drawImage(luck[7], 130, 250, 40, 40);}
+    luck[8].onload = function() {ctx.drawImage(luck[8], 90, 250, 40, 40);}
+    luck[9].onload = function() {ctx.drawImage(luck[9], 50, 250, 40, 40);}
+    luck[10].onload = function() {ctx.drawImage(luck[10], 410, 300, 40, 40);}
+    luck[11].onload = function() {ctx.drawImage(luck[11], 370, 300, 40, 40);}
+    luck[12].onload = function() {ctx.drawImage(luck[12], 330, 300, 40, 40);}
+    luck[13].onload = function() {ctx.drawImage(luck[13], 290, 300, 40, 40);}
+    luck[14].onload = function() {ctx.drawImage(luck[14], 250, 300, 40, 40);}
+    luck[15].onload = function() {ctx.drawImage(luck[15], 210, 300, 40, 40);}
+    luck[16].onload = function() {ctx.drawImage(luck[16], 170, 300, 40, 40);}
+    luck[17].onload = function() {ctx.drawImage(luck[17], 130, 300, 40, 40);}
+    luck[18].onload = function() {ctx.drawImage(luck[18], 90, 300, 40, 40);}
+    luck[19].onload = function() {ctx.drawImage(luck[19], 50, 300, 40, 40);}
+
+    // base64String = c.toDataURL('image/jpeg');
+    // console.log(base64String);
+
+    // var link = document.createElement('a'); wkddo
+    // link.href = base64String;
+    // link.download = today_date;
+    // link.click();
+    // //이름 초기화
+    // nameText = "";
+    // fullName = "";
+}
+
+
+
+function downloading(){
+    var download = document.getElementById("download");
+
+    c = document.getElementById("canvas_result");
+    let ctx = c.getContext("2d");
+    
+    ctx.reset();
+    ctx.fillStyle = "rgba(255,255,255,1)";
+    ctx.fillRect(0, 0, 500, 750);
+    
+    ctx.font = "10pt 맑은고딕";
+    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    ctx.fillText(fullName, 75, 30);
+
+    var m = [8];
+    for (i=0; i<8; i++){
+        m[i] = new Image();
+        
+        var k = i%4;
+        var idN = '';
+        if(i<4){
+            idN = 'SKY';
+        }
+        else{
+            idN = 'LAND'
+        }
+
+        idN += k.toString();
+        m[i].src = document.getElementById(idN).src.split('karma/')[1];
+        
+    }
+
+    m[0].onload = function() {ctx.drawImage(m[0], 60, 50, 80, 80);}
+    m[1].onload = function() {ctx.drawImage(m[1], 160, 50, 80, 80);}
+    m[2].onload = function() {ctx.drawImage(m[2], 260, 50, 80, 80);}
+    m[3].onload = function() {ctx.drawImage(m[3], 360, 50, 80, 80);}
+    m[4].onload = function() {ctx.drawImage(m[4], 60, 140, 80, 80);}
+    m[5].onload = function() {ctx.drawImage(m[5], 160, 140, 80, 80);}
+    m[6].onload = function() {ctx.drawImage(m[6], 260, 140, 80, 80);}
+    m[7].onload = function() {ctx.drawImage(m[7], 360, 140, 80, 80);}
+
+    
+
+    var luck = [20];
+    for(i=0; i<20; i++){
+        luck[i] = new Image();
+        var k = '';
+        if(i<10){
+            k = 'i';
+        }
+        else{
+            k = 'p';
+        }
+        var n = (i%10)+1;
+        luck[i].src = document.getElementById(n.toString().padStart(3, '0') + k).src.split('karma/')[1];
+        
+    }
+
+    luck[0].onload = function() {ctx.drawImage(luck[0], 410, 250, 40, 40);}
+    luck[1].onload = function() {ctx.drawImage(luck[1], 370, 250, 40, 40);}
+    luck[2].onload = function() {ctx.drawImage(luck[2], 330, 250, 40, 40);}
+    luck[3].onload = function() {ctx.drawImage(luck[3], 290, 250, 40, 40);}
+    luck[4].onload = function() {ctx.drawImage(luck[4], 250, 250, 40, 40);}
+    luck[5].onload = function() {ctx.drawImage(luck[5], 210, 250, 40, 40);}
+    luck[6].onload = function() {ctx.drawImage(luck[6], 170, 250, 40, 40);}
+    luck[7].onload = function() {ctx.drawImage(luck[7], 130, 250, 40, 40);}
+    luck[8].onload = function() {ctx.drawImage(luck[8], 90, 250, 40, 40);}
+    luck[9].onload = function() {ctx.drawImage(luck[9], 50, 250, 40, 40);}
+    luck[10].onload = function() {ctx.drawImage(luck[10], 410, 300, 40, 40);}
+    luck[11].onload = function() {ctx.drawImage(luck[11], 370, 300, 40, 40);}
+    luck[12].onload = function() {ctx.drawImage(luck[12], 330, 300, 40, 40);}
+    luck[13].onload = function() {ctx.drawImage(luck[13], 290, 300, 40, 40);}
+    luck[14].onload = function() {ctx.drawImage(luck[14], 250, 300, 40, 40);}
+    luck[15].onload = function() {ctx.drawImage(luck[15], 210, 300, 40, 40);}
+    luck[16].onload = function() {ctx.drawImage(luck[16], 170, 300, 40, 40);}
+    luck[17].onload = function() {ctx.drawImage(luck[17], 130, 300, 40, 40);}
+    luck[18].onload = function() {ctx.drawImage(luck[18], 90, 300, 40, 40);}
+    luck[19].onload = function() {ctx.drawImage(luck[19], 50, 300, 40, 40);}
+
+    image = c.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+    download.setAttribute("href", image);
+    download.setAttribute("download", (today_date.toString()+".jpg"));
+    
 }

@@ -2,7 +2,6 @@
 <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
 <script defer src="js/FortuneTelling.js"></script>
 <script defer src="js/FortuneExplain.js"></script>
-<script defer src="js/DownloadIMG.js"></script>
 
 <html>
 <head>
@@ -22,6 +21,7 @@
             </thead>
             <tbody>
                 <tr>
+                    <td style="font-size: 14px; text-align:center; width:70px; height:20px;">이름</td>
                     <td style="font-size: 14px; text-align:center; width:70px; height:20px;">년 (1 ~ 9999)</td>
                     <td style="font-size: 14px; text-align:center; width:70px; height:20px;">월 (1 ~ 12)</td>
                     <td style="font-size: 14px; text-align:center; width:70px; height:20px;">일 (1 ~ 31)</td>
@@ -29,6 +29,7 @@
                     <td style="font-size: 14px; text-align:center; width:70px; height:20px;">분 (0 ~ 59)</td>
                 </tr>
                 <tr>
+                    <td><input type="text" id="name" style="text-align:center; width:100px; height:18px;"/></td>
                     <td><input type="number" min="1" max="9999" id="year_msg" style="text-align:center; width:100px; height:18px;"/></td>
                     <td><input type="number" min="1" max="12" id="month_msg" style="text-align:center; width:100px; height:18px;"/></td>
                     <td><input type="number" min="1" max="31" id="day_msg" style="text-align:center; width:100px; height:18px;"/></td>
@@ -47,7 +48,8 @@
                     <td style="font-size: 14px;"><input type="checkbox" id="today_check" onclick="is_checked()"/>오늘</td>
                     <td style="font-size: 14px;"><button  onclick="Fortune_img_Today()" style="text-align:center; width:100px; height: 30px;">일진 검색</button></td>
                     <td style="font-size: 14px;"><button onclick="Fortune_img(); Explains();" style="text-align:center; width:100px; height: 30px;">사주팔자 조회</button></td>
-                    <td style="font-size: 14px;"><button onClick="copy()" style="text-align:center; width:100px; height: 30px;">텍스트로 복사</td>
+                    <td style="font-size: 14px;"><button onClick="Copy()" style="text-align:center; width:100px; height: 30px;">텍스트로 복사</td>
+                    <td style="font-size: 14px;"><button onClick="Convert2Image();" style="text-align:center; width:100px; height: 30px;">이미지로 다운</td>
                 </tr>
             </tbody>
         </table>
@@ -55,6 +57,7 @@
    
     <h3>
         <div id="debug1"></div>
+        <div id="debug2"></div>
     </h3>
     
     <table class="source">
@@ -70,6 +73,33 @@
             </tr>
             <tr>
                 <td id="time_land"><img id="LAND0" src=""/></td><td id="day_land"><img id="LAND1" src=""/></td><td id="month_land"><img id="LAND2" src=""/></td><td id="year_land"><img id="LAND3" src=""/></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="Fortune_Say">
+        <tbody>
+            <tr colspan="5">
+                <td style="font-size: 14px; text-align: center;"><div id="answer"></div></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>
+        <button onclick="ShowRow()" style="text-align:center; width:100px; height: 30px;">지장간</button>
+        <button onclick="DecideTell()" style="text-align:center; width:100px; height: 30px;">통변</button>
+    </h3>
+        
+    <table class="mens" id="source_men" style="display: none">
+        <tbody>
+            <tr>
+                <td id="ms"><img id="time0" src=""/></td><td id="ms"><img id="day0" src=""/></td><td id="ms"><img id="month0" src=""/></td><td id="ms"><img id="year0" src=""/></td>
+            </tr>
+            <tr>
+                <td id="ms"><img id="time1" src=""/></td><td id="ms"><img id="day1" src=""/></td><td id="ms"><img id="month1" src=""/></td><td id="ms"><img id="year1" src=""/></td>
+            </tr>
+            <tr>
+                <td id="ms"><img id="time2" src=""/></td><td id="ms"><img id="day2" src=""/></td><td id="ms"><img id="month2" src=""/></td><td id="ms"><img id="year2" src=""/></td>
             </tr>
         </tbody>
     </table>
@@ -126,20 +156,12 @@
             </tr>
         </tbody>
     </table>
+
     <h3>
-        <div id="debug2"><button onclick="DecideTell()" style="text-align:center; width:100px; height: 30px;">통변</button></div>
-        <button onclick="convert2Image()" id="convert">Convert to image</button>
-        
-    </h3>
-    <table class="Fortune_Say">
-        <tbody>
-            <tr colspan="5">
-                <td style="font-size: 14px; text-align: center;"><div id="answer"></div></td>
-            </tr>
-        </tbody>
-    </table>
-    <h3>
-        <canvas id="result" width="500px" height="750px"><!-- Result will appear be here --></canvas>
+        <a id="download">
+            <button type="button" onclick="downloading()">Download</button>
+        </a>
+        <canvas id="canvas_result" width="500px" height="750px"><!-- Result will appear be here --></canvas>
     </h3>
 </body>
 </html>

@@ -115,6 +115,14 @@ function DecideTell(){
     var monthl = Number(out('month_land'));
     var yearl = Number(out('year_land'));
 
+
+    var id_img = Number(document.getElementById('LAND2').getAttribute('src')[5] + document.getElementById('LAND2').getAttribute('src')[6]);
+    var stm = document.getElementById('debug1').textContent.indexOf('월')
+    var id_day = Number(document.getElementById('debug1').textContent.slice(stm+2, stm+4))
+    var skys = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    console.log(skys[real_men(id_img, id_day)]);
+
+
     answer = [times, days, months, years, timel, dayl, monthl, yearl];
 
     console.log("통변", answer);
@@ -125,9 +133,11 @@ function DecideTell(){
         var key_4 = 10*(answer[1]-1) + answer[3]-1; //일->년 공적으로 ~하는 사람으로 보여지며 4)
         var key_5 = 10*(answer[1]-1) + answer[2]-1; //일->월 ~하는 역할 가진 사람 5)
         
-        var result1 = "\""+stems[key_1]+"하는 세상에서 " + stems[key_2]+"하는 환경에 가서 " + stems[key_3]+"하는 능력을 가져서 \n";
-        var result2 = "공적으로 " + stems[key_4] + "하는 일에 " + stems[key_5] + "하는 역할을 가진 사람\"";
-        document.getElementById('answer').innerHTML = result1 + result2;
+        var result_men = "사령용신: " + skys[real_men(id_img, id_day)];
+        var result1 = stems[key_1]+"하는 세상에서 " + stems[key_2]+"하는 환경에 가서 " + stems[key_3]+"하는 능력을 가져서";
+        var result2 = "공적으로 " + stems[key_4] + "하는 일에 " + stems[key_5] + "하는 역할을 가진 사람";
+        //document.getElementById('answer').innerHTML = "\""+ "(" + result_men + ")" + "\n" + result1 + "\n" + result2 + "\"";
+        document.getElementById('answer').innerHTML = "\""+ result_men + "\"";
     }
 }
 
@@ -156,3 +166,52 @@ function out(id_tag){
     return result;                                               
 }
 
+function real_men(take_month, take_day){
+    var point = [7, 6, 4, 5, 5, 5, 5, 7, 7, 7, 8, 7]; //子月, 丑月, 寅月, 卯月, 辰月, 巳月, 午月, 未月, 申月, 酉月, 戌月, 亥月
+    var k = [8, 9, 9, 9, 7, 5, 4, 2, 0, 0, 1, 1, 1, 9, 4, 4, 6, 2, 2, 5, 3, 3, 1, 5, 4, 8, 6, 6, 7, 7, 7, 3, 4, 4, 0, 8];
+    var p_span = take_day - point[take_month-1]
+    var result = 0;
+
+    if(take_month%3 == 1){
+        if(p_span<10){
+            result = 3*(take_month-1);
+        }
+        else{
+            if(take_month == 7){
+                if(p_span<19){
+                    result = 3*(take_month-1) + 1;
+                }
+                else{
+                    result = 3*(take_month-1) + 2;
+                }
+            }
+            else{
+                result = 3*(take_month-1) + 2;
+            }
+        }
+    }
+    else if(take_month%3 == 2){
+        if(p_span<7){
+            result = 3*(take_month-1);
+        }
+        else if(p_span<14){
+            result = 3*(take_month-1) + 1;
+        }
+        else{
+            result = 3*(take_month-1) + 2;
+        }
+    }
+    else{
+        if(p_span<9){
+            result = 3*(take_month-1);
+        }
+        else if(p_span<12){
+            result = 3*(take_month-1) + 1;
+        }
+        else{
+            result = 3*(take_month-1) + 2;
+        }
+    }
+
+    return k[result];
+}

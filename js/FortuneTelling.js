@@ -934,7 +934,7 @@ function downloading(){
     luck[19].onload = function() {ctx.drawImage(luck[19], 50, 300, 40, 40);}
 
     image = c.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-    download.setAttribute("href", image);
-    download.setAttribute("download", (today_date.toString()+".jpg"));
+    //download.setAttribute("href", image);
+    //download.setAttribute("download", (today_date.toString()+".jpg"));
     
 }

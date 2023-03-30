@@ -49,7 +49,7 @@
                     <td style="font-size: 14px;"><button  onclick="Fortune_img_Today()" style="text-align:center; width:100px; height: 30px;">일진 검색</button></td>
                     <td style="font-size: 14px;"><button onclick="Fortune_img(); Explains();" style="text-align:center; width:100px; height: 30px;">사주팔자 조회</button></td>
                     <td style="font-size: 14px;"><button onClick="Copy()" style="text-align:center; width:100px; height: 30px;">텍스트로 복사</td>
-                    <td style="font-size: 14px;"><button onClick="Convert2Image();" style="text-align:center; width:100px; height: 30px;">이미지로 다운</td>
+                    <td style="font-size: 14px;"><button onClick="downloading()" style="text-align:center; width:100px; height: 30px;">이미지로 다운</td>
                 </tr>
             </tbody>
         </table>
@@ -159,9 +159,8 @@
 
     <h3>
         <a id="download">
-            <button type="button" onclick="downloading()">Download</button>
+            <canvas id="canvas_result" width="500px" height="750px"></canvas>
         </a>
-        <canvas id="canvas_result" width="500px" height="750px"><!-- Result will appear be here --></canvas>
     </h3>
 </body>
 </html>

@@ -49,17 +49,31 @@
                     <td style="font-size: 14px;"><button  onclick="Fortune_img_Today()" style="text-align:center; width:100px; height: 30px;">일진 검색</button></td>
                     <td style="font-size: 14px;"><button onclick="Fortune_img(); Explains();" style="text-align:center; width:100px; height: 30px;">사주팔자 조회</button></td>
                     <td style="font-size: 14px;"><button onClick="Copy()" style="text-align:center; width:100px; height: 30px;">텍스트로 복사</td>
-                    <td style="font-size: 14px;"><button onClick="downloading()" style="text-align:center; width:100px; height: 30px;">이미지로 다운</td>
+                    <td style="font-size: 14px;"><button onClick="Convert2Image();" onload="javascript:pop()"  style="text-align:center; width:100px; height: 30px;">이미지로 다운</td>
                 </tr>
             </tbody>
         </table>
     </h2>
+
+    <h3>
+        <button onclick="ShowRow()" style="text-align:center; width:100px; height: 30px;">지장간</button>
+        <button onclick="DecideTell()" style="text-align:center; width:100px; height: 30px;">통변</button>
+        
+    </h3>
+
+    <table class="Fortune_Say">
+        <tbody>
+            <tr colspan="5">
+                <td style="font-size: 14px; text-align: center;"><div id="answer"></div></td>
+            </tr>
+        </tbody>
+    </table>
    
     <h3>
         <div id="debug1"></div>
         <div id="debug2"></div>
     </h3>
-    
+
     <table class="source">
         <thead>
             <tr>
@@ -76,19 +90,6 @@
             </tr>
         </tbody>
     </table>
-
-    <table class="Fortune_Say">
-        <tbody>
-            <tr colspan="5">
-                <td style="font-size: 14px; text-align: center;"><div id="answer"></div></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h3>
-        <button onclick="ShowRow()" style="text-align:center; width:100px; height: 30px;">지장간</button>
-        <button onclick="DecideTell()" style="text-align:center; width:100px; height: 30px;">통변</button>
-    </h3>
         
     <table class="mens" id="source_men" style="display: none">
         <tbody>
@@ -156,11 +157,9 @@
             </tr>
         </tbody>
     </table>
-
     <h3>
-        <a id="download">
-            <canvas id="canvas_result" width="500px" height="750px"></canvas>
-        </a>
+        <canvas id="FRESH" style="background-color:aliceblue" width="500px" height="500px"><!-- Result will appear be here --></canvas>
     </h3>
+    
 </body>
 </html>

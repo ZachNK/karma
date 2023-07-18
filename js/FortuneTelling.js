@@ -738,6 +738,7 @@ function CopyStringToClipboard (string) {
 
 var canvas, context;
 function Convert2Image(){
+    
     canvas = document.getElementById("FRESH");
     context = canvas.getContext("2d");
 
@@ -747,7 +748,7 @@ function Convert2Image(){
     
     context.font = "10pt 맑은고딕";
     context.fillStyle = "rgba(0, 0, 0, 1)";
-    context.fillText(fullName, 50, 30);
+    context.fillText(fullName, 125, 30);
 
     var m = [8];
     for (i=0; i<8; i++){
@@ -812,12 +813,26 @@ function Convert2Image(){
     luck[18].onload = function() {context.drawImage(luck[18], 90, 300, 40, 40);}
     luck[19].onload = function() {context.drawImage(luck[19], 50, 300, 40, 40);}
 
+    
+    
+
+    // var imgW = document.getElementById('FRESH').naturalWidth;
+
+    // var imgH = document.getElementById('FRESH').naturalHeight;
+
+    // var imgWindow = window.open("", "_image_view_", "width="+imgW+", height="+imgH);
+
+    // imgWindow.document.write("<img src='"+dataURL+"'>");
+
+
+    
     var dataURL = canvas.toDataURL("image/png");
-
-    console.log(dataURL);
+    
+    const linkEle = document.querySelector('a');
+    linkEle.download = fullName+'.png'
+    linkEle.addEventListener('click', event => event.target.href = dataURL);
+    
 }
-
-
 
 
 

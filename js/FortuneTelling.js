@@ -637,7 +637,7 @@ function Fortune_img_Today(){
     var min = document.getElementById("min_msg").value;
     document.getElementById("debug1").innerHTML = String(yyyy) + "년 " + String(mm) + "월 " + String(dd) + "일 " + String(hh) + "시 " + String(min)+ "분";
     fileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min);
-    pdfFileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min)+".pdf";
+    pdfFileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min)+"_day.pdf";
     
     var a = zy(yyyy, mm, dd)[0];
     var b = zy(yyyy, mm, dd)[1];

@@ -44,15 +44,27 @@ function is_checked(){
     }
 }
 
+function select_char(){
+    var char_result = ""
+    var char = document.querySelector('input[name="char"]').checked;
+    if(char == true){
+        char_result = "img/oracle/";
+    }
+    else{
+        char_result = "img/modern/";
+    }
+    return char_result;
+}
+
 function i_img(x){
     var num = String(x).padStart(2, '0');
-    var src = "img/" + "i" + num + ".png";
+    var src = select_char() + "i" + num + ".png";
     return src;
 }
 
 function p_img(x){
     var num = String(x).padStart(2, '0');
-    var src = "img/" + "p" + num + ".png";
+    var src = select_char() + "p" + num + ".png";
     return src;
 }
 
@@ -735,104 +747,151 @@ function CopyStringToClipboard (string) {
 }
 
 
-
-var canvas, context;
-function Convert2Image(){
+function Convert2Image(e){
     
-    canvas = document.getElementById("FRESH");
-    context = canvas.getContext("2d");
+    const canvas = document.getElementById("FRESH");
+    const context = canvas.getContext("2d");
 
     context.reset();
+    const width = 500;
+    const height = 500;
+    const cw = width/2;
+    const ch = height/2;
     context.fillStyle = "rgba(255,255,255,1)";
-    context.fillRect(0, 0, 500, 500);
-    
-    context.font = "10pt 맑은고딕";
+    context.fillRect(0, 0, width, height);
+    context.textAlign = "center"
     context.fillStyle = "rgba(0, 0, 0, 1)";
-    context.fillText(fullName, 125, 30);
+    
+    context.font = "15pt 맑은고딕";
+    console.log(fullName.split(' '))
+    context.fillText(fullName.split(' ',8)[0], cw, ch-200);
+    context.fillText(fullName.slice(fullName.split(' ',8)[0].length+1, fullName.length), cw, ch-170);
 
-    var m = [8];
-    for (i=0; i<8; i++){
-        m[i] = new Image();
+    // 추가
+    context.font = "22pt 맑은고딕";
+    context.fillText(resultCopy.split('\n',2)[0], cw, ch-40);
+    context.fillText(resultCopy.split('\n',2)[1], cw, ch);
+
+    context.fillText(greatLuckCopy.split('\n', 4)[2], cw, ch+100);
+    context.fillText(greatLuckCopy.split('\n', 4)[3], cw, ch+140);
+
+
+
+
+    // var m = [8];
+    // for (i=0; i<8; i++){
+    //     m[i] = new Image();
         
-        var k = i%4;
-        var idN = '';
-        if(i<4){
-            idN = 'SKY';
-        }
-        else{
-            idN = 'LAND'
-        }
+    //     var k = i%4;
+    //     var idN = '';
+    //     if(i<4){
+    //         idN = 'SKY';
+    //     }
+    //     else{
+    //         idN = 'LAND'
+    //     }
 
-        idN += k.toString();
-        m[i].src = document.getElementById(idN).src.split('karma/')[1];
-        
-    }
-
-    m[0].onload = function() {context.drawImage(m[0], 50, 50, 80, 80);}
-    m[1].onload = function() {context.drawImage(m[1], 150, 50, 80, 80);}
-    m[2].onload = function() {context.drawImage(m[2], 250, 50, 80, 80);}
-    m[3].onload = function() {context.drawImage(m[3], 350, 50, 80, 80);}
-    m[4].onload = function() {context.drawImage(m[4], 50, 140, 80, 80);}
-    m[5].onload = function() {context.drawImage(m[5], 150, 140, 80, 80);}
-    m[6].onload = function() {context.drawImage(m[6], 250, 140, 80, 80);}
-    m[7].onload = function() {context.drawImage(m[7], 350, 140, 80, 80);}
-
-    var luck = [20];
-    for(i=0; i<20; i++){
-        luck[i] = new Image();
-        var k = '';
-        if(i<10){
-            k = 'i';
-        }
-        else{
-            k = 'p';
-        }
-        var n = (i%10)+1;
-        luck[i].src = document.getElementById(n.toString().padStart(3, '0') + k).src.split('karma/')[1];
-        
-    }
-
-    luck[0].onload = function() {context.drawImage(luck[0], 410, 250, 40, 40);}
-    luck[1].onload = function() {context.drawImage(luck[1], 370, 250, 40, 40);}
-    luck[2].onload = function() {context.drawImage(luck[2], 330, 250, 40, 40);}
-    luck[3].onload = function() {context.drawImage(luck[3], 290, 250, 40, 40);}
-    luck[4].onload = function() {context.drawImage(luck[4], 250, 250, 40, 40);}
-    luck[5].onload = function() {context.drawImage(luck[5], 210, 250, 40, 40);}
-    luck[6].onload = function() {context.drawImage(luck[6], 170, 250, 40, 40);}
-    luck[7].onload = function() {context.drawImage(luck[7], 130, 250, 40, 40);}
-    luck[8].onload = function() {context.drawImage(luck[8], 90, 250, 40, 40);}
-    luck[9].onload = function() {context.drawImage(luck[9], 50, 250, 40, 40);}
-    luck[10].onload = function() {context.drawImage(luck[10], 410, 300, 40, 40);}
-    luck[11].onload = function() {context.drawImage(luck[11], 370, 300, 40, 40);}
-    luck[12].onload = function() {context.drawImage(luck[12], 330, 300, 40, 40);}
-    luck[13].onload = function() {context.drawImage(luck[13], 290, 300, 40, 40);}
-    luck[14].onload = function() {context.drawImage(luck[14], 250, 300, 40, 40);}
-    luck[15].onload = function() {context.drawImage(luck[15], 210, 300, 40, 40);}
-    luck[16].onload = function() {context.drawImage(luck[16], 170, 300, 40, 40);}
-    luck[17].onload = function() {context.drawImage(luck[17], 130, 300, 40, 40);}
-    luck[18].onload = function() {context.drawImage(luck[18], 90, 300, 40, 40);}
-    luck[19].onload = function() {context.drawImage(luck[19], 50, 300, 40, 40);}
+    //     idN += k.toString();
+    //     m[i].src = document.getElementById(idN).src.split('karma/')[1];
+    //     console.log(m[i])
+    // }
 
     
+    // m[0].onload = function() {context.drawImage(m[0], 50, 50, 80, 80);}
+    // m[1].onload = function() {context.drawImage(m[1], 150, 50, 80, 80);}
+    // m[2].onload = function() {context.drawImage(m[2], 250, 50, 80, 80);}
+    // m[3].onload = function() {context.drawImage(m[3], 350, 50, 80, 80);}
+    // m[4].onload = function() {context.drawImage(m[4], 50, 140, 80, 80);}
+    // m[5].onload = function() {context.drawImage(m[5], 150, 140, 80, 80);}
+    // m[6].onload = function() {context.drawImage(m[6], 250, 140, 80, 80);}
+    // m[7].onload = function() {context.drawImage(m[7], 350, 140, 80, 80);}
+
+    // var luck = [20];
+    // for(i=0; i<20; i++){
+    //     luck[i] = new Image();
+    //     var k = '';
+    //     if(i<10){
+    //         k = 'i';
+    //     }
+    //     else{
+    //         k = 'p';
+    //     }
+    //     var n = (i%10)+1;
+    //     luck[i].src = document.getElementById(n.toString().padStart(3, '0') + k).src.split('karma/')[1];
+        
+    // }
+
+    // luck[0].onload = function() {context.drawImage(luck[0], 410, 250, 40, 40);}
+    // luck[1].onload = function() {context.drawImage(luck[1], 370, 250, 40, 40);}
+    // luck[2].onload = function() {context.drawImage(luck[2], 330, 250, 40, 40);}
+    // luck[3].onload = function() {context.drawImage(luck[3], 290, 250, 40, 40);}
+    // luck[4].onload = function() {context.drawImage(luck[4], 250, 250, 40, 40);}
+    // luck[5].onload = function() {context.drawImage(luck[5], 210, 250, 40, 40);}
+    // luck[6].onload = function() {context.drawImage(luck[6], 170, 250, 40, 40);}
+    // luck[7].onload = function() {context.drawImage(luck[7], 130, 250, 40, 40);}
+    // luck[8].onload = function() {context.drawImage(luck[8], 90, 250, 40, 40);}
+    // luck[9].onload = function() {context.drawImage(luck[9], 50, 250, 40, 40);}
+    // luck[10].onload = function() {context.drawImage(luck[10], 410, 300, 40, 40);}
+    // luck[11].onload = function() {context.drawImage(luck[11], 370, 300, 40, 40);}
+    // luck[12].onload = function() {context.drawImage(luck[12], 330, 300, 40, 40);}
+    // luck[13].onload = function() {context.drawImage(luck[13], 290, 300, 40, 40);}
+    // luck[14].onload = function() {context.drawImage(luck[14], 250, 300, 40, 40);}
+    // luck[15].onload = function() {context.drawImage(luck[15], 210, 300, 40, 40);}
+    // luck[16].onload = function() {context.drawImage(luck[16], 170, 300, 40, 40);}
+    // luck[17].onload = function() {context.drawImage(luck[17], 130, 300, 40, 40);}
+    // luck[18].onload = function() {context.drawImage(luck[18], 90, 300, 40, 40);}
+    // luck[19].onload = function() {context.drawImage(luck[19], 50, 300, 40, 40);}
+
     
-
-    // var imgW = document.getElementById('FRESH').naturalWidth;
-
-    // var imgH = document.getElementById('FRESH').naturalHeight;
-
-    // var imgWindow = window.open("", "_image_view_", "width="+imgW+", height="+imgH);
-
-    // imgWindow.document.write("<img src='"+dataURL+"'>");
-
-
     
     var dataURL = canvas.toDataURL("image/png");
-    
+    console.log(dataURL);
     const linkEle = document.querySelector('a');
     linkEle.download = fullName+'.png'
+    linkEle.href = dataURL;
     linkEle.addEventListener('click', event => event.target.href = dataURL);
+
+
     
 }
 
+function savePDF(){
+    //저장 영역 div id
+    html2canvas($('#pdfArea')[0] ,{	
+      //logging : true,		// 디버그 목적 로그
+      //proxy: "html2canvasproxy.php",
+      allowTaint : true,	// cross-origin allow 
+      useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
+      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+      
+    }).then(function(canvas) {	
+      // 캔버스를 이미지로 변환
+      var imgData = canvas.toDataURL('image/png');
 
+      var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+      var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
+      var margin = 10; // 출력 페이지 여백설정
+      var doc = new jsPDF('p', 'mm');
+      var position = 0;
+
+      // 첫 페이지 출력
+      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // 한 페이지 이상일 경우 루프 돌면서 출력
+      while (heightLeft >= 20) {			// 35
+      position = heightLeft - imgHeight;
+      position = position - 20 ;		// -25
+
+      doc.addPage();
+      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      }
+
+      // 파일 저장
+      doc.save('filename.pdf');
+    });
+  }
 

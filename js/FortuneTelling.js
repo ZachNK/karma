@@ -891,7 +891,7 @@ function savePDF(){
       }
 
       // 파일 저장
-      doc.save('filename.pdf');
+      doc.save(fullName+'.pdf');
     });
   }
 

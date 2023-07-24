@@ -11,6 +11,7 @@ var result_data = [];
 
 var nameText = "";
 var fullName = "";
+var pdfFileName = "";
 let base64String = null;
 let today_date = (today.getMonth()+1).toString().padStart(2, '0') + today.getDate().toString().padStart(2, '0') + '_' + today.getHours().toString().padStart(2, '0') + today.getMinutes().toString().padStart(2, '0');
 var c = null;
@@ -158,6 +159,8 @@ function Fortune_img(){
     document.getElementById("debug1").innerHTML = fullName;
     
     /****************************************************debugging***************************************************************/
+
+    pdfFileName = nameText + "_" + yyyy+"_"+mm+"_"+dd+"_"+hh+"_"+min+"_"+starting[3]+"_"+thisSex+".pdf";
 
 }
 
@@ -890,8 +893,9 @@ function savePDF(){
       heightLeft -= pageHeight;
       }
 
+      
       // 파일 저장
-      doc.save(fullName+'.pdf');
+      doc.save(pdfFileName);
     });
   }
 

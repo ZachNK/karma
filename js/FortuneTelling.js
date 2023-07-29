@@ -49,10 +49,10 @@ function select_char(){
     var char_result = ""
     var char = document.querySelector('input[name="char"]').checked;
     if(char == true){
-        char_result = "img/oracle/";
+        char_result = "img/modern/";
     }
     else{
-        char_result = "img/modern/";
+        char_result = "img/oracle/";
     }
     return char_result;
 }

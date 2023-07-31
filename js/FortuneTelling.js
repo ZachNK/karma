@@ -3,6 +3,7 @@ var land_tag = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 var point = [6, 4, 5, 5, 5, 5, 7, 7, 7, 8, 7, 7]; //丑月, 寅月, 卯月, 辰月, 巳月, 午月, 未月, 申月, 酉月, 戌月, 亥月, 子月
 var sky = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
 var land = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥']
+
 let today = new Date();
 var nowYear = today.getFullYear();
 var resultCopy = "";
@@ -30,18 +31,15 @@ function is_checked(){
     if(is_checked == true){
         ten_years_refresh();
         document.getElementById('year_msg').value = tYear;
-        document.getElementById('month_msg').value = tMonth;
-        document.getElementById('day_msg').value = tDay;
-        document.getElementById('hour_msg').value = tHour;
-        document.getElementById('min_msg').value = tMin;
+        document.getElementById('monthday_msg').value = tMonth.toString().padStart(2, '0') + tDay.toString().padStart(2, '0');
+        document.getElementById('hourmin_msg').value = tHour.toString().padStart(2, '0') + tMin.toString().padStart(2, '0');
+
     }
     else{
         ten_years_refresh();
         document.getElementById('year_msg').value = "";
-        document.getElementById('month_msg').value = "";
-        document.getElementById('day_msg').value = "";
-        document.getElementById('hour_msg').value = "";
-        document.getElementById('min_msg').value = "";
+        document.getElementById('monthday_msg').value = "";
+        document.getElementById('hourmin_msg').value = "";
     }
 }
 
@@ -73,10 +71,14 @@ function Fortune_img(){
     great_luck_refresh(false);
     nameText = document.getElementById("name").value;
     var yyyy = document.getElementById("year_msg").value;
-    var mm = document.getElementById("month_msg").value;
-    var dd = document.getElementById("day_msg").value;
-    var hh = document.getElementById("hour_msg").value;
-    var min = document.getElementById("min_msg").value;
+    var md = document.getElementById("monthday_msg").value
+    var mm = md.substring(0,2).toString().padStart(2, '0');
+    var dd = md.substring(2,4).toString().padStart(2, '0');
+
+    var hm = document.getElementById("hourmin_msg").value;
+    var hh = hm.substring(0,2).toString().padStart(2, '0');
+    var min = hm.substring(2,4).toString().padStart(2, '0');
+
     var sexVar = document.querySelector('input[name="sex"]').checked;
     var thisSex = "";
     if(sexVar == true){
@@ -631,10 +633,13 @@ function mens(list, x){
 function Fortune_img_Today(){
     great_luck_refresh(true);
     var yyyy = document.getElementById("year_msg").value;
-    var mm = document.getElementById("month_msg").value;
-    var dd = document.getElementById("day_msg").value;
-    var hh = document.getElementById("hour_msg").value;
-    var min = document.getElementById("min_msg").value;
+    var md = document.getElementById("monthday_msg").value;
+    var mm = md.substring(0,2).toString().padStart(2, '0');
+    var dd = md.substring(2,4).toString().padStart(2, '0');
+    var hm = document.getElementById("hourmin_msg").value;
+    var hh = hm.substring(0,2).toString().padStart(2, '0');
+    var min = hm.substring(2,4).toString().padStart(2, '0');
+
     document.getElementById("debug1").innerHTML = String(yyyy) + "년 " + String(mm) + "월 " + String(dd) + "일 " + String(hh) + "시 " + String(min)+ "분";
     fileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min);
     pdfFileName = String(yyyy) + "_" + String(mm) + "_" + String(dd) + "_" + String(hh) + "_" + String(min)+"_day.pdf";
@@ -899,4 +904,3 @@ function savePDF(){
       doc.save(pdfFileName);
     });
   }
-

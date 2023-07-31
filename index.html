@@ -30,47 +30,41 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="font-size: 14px; text-align:center; width:80px; height:20px;">이름</td>
-                    <td style="font-size: 14px; text-align:center; width:80px; height:20px;">년 (1 ~ 9999)</td>
-                    <td style="font-size: 14px; text-align:center; width:80px; height:20px;">월 (1 ~ 12)</td>
-                    <td style="font-size: 14px; text-align:center; width:80px; height:20px;">일 (1 ~ 31)</td>
-                    <td style="font-size: 14px; text-align:center; width:80px; height:20px;">시 (0 ~ 23)</td>
-                    <td style="font-size: 14px; text-align:center; width:80px; height:20px;">분 (0 ~ 59)</td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="name" style="text-align:center; width:80px; height:18px;"/></td>
-                    <td><input type="number" min="1" max="9999" id="year_msg" style="text-align:center; width:80px; height:18px;"/></td>
-                    <td><input type="number" min="1" max="12" id="month_msg" style="text-align:center; width:80px; height:18px;"/></td>
-                    <td><input type="number" min="1" max="31" id="day_msg" style="text-align:center; width:80px; height:18px;"/></td>
-                    <td><input type="number" min="0" max="23" id="hour_msg" style="text-align:center; width:80px; height:18px;"/></td>
-                    <td><input type="number" min="0" max="59" id="min_msg" style="text-align:center; width:80px; height:18px;"/></td>
-                </tr>
-                <tr>
-                </tr>
-                <tr>
-                    <td style="font-size: 15px;">
+                    <td colspan="2" rowspan="4" style="font-size: 14px; text-align:center; width:100px; height:20px;">
                         <input type="radio" id="Choice1" name="sex" value="male" checked>
                         <label for="Choice1">M</label>
                         <input type="radio" id="Choice2" name="sex" value="female">
                         <label for="Choice2">F</label>
                     </td>
-                    <td style="font-size: 15px;"><input type="checkbox" id="today_check" onclick="is_checked()"/>오늘</td>
-                    <td style="font-size: 15px;"><button  onclick="Fortune_img_Today()" style="text-align:center; width:80px; height: 30px;">Day</button></td>
-                    <td style="font-size: 15px;"><button onclick="Fortune_img(); Explains();"  style="text-align:center; width:80px; height: 30px; font-weight: bold;">Search</button></td>
-                    <td style="font-size: 15px;"><button onClick="Copy()" style="text-align:center; width:80px; height: 30px;">Copy</button></td>
-                    <!-- <td style="font-size: 15px;"><button onClick="Convert2Image();" onload="javascript:pop()"  style="text-align:center; width:80px; height: 30px;">이미지로 다운</button></td> -->
-                    <td style="font-size: 15px;"><button  onclick="savePDF()" style="text-align:center; width:80px; height: 30px;">PDF</button></td>
-                    <!-- <td style="font-size: 15px;"><input type="button" id="uploader"/>업로드</td> -->
+                    <td colspan="2" style="font-size: 14px; text-align:center; width:100px; height:20px;">이름</td>
+                    <td colspan="2" style="font-size: 14px; text-align:center; width:100px; height:20px;">년 (YYYY)</td>
+                    <td colspan="2" style="font-size: 14px; text-align:center; width:100px; height:20px;">월일 (MMDD)</td>
+                    <td colspan="2" style="font-size: 14px; text-align:center; width:100px; height:20px;">시분 (hhmm)</td>
+                    
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="text" id="name" style="text-align:center; width:100px; height:18px;"/></td>
+                    <td colspan="2"><input type="number" min="1" max="9999" id="year_msg" style="text-align:center; width:100px; height:18px;"/></td>
+                    <td colspan="2"><input type="number" min="101" max="1231" id="monthday_msg" style="text-align:center; width:100px; height:18px;"/></td>
+                    <td colspan="2"><input type="number" min="0" max="2359" id="hourmin_msg" style="text-align:center; width:100px; height:18px;"/></td>
+                    <td colspan="2" rowspan="6" style="font-size: 14px; text-align:center; width:200px; height:18px;"><button onclick="Fortune_img(); Explains();"  style="text-align:center; width:80px; height: 80px; font-weight: bold;">Search</button></td>
+                </tr>
+                <tr>
+                </tr>
+                <tr>
+                    <td colspan="4" style="font-size: 15px;"><button onClick="Copy()" style="text-align:center; width:230px; height: 30px;">Copy</button></td>
+                    <td colspan="4" style="font-size: 15px;"><button  onclick="savePDF()" style="text-align:center; width:230px; height: 30px;">PDF</button></td>
+                    
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-size: 15px;"><input type="checkbox" id="today_check" onclick="is_checked()"/>Today</td>
+                    <td colspan="4" style="font-size: 15px;"><button onClick="Fortune_img_Today()" style="text-align:center; width:230px; height: 30px;">Day fortune</button></td>
+                    <td colspan="4" style="font-size: 15px;"><button  onclick="ShowRow()" style="text-align:center; width:230px; height: 30px;">지장간</button></td>
                 </tr>
             </tbody>
         </table>
     </h2>
 
-    <h3>
-        <button onclick="ShowRow()" style="text-align:center; width:100px; height: 30px;">지장간</button>
-        <!-- <button onclick="DecideTell()" style="text-align:center; width:100px; height: 30px;">통변</button> -->
-    </h3>
-    
     <table class="Fortune_Say">
         <tbody>
             <tr colspan="5">

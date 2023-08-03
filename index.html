@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
 <script defer src="js/index.js"></script>
+<script defer src="js/FortuneExplain.js"></script>
 <script defer src="js/sky.json"></script>
 <script defer src="js/land.json"></script>
 <script defer src="js/initialdate.json"></script>
@@ -17,20 +18,20 @@
 </head>
 <body>
     <h1>Know Your Karma</h1>
-    <h3>
+    <h2>
         <input type="radio" id="select1" name="char" value="modern" checked>
         <label for="select1">한문</label>
         <input type="radio" id="select2" name="char" value="oracle">
         <label for="select2">갑골문</label>
-    </h3>
-    <h3>
+    </h2>
+    <h2>
         <ul>
             <li>Today Check</li><li><input type="checkbox" id="today_check" onclick="is_checked()"/></li>
         </ul>
         
-    </h3>
+    </h2>
     
-    <table class="input_date">
+    <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
         <thead>
             <th style="margin: 0 auto; text-align: center;">
                 <input type="radio" id="Choice1" name="sex" value="male" checked>
@@ -65,7 +66,7 @@
         </tbody>
         <tbody>
             <tr>
-                <td><button onclick="Fortune_img();"  style="font-size: 18px; text-align:center; width:300px; height: 40px; font-weight: bold;">Search</button></td>
+                <td><button onclick="Fortune_img(); DecideTell();"  style="font-size: 18px; text-align:center; width:300px; height: 40px; font-weight: bold;">Search</button></td>
             </tr>
         </tbody>
     </table>
@@ -76,37 +77,26 @@
         </thead>
         <tbody>
             <tr>
-                <td><button onClick="Copy()" style="font-size: 18px; text-align:center; width:150px; height: 30px;">Copy</button></td>
-                <td><button  onclick="savePDF()" style="font-size: 18px; text-align:center;width:150px;  height: 30px;">PDF</button></td>
+                <td><button onClick="Copy()" style="font-size: 18px; text-align:center; width:150px; height: 30px;">Copy Text</button></td>
+                <td><button  onclick="savePDF()" style="font-size: 18px; text-align:center;width:150px;  height: 30px;">Download PDF</button></td>
             </tr>
             <tr>
-                <td><button onClick="Fortune_img_Today()" style="font-size: 18px; text-align:center; width:150px;  height: 30px;">Day fortune</button></td>
+                <td><button onClick="Fortune_img_Today()" style="font-size: 18px; text-align:center; width:150px;  height: 30px;">Day Fortune</button></td>
                 <td><button  onclick="ShowRow()" style="font-size: 18px; text-align:center; width:150px; height: 30px;">지장간</button></td>
             </tr>
         </tbody>
     </table>
-
-    <table class="Fortune_Say">
-        <tbody>
-            <tr colspan="5">
-                <td style="font-size: 14px; text-align: center;"><div id="answer"></div></td>
-            </tr>
-        </tbody>
-    </table>
-
     <div id="pdfArea">
         <ul>
             <li></li>
         </ul>
         <h2>
-            <div id="debug1" style="font-size: 30px; margin-top: 30px;"></div>
-            <div id="debug2"></div>
+            <div id="debug1" style="margin-top: 10px;"></div>
         </h2>
-        
         <table class="source">
             <thead>
                 <tr>
-                    <th style="font-size: 45px;" id="LIST0"></th><th style="font-size: 45px;" id="LIST1"></th><th style="font-size: 45px;" id="LIST2"></th><th style="font-size: 45px;" id="LIST3"></th>
+                    <th id="LIST0"></th><th id="LIST1"></th><th id="LIST2"></th><th id="LIST3"></th>
                 </tr>
             </thead>
             
@@ -137,12 +127,12 @@
         <table class="variety" id='testTable'>
             <thead>
                 <tr>
-                    <th id="t12" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t11" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t10" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t09" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t08" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t07" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t06" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t05" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t04" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t03" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t02" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t01" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
+                    <th id="t12" style="vertical-align: center; height:5px;"></th><th id="t11" style="vertical-align: center; height:5px;"></th>
+                    <th id="t10" style="vertical-align: center; height:5px;"></th><th id="t09" style="vertical-align: center; height:5px;"></th>
+                    <th id="t08" style="vertical-align: center; height:5px;"></th><th id="t07" style="vertical-align: center; height:5px;"></th>
+                    <th id="t06" style="vertical-align: center; height:5px;"></th><th id="t05" style="vertical-align: center; height:5px;"></th>
+                    <th id="t04" style="vertical-align: center; height:5px;"></th><th id="t03" style="vertical-align: center; height:5px;"></th>
+                    <th id="t02" style="vertical-align: center; height:5px;"></th><th id="t01" style="vertical-align: center; height:5px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -168,11 +158,11 @@
         <table class="tenyears">
             <thead>
                 <tr>
-                    <th id="j10" style="font-size: 20px;"></th><th id="j09" style="font-size: 20px;"></th>
-                    <th id="j08" style="font-size: 20px;"></th><th id="j07" style="font-size: 20px;"></th>
-                    <th id="j06" style="font-size: 20px;"></th><th id="j05" style="font-size: 20px;"></th>
-                    <th id="j04" style="font-size: 20px;"></th><th id="j03" style="font-size: 20px;"></th>
-                    <th id="j02" style="font-size: 20px;"></th><th id="j01" style="font-size: 20px;"></th>
+                    <th id="j10"></th><th id="j09"></th>
+                    <th id="j08"></th><th id="j07"></th>
+                    <th id="j06"></th><th id="j05"></th>
+                    <th id="j04"></th><th id="j03"></th>
+                    <th id="j02"></th><th id="j01"></th>
                 </tr>
             </thead>
             <tbody>
@@ -186,6 +176,37 @@
                 </tr>
             </tbody>
         </table>
+        
+        <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
+            <thead>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div id="debug2" style="font-weight: 900; width:700px; margin:0 auto;"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="debug3" style="width:700px; margin:0 auto;"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="debug4" style="width:700px; margin:0 auto;"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="debug5" style="width:700px; margin:0 auto;"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="debug6" style="width:700px; margin:0 auto;"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="debug7" style="width:700px; margin:0 auto;"></div></td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
     </div>
 </body>
 </html>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <script defer src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
-<script defer src="js/FortuneTelling.js"></script>
-<script defer src="js/FortuneExplain.js"></script>
+<script defer src="js/index.js"></script>
+<script defer src="js/sky.json"></script>
+<script defer src="js/land.json"></script>
+<script defer src="js/initialdate.json"></script>
 <script type="text/javascript"></script>
 <script src="js/html2canvas.js"></script>
 <script src="js/jspdf.min.js"></script>
@@ -21,49 +23,68 @@
         <input type="radio" id="select2" name="char" value="oracle">
         <label for="select2">갑골문</label>
     </h3>
-    <h2>
-        <table class="input_date">
-            <thead>
-                <tr>
-                    <th colspan="5" style="font-size: 14px; text-align: center;"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="2" rowspan="4" style="font-size: 14px; text-align:center; width:100px; height:20px;">
-                        <input type="radio" id="Choice1" name="sex" value="male" checked>
-                        <label for="Choice1">M</label>
-                        <input type="radio" id="Choice2" name="sex" value="female">
-                        <label for="Choice2">F</label>
-                    </td>
-                    <td colspan="2" style="font-size: 14px; text-align:center; width:100px; height:20px;">이름</td>
-                    <td colspan="2" style="font-size: 14px; text-align:center; width:100px; height:20px;">년 (YYYY)</td>
-                    <td colspan="2" style="font-size: 14px; text-align:center; width:100px; height:20px;">월일 (MMDD)</td>
-                    <td colspan="2" style="font-size: 14px; text-align:center; width:100px; height:20px;">시분 (hhmm)</td>
-                    
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="text" id="name" style="text-align:center; width:100px; height:18px;"/></td>
-                    <td colspan="2"><input type="number" min="1" max="9999" id="year_msg" style="text-align:center; width:100px; height:18px;"/></td>
-                    <td colspan="2"><input type="number" min="101" max="1231" id="monthday_msg" style="text-align:center; width:100px; height:18px;"/></td>
-                    <td colspan="2"><input type="number" min="0" max="2359" id="hourmin_msg" style="text-align:center; width:100px; height:18px;"/></td>
-                    <td colspan="2" rowspan="6" style="font-size: 14px; text-align:center; width:200px; height:18px;"><button onclick="Fortune_img(); Explains();"  style="text-align:center; width:80px; height: 80px; font-weight: bold;">Search</button></td>
-                </tr>
-                <tr>
-                </tr>
-                <tr>
-                    <td colspan="4" style="font-size: 15px;"><button onClick="Copy()" style="text-align:center; width:230px; height: 30px;">Copy</button></td>
-                    <td colspan="4" style="font-size: 15px;"><button  onclick="savePDF()" style="text-align:center; width:230px; height: 30px;">PDF</button></td>
-                    
-                </tr>
-                <tr>
-                    <td colspan="2" style="font-size: 15px;"><input type="checkbox" id="today_check" onclick="is_checked()"/>Today</td>
-                    <td colspan="4" style="font-size: 15px;"><button onClick="Fortune_img_Today()" style="text-align:center; width:230px; height: 30px;">Day fortune</button></td>
-                    <td colspan="4" style="font-size: 15px;"><button  onclick="ShowRow()" style="text-align:center; width:230px; height: 30px;">지장간</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </h2>
+    <h3>
+        <ul>
+            <li>Today Check</li><li><input type="checkbox" id="today_check" onclick="is_checked()"/></li>
+        </ul>
+        
+    </h3>
+    
+    <table class="input_date">
+        <thead>
+            <th style="margin: 0 auto; text-align: center;">
+                <input type="radio" id="Choice1" name="sex" value="male" checked>
+                <label for="Choice1">Male</label>
+                <input type="radio" id="Choice2" name="sex" value="female">
+                <label for="Choice2">Female</label>
+            </th>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td><input type="text" id="name" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="이름"/></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9999" id="year_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)"/></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="101" max="1231" id="monthday_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="0" max="2359" id="hourmin_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생시분 (hhmm)"/></td>
+            </tr>
+            <tr>
+                
+            </tr>
+            
+        </tbody>
+        <tbody>
+            <tr>
+                
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <td><button onclick="Fortune_img();"  style="font-size: 18px; text-align:center; width:300px; height: 40px; font-weight: bold;">Search</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
+        <thead>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr>
+                <td><button onClick="Copy()" style="font-size: 18px; text-align:center; width:150px; height: 30px;">Copy</button></td>
+                <td><button  onclick="savePDF()" style="font-size: 18px; text-align:center;width:150px;  height: 30px;">PDF</button></td>
+            </tr>
+            <tr>
+                <td><button onClick="Fortune_img_Today()" style="font-size: 18px; text-align:center; width:150px;  height: 30px;">Day fortune</button></td>
+                <td><button  onclick="ShowRow()" style="font-size: 18px; text-align:center; width:150px; height: 30px;">지장간</button></td>
+            </tr>
+        </tbody>
+    </table>
 
     <table class="Fortune_Say">
         <tbody>
@@ -74,21 +95,18 @@
     </table>
 
     <div id="pdfArea">
-        <h1>
-            
-        </h1>
-        <h1>
-            
-        </h1>
-        <h1>
-            <div id="debug1"></div>
+        <ul>
+            <li></li>
+        </ul>
+        <h2>
+            <div id="debug1" style="font-size: 30px; margin-top: 30px;"></div>
             <div id="debug2"></div>
-        </h1>
+        </h2>
         
         <table class="source">
             <thead>
                 <tr>
-                    <th style="font-size: 20px;" id="LIST0">時</th><th style="font-size: 20px;" id="LIST1">日</th><th style="font-size: 20px;" id="LIST2">月</th><th style="font-size: 20px;" id="LIST3">年</th>
+                    <th style="font-size: 45px;" id="LIST0">時</th><th style="font-size: 45px;" id="LIST1">日</th><th style="font-size: 45px;" id="LIST2">月</th><th style="font-size: 45px;" id="LIST3">年</th>
                 </tr>
             </thead>
             
@@ -105,13 +123,13 @@
         <table class="mens" id="source_men" style="display: none">
             <tbody>
                 <tr>
-                    <td id="ms"><img id="time0" src=""/></td><td id="ms"><img id="day0" src=""/></td><td id="ms"><img id="month0" src=""/></td><td id="ms"><img id="year0" src=""/></td>
+                    <td id="ms"><img id="time0" src=""/></td><td id="ms"><img id="day0" src=""/></td><td id="ms0"><img id="month0" src=""/></td><td id="ms"><img id="year0" src=""/></td>
                 </tr>
                 <tr>
-                    <td id="ms"><img id="time1" src=""/></td><td id="ms"><img id="day1" src=""/></td><td id="ms"><img id="month1" src=""/></td><td id="ms"><img id="year1" src=""/></td>
+                    <td id="ms"><img id="time1" src=""/></td><td id="ms"><img id="day1" src=""/></td><td id="ms1"><img id="month1" src=""/></td><td id="ms"><img id="year1" src=""/></td>
                 </tr>
                 <tr>
-                    <td id="ms"><img id="time2" src=""/></td><td id="ms"><img id="day2" src=""/></td><td id="ms"><img id="month2" src=""/></td><td id="ms"><img id="year2" src=""/></td>
+                    <td id="ms"><img id="time2" src=""/></td><td id="ms"><img id="day2" src=""/></td><td id="ms2"><img id="month2" src=""/></td><td id="ms"><img id="year2" src=""/></td>
                 </tr>
             </tbody>
         </table>
@@ -119,12 +137,12 @@
         <table class="variety" id='testTable'>
             <thead>
                 <tr>
-                    <th id="t12" style="font-size: 20px; vertical-align: bottom; height:45px;"></th><th id="t11" style="font-size: 20px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t10" style="font-size: 20px; vertical-align: bottom; height:45px;"></th><th id="t09" style="font-size: 20px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t08" style="font-size: 20px; vertical-align: bottom; height:45px;"></th><th id="t07" style="font-size: 20px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t06" style="font-size: 20px; vertical-align: bottom; height:45px;"></th><th id="t05" style="font-size: 20px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t04" style="font-size: 20px; vertical-align: bottom; height:45px;"></th><th id="t03" style="font-size: 20px; vertical-align: bottom; height:45px;"></th>
-                    <th id="t02" style="font-size: 20px; vertical-align: bottom; height:45px;"></th><th id="t01" style="font-size: 20px; vertical-align: bottom; height:45px;"></th>
+                    <th id="t12" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t11" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
+                    <th id="t10" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t09" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
+                    <th id="t08" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t07" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
+                    <th id="t06" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t05" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
+                    <th id="t04" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t03" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
+                    <th id="t02" style="font-size: 30px; vertical-align: bottom; height:45px;"></th><th id="t01" style="font-size: 30px; vertical-align: bottom; height:45px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -150,11 +168,11 @@
         <table class="tenyears">
             <thead>
                 <tr>
-                    <th id="j10" style="font-size: 14px;"></th><th id="j09" style="font-size: 14px;"></th>
-                    <th id="j08" style="font-size: 14px;"></th><th id="j07" style="font-size: 14px;"></th>
-                    <th id="j06" style="font-size: 14px;"></th><th id="j05" style="font-size: 14px;"></th>
-                    <th id="j04" style="font-size: 14px;"></th><th id="j03" style="font-size: 14px;"></th>
-                    <th id="j02" style="font-size: 14px;"></th><th id="j01" style="font-size: 14px;"></th>
+                    <th id="j10" style="font-size: 20px;"></th><th id="j09" style="font-size: 20px;"></th>
+                    <th id="j08" style="font-size: 20px;"></th><th id="j07" style="font-size: 20px;"></th>
+                    <th id="j06" style="font-size: 20px;"></th><th id="j05" style="font-size: 20px;"></th>
+                    <th id="j04" style="font-size: 20px;"></th><th id="j03" style="font-size: 20px;"></th>
+                    <th id="j02" style="font-size: 20px;"></th><th id="j01" style="font-size: 20px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -169,11 +187,5 @@
             </tbody>
         </table>
     </div>
-    <!-- <h3>
-        <a href="" download="">다운로드</a>
-    </h3>
-    <h3>
-        <canvas id="FRESH" style="background-color:rgb(255, 255, 255)" width="500px" height="500px"></canvas>
-    </h3>     -->
 </body>
 </html>

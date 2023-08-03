@@ -1,14 +1,14 @@
-LAND = [
-    {"id":1, "name": "子"}, 
-    {"id":2, "name": "丑"}, 
-    {"id":3, "name": "寅"}, 
-    {"id":4, "name": "卯"}, 
-    {"id":5, "name": "辰"}, 
-    {"id":6, "name": "巳"}, 
-    {"id":7, "name": "午"}, 
-    {"id":8, "name": "未"}, 
-    {"id":9, "name": "申"}, 
-    {"id":10, "name": "酉"}, 
-    {"id":11, "name": "戌"}, 
-    {"id":12, "name": "亥"}
+[
+    {"id":1, "name": "子", "property": [{"remain":1, "name": "壬"}, {"middle":2, "name": ""}, {"standard":3, "name": "癸"}]}, 
+    {"id":2, "name": "丑", "property": [{"remain":1, "name": "癸"}, {"middle":2, "name": "辛"}, {"standard":3, "name": "己"}]}, 
+    {"id":3, "name": "寅", "property": [{"remain":1, "name": "戊"}, {"middle":2, "name": "丙"}, {"standard":3, "name": "甲"}]}, 
+    {"id":4, "name": "卯", "property": [{"remain":1, "name": "甲"}, {"middle":2, "name": ""}, {"standard":3, "name": "乙"}]}, 
+    {"id":5, "name": "辰", "property": [{"remain":1, "name": "乙"}, {"middle":2, "name": "癸"}, {"standard":3, "name": "戊"}]}, 
+    {"id":6, "name": "巳", "property": [{"remain":1, "name": "戊"}, {"middle":2, "name": "庚"}, {"standard":3, "name": "丙"}]}, 
+    {"id":7, "name": "午", "property": [{"remain":1, "name": "丙"}, {"middle":2, "name": "己"}, {"standard":3, "name": "丁"}]}, 
+    {"id":8, "name": "未", "property": [{"remain":1, "name": "丁"}, {"middle":2, "name": "乙"}, {"standard":3, "name": "己"}]}, 
+    {"id":9, "name": "申", "property": [{"remain":1, "name": "戊"}, {"middle":2, "name": "壬"}, {"standard":3, "name": "庚"}]}, 
+    {"id":10, "name": "酉", "property": [{"remain":1, "name": "庚"}, {"middle":2, "name": ""}, {"standard":3, "name": "辛"}]}, 
+    {"id":11, "name": "戌", "property": [{"remain":1, "name": "辛"}, {"middle":2, "name": "丁"}, {"standard":3, "name": "戊"}]}, 
+    {"id":12, "name": "亥", "property": [{"remain":1, "name": "戊"}, {"middle":2, "name": "甲"}, {"standard":3, "name": "壬"}]}
 ]

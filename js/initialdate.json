@@ -1,0 +1,14 @@
+[
+    {"tag":1, "start":6, "remain":9, "center":3, "tail":18, "zodiac":"丑"},
+    {"tag":2, "start":4, "remain":7, "center":7, "tail":16, "zodiac":"寅"}, 
+    {"tag":3, "start":5, "remain":10, "center":0, "tail":20, "zodiac":"卯"}, 
+    {"tag":4, "start":5, "remain":9, "center":3, "tail":18, "zodiac":"辰"}, 
+    {"tag":5, "start":5, "remain":7, "center":7, "tail":16, "zodiac":"巳"}, 
+    {"tag":6, "start":5, "remain":10, "center":0, "tail":20, "zodiac":"午"}, 
+    {"tag":7, "start":7, "remain":9, "center":3, "tail":18, "zodiac":"未"}, 
+    {"tag":8, "start":7, "remain":7, "center":7, "tail":16, "zodiac":"申"}, 
+    {"tag":9, "start":7, "remain":10, "center":0, "tail":20, "zodiac":"酉"}, 
+    {"tag":10, "start":8, "remain":9, "center":3, "tail":18, "zodiac":"戌"}, 
+    {"tag":11, "start":7, "remain":7, "center":7, "tail":16, "zodiac":"亥"}, 
+    {"tag":12, "start":7, "remain":10, "center":0, "tail":20, "zodiac":"子"}
+]

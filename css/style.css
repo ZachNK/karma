@@ -8,7 +8,7 @@ body {
 	/* margin: 0; */
 	padding: 0;
 	width: 100%;
-	margin: auto;
+	margin: 0 auto;
     align-items: center;
     height: 100vh;
 }
@@ -16,32 +16,34 @@ ul{
     text-align: center;
     float: center;
     list-style: none;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin: 0 auto;
+    
 }
 li{
-    display: inline-block; margin-left: 2px; margin-right: 2px;  
+    display: inline-block;  
     text-align: center;
 }
 
 h1 {
     text-align: center;
-    font-size: 50px;
+    font-size: 35px;
     
 }
 
 h2{
     text-align: center;
-    font-size: 30px;
-    margin-top: 30px;
-    margin-bottom: 70px;
+    font-size: 15px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 h3{
     text-align: center;
-    font-size: 18px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 
@@ -97,8 +99,8 @@ table.mens{
 }
 
 #time0, #time1, #time2, #day0, #day1, #day2, #month0, #month1, #month2, #year0, #year1, #year2{
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 50px;
+    max-height: 50px;
     width: auto;
     height: auto;
 }
@@ -135,6 +137,7 @@ table.Fortune_Say{
 th{
     text-align: center;
     display: table-cell;
+    font-size: 15px;
 }
 
 

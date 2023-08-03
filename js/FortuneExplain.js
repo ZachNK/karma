@@ -1,217 +1,205 @@
-var stems = [
-    '머리 좋은 사람들 주변에 많고 머리로 승부', 
-    '상대에게 휘둘려 지배 당', 
-    '스스로 성장', 
-    '열정으로 노력',
-    '믿을 만한 곳을 지배',
-    '특정 분야로 지배',
-    '어려움을 마주',
-    '사소한 것으로 비범하게',
-    '타이틀 보다 능력으로 승부 ',
-    '남들이 나를 좋아',//
-    '남에게 의존',
-    '남과 서로 의지',
-    '적극적으로 나대려고',
-    '불규칙적으로 나대려고',
-    '내부를 감지',
-    '대중적인 곳에 지배',
-    '완성된 사람 및 환경으로 몸 바쳐서 합류',
-    '절대 지존자에게 충성',
-    '타의에 의해 저 멀리로 진출',
-    '적극적으로 긴밀히 접촉',//
-    '선량한 마음으로 남 좋은일',
-    '유망한 것을 보호하고 보존',
-    '좋아 보이는 것을 더 좋아 보이게',
-    '더 밝고 드러내려는 사람들을 마주',
-    '적절히 타이밍을 맞추고 좋게 좋게',
-    '길고 오랫동안 자세히 보려고',
-    '오랜동안 예의 주시하여 이득을 취',
-    '이상적인 것을 취',
-    '비범하고 어려운 일을 해결',
-    '가치를 투자',//
-    '남에게 서비스',
-    '예측 불가능하게 열심히 살려고',
-    '주변에 더 따듯하게 하는 사람 마주',
-    '열정에 열정을 추가',
-    '상위권으로 안내',
-    '아무것도 없는 분야에 개조 및 개발',
-    '단기간에 완성을',
-    '쓸모 있게 재활용',
-    '무에서 유를 창조해 고생',
-    '정신적으로 당',//
-    '누군가로부터 희생당',
-    '사람들에게 휘둘려 지배 당',
-    '장점만 앞세우려고',
-    '상위권으로 안내',
-    '몸을 너무 사리고 답답하게',
-    '보호 해줘야 할 사람 마주',
-    '내 앞에 자랑할 만한 사람 마주',
-    '내 능력 불안해서 실력 감추려고',
-    '외부 소식을 잘 접해 위기를 통제',
-    '비밀을 앉고 사는 운명을 맞이',//
-    '사회적 타이틀로 자랑하려 내세우려고',
-    '사람에게 잘 휘둘리는 운명을 맞이',
-    '나 좀 자세히 봐달라고 볼만하게 행동',
-    '나를 뜯어 고칠 사람 마주',
-    '사람 보는 안목으로 충신이 옆에 있게',
-    '다이렉트로 길을 이어주게',
-    '의미있는 일을 하려고',
-    '그 분야에 있을 만한 것 그대로 활용',
-    '그때 그때 사정을 달리',
-    '어딜 가든 대접 받고 인기있는 운명 마주',//
-    '아직 숙련 중에 뭔가를 바꾸려고',
-    '기대할 만한 것 더 끌어 올리려고',
-    '남들에게 기분 좋게',
-    '단기 코스로 완성을 더',
-    '총대 매고 바지 사장',
-    '능력대비 고성과를 내게',
-    '아직 미완성인데 답답하게 살아서 힘겨워',
-    '나 대신 집중해 줄 사람 마주',
-    '문제를 대비하고 있는 그대로를 전달',
-    '가치를 만들어 내는 행위',//
-    '가르치려고',
-    '훈계하여 절대 지존자로 받아들이게 하도록',
-    '미완성임에 비해 그럴싸하게 뻥 튀기',
-    '타이트 하게 어렵게 용도 변경',
-    '동선 짧은 곳으로 이동',
-    '어느 분야에 완성',
-    '남이 등장으로 나를 밀려나가게',
-    '전문가들을 마주해서 겸손한 자세로 생각',
-    '나를 가치 높게',
-    '어려운거 도전하여 정신일도', //
-    '남을 중독 시키어 두뇌를 조종',
-    '홀리게 만들어 행위로 자극하여 조종',
-    '웅장하고 대단한 일을 ',
-    '무에서 유를 창조해 야망을 가지고 비장',
-    '올바른 선택으로 위기 관리에 능',
-    '경계가 모호하거나 선을 넘어 지배',
-    '날것을 온전히 그대로 유통 전달',
-    '완성된 것을 온전히 전달',
-    '어려운 일을 정면으로 마주',
-    '정보를 더 퍼지게',//
-    '새로운 방법과 시행착오로 의식을 깨우게',
-    '자유로운 행위적인 방법으로 경험을 전달',
-    '상대를 조져서 남 잘되는 꼴 못하게',
-    '육체에 정신을 넣게',
-    '속 깊게',
-    '상대에게 편의를 제공 하려고 고생',
-    '상대 말을 잘 들어서 잘 통하게',
-    '결과를 통보 받고 남에게 전략을 전',
-    '낯선 사람들과 합류',
-    '정신에 정신을 더'
-]
+let p = []
+let skyUse = [];
+let landDuty = [];
+let landUse = [];
+let skyTag = [];
+let landTag = [];
+fetch('./js/initialdate.json')
+    .then(results => results.json())
+    .then(data => {
+        data.forEach(post => {
+            p.push(post);
+        });
+    });
 
-var answer = [];
-var code = [];
+// fetch('./js/sky.json')
+//     .then(results => results.json())
+//     .then(data => {
+//         data.forEach(post => {
+//             skyUse.push(post.use);
+//         });
+//     });
+
+// fetch('./js/land.json')
+//     .then(results => results.json())
+//     .then(data => {
+//         data.forEach(post => {
+//             landUse.push(post.use);
+//         });
+//     });
+
+// fetch('./js/land.json')
+//     .then(results => results.json())
+//     .then(data => {
+//         data.forEach(post => {
+//             landDuty.push(post.duty);
+//         });
+//     });
+
+// fetch('./js/sky.json')
+//     .then(results => results.json())
+//     .then(data => {
+//         data.forEach(post => {
+//             skyTag.push({"name":post.name, "type":post.type});
+//         });
+//     });
+
+// fetch('./js/land.json')
+//     .then(results => results.json())
+//     .then(data => {
+//         data.forEach(post => {
+//             landTag.push({"name":post.name, "type":post.type});
+//         });
+//     });
+
+fetch('./js/sky.json')
+    .then(results => results.json())
+    .then(data => {
+        data.forEach(post => {
+            skyTag.push(post);
+        });
+    });
+
+fetch('./js/land.json')
+    .then(results => results.json())
+    .then(data => {
+        data.forEach(post => {
+            landTag.push(post);
+        });
+    });
+
+
+var useSet = []; //월령용신의 甲~癸까지
+var mainDuty = []; //정기 지장간 불러오기
 
 
 function DecideTell(){
-    var times = Number(out('time_sky'));
-    var days = Number(out('day_sky'));
-    var months = Number(out('month_sky'));
-    var years = Number(out('year_sky'));
-    var timel = Number(out('time_land'));
-    var dayl = Number(out('day_land'));
-    var monthl = Number(out('month_land'));
-    var yearl = Number(out('year_land'));
+    useSet.length = 0; // 제거
+    mainDuty.length = 0; //제거
+    var times = Number(out('time_sky')[1]);
+    var days = Number(out('day_sky')[1]);
+    var months = Number(out('month_sky')[1]);
+    var years = Number(out('year_sky')[1]);
+    var timel = Number(out('time_land')[1]);
+    var dayl = Number(out('day_land')[1]);
+    var monthl = Number(out('month_land')[1]);
+    var yearl = Number(out('year_land')[1]);
+    
+    var yyyy = document.getElementById("year_msg").value;
+    var md = document.getElementById("monthday_msg").value;
+    var mm = md.substring(0,2).toString().padStart(2, '0');
+    var dd = md.substring(2,4).toString().padStart(2, '0');
+    
+    var ord = zm(yyyy, mm, dd)[2]
+    var t = type(monthl, ord);// 당령용신 번호 찾기 ex) 午 = 0:丙, 1:丁 ==> 0 혹은 1 / 辰 = 0:乙 1:癸 ==>무조건 0 / 寅 = 0:丙, 1:甲 ==>무조건 1
+    var useName = landTag[monthl-1]['use'][t].tag; // 당령용신 string ex) 癸, 丙 ...
 
-
-    var id_img = Number(document.getElementById('LAND2').getAttribute('src')[5] + document.getElementById('LAND2').getAttribute('src')[6]);
-    var stm = document.getElementById('debug1').textContent.indexOf('월')
-    var id_day = Number(document.getElementById('debug1').textContent.slice(stm+2, stm+4))
-    var skys = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
-    console.log(skys[real_men(id_img, id_day)]);
-
-
-    answer = [times, days, months, years, timel, dayl, monthl, yearl];
-
-    console.log("통변", answer);
-    if(code != answer){
-        var key_1 = 10*(answer[0]-1) + answer[3]-1; // 시->년 ~하는 세상에서 
-        var key_2 = 10*(answer[2]-1) + answer[3]-1; //월->년 ~하는 환경에 가서 2)
-        var key_3 = 10*(answer[1]-1) + answer[0]-1; //일->시 ~하는 능력으로 3)
-        var key_4 = 10*(answer[1]-1) + answer[3]-1; //일->년 공적으로 ~하는 사람으로 보여지며 4)
-        var key_5 = 10*(answer[1]-1) + answer[2]-1; //일->월 ~하는 역할 가진 사람 5)
+    for(var i=0; i<10; i++){ //용신과 희기신의 key들 불러오기 == 甲~癸까지 천간 순서로 useSet에 배열
+        var obj = skyTag[i].use;
+        useSet.push(obj.find(e => e.tag === useName));
+    }
+    console.log(useSet); //useSet에 용신과 희기신의 key 세트. 여기에서 모든 용희기신 가려낸다.
+    for(var i=0; i<12; i++){ //지장간 세트 불러오기 ex) mainDuty[${"지지 번호"}]에서 배열 순서  = 지장간 0:여기, 1:중기, 2:정기
+        var arr = landTag[i].duty;
+        mainDuty.push(arr);
+    }
+    
+    
+    // 시지(timel), 일지(dayl), 월지(useName, 아예 텍스트 값), 년지(yearl)로 찾은 통변 텍스트 메세지 (key)
+    // skyTag.find(e => e.name === mainDuty[timel-1][2].name).use.find(e=> e.tag === useName).key,
+    // skyTag.find(e => e.name === mainDuty[dayl-1][2].name).use.find(e=> e.tag === useName).key, 
+    // skyTag.find(e => e.name === useName).use.find(e=> e.tag === useName).key,
+    // skyTag.find(e => e.name === mainDuty[yearl-1][2].name).use.find(e=> e.tag === useName).key
+    
+    var result =[
+                        useSet[times-1].key, 
+                        useSet[days-1].key, 
+                        useSet[months-1].key, 
+                        useSet[years-1].key,
+                        skyTag.find(e => e.name === useName).use.find(e=> e.tag === useName).key
+                    ];
+    
+    //console.log(result); // 천간 4개와 월지의 월령 모조리 배열
+    const myString = result[1]; // 일간에 해당되는 용희신을 myString에 할당
+    const orderString = result.pop(); // result배열의 맨 마지막에 있는 월령을 빼고, orderString에 할당시킴
+    const set = result.filter((item, index) => result.indexOf(item) === index); // set 배열에는, 월령을 제외하고, 천간 중에 중복된 값을 뺀 새로운 배열
+    
+    var my =0; //set 배열 중 일간 위치 index값
+    for(var i=0; i<set.length;i++){
+        if(set[i]===myString){
+            my = i; // set에서 일간 위치 index값을 my에 할당
+        } 
+    }
+    set.splice(my, 1); // set배열에서 일간에 해당되는 용희신을 제거
+    set.unshift(myString); //다시 set배열에서 맨 앞칸 (index=0)에 끼워넣기 (unshift() 사용) 
+    // => 이제 set배열은, 맨 앞칸이 일간의 용희신이고, 나머지 중복제거된 천간들만 배열됨.
+    
+    // set의 길이에 따라 각각 다르게 통변 메세지 부여
+    if(set.length == 1){
+        document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신 통변) ※";
+        document.getElementById("debug3").innerHTML = orderString + "이 요구되는 사회 환경에";
+        document.getElementById("debug4").innerHTML = set[0] + "을 발휘합니다.";
+        document.getElementById("debug5").innerHTML = "";
+        document.getElementById("debug6").innerHTML = "";
+        document.getElementById("debug7").innerHTML = "";
+    }
+    else if(set.length == 2){
+        document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신 통변) ※";
+        document.getElementById("debug3").innerHTML = orderString + "이 요구되는 사회 환경에";
+        document.getElementById("debug4").innerHTML = "주체적으로 " + set[0] + "을 통한";
+        document.getElementById("debug5").innerHTML = set[1] + "을 갖추고 있습니다.";
+        document.getElementById("debug6").innerHTML = "";
+        document.getElementById("debug7").innerHTML = "";
         
-        var result_men = "사령용신: " + skys[real_men(id_img, id_day)];
-        var result1 = stems[key_1]+"하는 세상에서 " + stems[key_2]+"하는 환경에 가서 " + stems[key_3]+"하는 능력을 가져서";
-        var result2 = "공적으로 " + stems[key_4] + "하는 일에 " + stems[key_5] + "하는 역할을 가진 사람";
-        //document.getElementById('answer').innerHTML = "\""+ "(" + result_men + ")" + "\n" + result1 + "\n" + result2 + "\"";
-        document.getElementById('answer').innerHTML = "\""+ result_men + "\"";
     }
-}
-
-function Explains(){
-    var x = Number(out('time_sky'));
-    var y = Number(out('day_sky'));
-    var z = Number(out('month_sky'));
-    var r = Number(out('year_sky'));
-    var s = Number(out('time_land'));
-    var t = Number(out('day_land'));
-    var u = Number(out('month_land'));
-    var v = Number(out('year_land'));
-
-    code =[x, y, z, r, s, t, u, v];
-
-    if(code != answer){
-        document.getElementById('answer').innerHTML = "";
+    else if(set.length == 3){
+        document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신 통변) ※";
+        document.getElementById("debug3").innerHTML = orderString + "이 요구되는 사회 환경에";
+        document.getElementById("debug4").innerHTML = "주체적으로 " + set[0] + "을 통한";
+        document.getElementById("debug5").innerHTML = set[1] + "을 갖추고 있으며"; 
+        document.getElementById("debug6").innerHTML = set[2] + "에도 재능이 있습니다.";
+        document.getElementById("debug7").innerHTML = "";
     }
-}
+    else{
+        document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신 통변) ※";
+        document.getElementById("debug3").innerHTML = orderString + "이 요구되는 사회 환경에";
+        document.getElementById("debug4").innerHTML = "주체적으로 " + set[0] + "을 통한";
+        document.getElementById("debug5").innerHTML = set[1] + "을 갖추고 있습니다."; 
+        document.getElementById("debug6").innerHTML = "또한 " + set[2] + "을 발휘하며";
+        document.getElementById("debug7").innerHTML = set[3] +"에도 재능이 있습니다.";
+    }
 
+    
+    
+}
 
 function out(id_tag){
     var print = document.getElementById(id_tag).children[0];
     var srcName = print.getAttribute('src');
-    var result =srcName[5] + srcName[6];       
+    let imgFileName = srcName.split('.')[0].split('/')[2]; // ex) img/modern/p01.png에서 imgFileName == p01
+    let stem_branch = imgFileName.split('')[0]; // i == 천간, p == 지지
+    var result =[stem_branch, imgFileName.substring(1,3)]       
     return result;                                               
 }
 
-function real_men(take_month, take_day){
-    var point = [7, 6, 4, 5, 5, 5, 5, 7, 7, 7, 8, 7]; //子月, 丑月, 寅月, 卯月, 辰月, 巳月, 午月, 未月, 申月, 酉月, 戌月, 亥月
-    var k = [8, 9, 9, 9, 7, 5, 4, 2, 0, 0, 1, 1, 1, 9, 4, 4, 6, 2, 2, 5, 3, 3, 1, 5, 4, 8, 6, 6, 7, 7, 7, 3, 4, 4, 0, 8];
-    var p_span = take_day - point[take_month-1]
-    var result = 0;
-
-    if(take_month%3 == 1){
-        if(p_span<10){
-            result = 3*(take_month-1);
-        }
-        else{
-            if(take_month == 7){
-                if(p_span<19){
-                    result = 3*(take_month-1) + 1;
-                }
-                else{
-                    result = 3*(take_month-1) + 2;
-                }
-            }
-            else{
-                result = 3*(take_month-1) + 2;
-            }
-        }
+function type(zodiac_month, num_order){
+    // 생지는 무조건 1, 왕지는 택, 고지는 무조건 0
+    let x = 0;
+    if(zodiac_month%3===0){
+        x = 1;
     }
-    else if(take_month%3 == 2){
-        if(p_span<7){
-            result = 3*(take_month-1);
-        }
-        else if(p_span<14){
-            result = 3*(take_month-1) + 1;
-        }
-        else{
-            result = 3*(take_month-1) + 2;
-        }
+    else if(zodiac_month%3===2){
+        x = 0;
     }
     else{
-        if(p_span<9){
-            result = 3*(take_month-1);
-        }
-        else if(p_span<12){
-            result = 3*(take_month-1) + 1;
+        if(num_order<=1){
+            x = 0;
         }
         else{
-            result = 3*(take_month-1) + 2;
+            x = 1;
         }
     }
-
-    return k[result];
+    
+    var result = x
+    return result; //(0 혹은 1)
 }

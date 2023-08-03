@@ -33,6 +33,22 @@ fetch('./js/initialdate.json')
         });
     });
 
+var sall = []
+fetch('./js/sky.json')
+    .then(results => results.json())
+    .then(data => {
+        data.forEach(post => {
+            sall.push(post);
+        });
+    });
+var lall = []
+fetch('./js/land.json')
+    .then(results => results.json())
+    .then(data => {
+        data.forEach(post => {
+            lall.push(post);
+        });
+    });
 
 let today = new Date();
 var nowYear = today.getFullYear();
@@ -244,6 +260,9 @@ function Fortune_img(){
 
     pdfFileName = nameText + "_" + yyyy+"_"+mm+"_"+dd+"_"+hh+"_"+min+"_"+starting[3]+"_"+thisSex+".pdf";
 
+    
+    
+     
 }
 
 function ShowRow(){
@@ -747,10 +766,14 @@ function great_luck_show(value_seasons, value_num, value_startNum){
 //지장간: 甲=0 ~ 癸=9, list = result_data, 년(x=1), 월(x=2), 일(x=3), 시(x=4)
 function mens(list, x){
     
-    var k = [8, 9, 9, 9, 7, 5, 4, 2, 0, 0, 1, 1, 1, 9, 4, 4, 6, 2, 2, 5, 3, 3, 1, 5, 4, 8, 6, 6, 7, 7, 7, 3, 4, 4, 0, 8];
-    var x_men = [k[list[(2*x-1)]*3], k[1+list[(2*x-1)]*3], k[2+list[(2*x-1)]*3]];
-    
-    return [x_men[0], x_men[1], x_men[2]];
+    var r = lall[list[(2*x-1)]].duty[0].name;
+    var c = lall[list[(2*x-1)]].duty[1].name;
+    var s = lall[list[(2*x-1)]].duty[2].name;
+
+    //console.log(r, c, s); 올바른 지장간 텍스트
+    if(c=='  ') c=s;
+    var x_men = [sall.find(e => e.name === r).id-1, sall.find(e => e.name === c).id-1, sall.find(e => e.name === s).id-1]; //이미지 파일을 읽기 위해 숫자로 변환 ex) 戊=5=> 4
+    return x_men;
 }
 
 function Fortune_img_Today(){
@@ -785,6 +808,13 @@ function Fortune_img_Today(){
     document.getElementById("LAND1").src = p_img(land_tag[f]);
     document.getElementById("LAND2").src = p_img(land_tag[d]);
     document.getElementById("LAND3").src = p_img(land_tag[b]);
+
+    document.getElementById("debug2").innerHTML = "";
+    document.getElementById("debug3").innerHTML = "";
+    document.getElementById("debug4").innerHTML = "";
+    document.getElementById("debug5").innerHTML = "";
+    document.getElementById("debug6").innerHTML = "";
+    document.getElementById("debug7").innerHTML = "";
 
     var todaySky = sky[sky_tag[g]-1] + " " + sky[sky_tag[e]-1] + " "  + sky[sky_tag[c]-1] + " " + sky[sky_tag[a]-1];
     var todayLand = land[land_tag[h]-1] + " " + land[land_tag[f]-1] + " " + land[land_tag[d]-1] + " " + land[land_tag[b]-1];
@@ -863,7 +893,8 @@ function this_year_coloring(startingYear, value_nowYear){
 }
 
 function Copy(){
-    var str = resultCopy + greatLuckCopy;
+    var inter = document.getElementById("debug2").innerText+"\n\n"+document.getElementById("debug3").innerText+"\n"+document.getElementById("debug4").innerText+"\n"+document.getElementById("debug5").innerText+"\n"+document.getElementById("debug6").innerText+"\n"+document.getElementById("debug7").innerText;
+    var str = fullName + "\n\n" +resultCopy + greatLuckCopy + "\n\n" + inter;
     CopyStringToClipboard(str);
 }
 
@@ -926,7 +957,7 @@ function savePDF(){
       //proxy: "html2canvasproxy.php",
       allowTaint : true,	// cross-origin allow 
       useCORS: true,		// CORS 사용한 서버로부터 이미지 로드할 것인지 여부
-      scale : 2			// 기본 96dpi에서 해상도를 두 배로 증가
+      scale : 2		// 기본 96dpi에서 해상도를 두 배로 증가
       
     }).then(function(canvas) {	
       // 캔버스를 이미지로 변환

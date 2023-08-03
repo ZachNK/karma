@@ -142,6 +142,11 @@ function Fortune_img(){
     //사령번호 0, 1, 2
     order = zm(yyyy, mm, dd)[2];
     
+    document.getElementById("LIST0").innerText = "時";
+    document.getElementById("LIST1").innerText = "日";
+    document.getElementById("LIST2").innerText = "月";
+    document.getElementById("LIST3").innerText = "年";
+
     document.getElementById("SKY0").src = i_img(sky_tag[g]);
     document.getElementById("SKY1").src = i_img(sky_tag[e]);
     document.getElementById("SKY2").src = i_img(sky_tag[c]);

@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Know Your Karma</title>
-    <link rel="shortcut icon" type="image/x-icon" href="img/icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="img/icon.svg">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -33,7 +33,7 @@
     
     <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
         <thead>
-            <th style="margin: 0 auto; text-align: center;">
+            <th style="margin: 0 auto; text-align: center; font-size: 15px;">
                 <input type="radio" id="Choice1" name="sex" value="male" checked>
                 <label for="Choice1">Male</label>
                 <input type="radio" id="Choice2" name="sex" value="female">
@@ -46,7 +46,7 @@
                 <td><input type="text" id="name" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="이름"/></td>
             </tr>
             <tr>
-                <td><input type="number" min="1" max="9999" id="year_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)"/></td>
+                <td><input type="number" min="1" max="9999" id="year_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)"  autofocus/></td>
             </tr>
             <tr>
                 <td><input type="number" min="101" max="1231" id="monthday_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></td>
@@ -88,12 +88,14 @@
     </table>
     <div id="pdfArea">
         <ul>
-            <li></li>
+            <li>
+                <div id="debug4" ></div>
+            </li>
         </ul>
         <h2>
             <div id="debug1" style="margin-top: 10px;"></div>
         </h2>
-        <table class="source">
+        <table class="source" >
             <thead>
                 <tr>
                     <th id="LIST0"></th><th id="LIST1"></th><th id="LIST2"></th><th id="LIST3"></th>
@@ -186,19 +188,7 @@
                     <td><div id="debug2" style="font-weight: 900; width:700px; margin:0 auto;"></div></td>
                 </tr>
                 <tr>
-                    <td><div id="debug3" style="width:700px; margin:0 auto;"></div></td>
-                </tr>
-                <tr>
-                    <td><div id="debug4" style="width:700px; margin:0 auto;"></div></td>
-                </tr>
-                <tr>
-                    <td><div id="debug5" style="width:700px; margin:0 auto;"></div></td>
-                </tr>
-                <tr>
-                    <td><div id="debug6" style="width:700px; margin:0 auto;"></div></td>
-                </tr>
-                <tr>
-                    <td><div id="debug7" style="width:700px; margin:0 auto;"></div></td>
+                    <td><div id="debug3" style="width:1000px; margin:0 auto;"></div></td>
                 </tr>
             </tbody>
         </table>

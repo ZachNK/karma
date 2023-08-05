@@ -166,12 +166,3 @@ canvas.tutorial{
     width: 100%;
 
 }
-
-#debug2, #debug3, #debug4{
-    align-content: center;
-    text-align: center;
-    align-self: center;
-    align-items: center; 
-    /* margin-top: 10px;
-    font-size: 8px; */
-}

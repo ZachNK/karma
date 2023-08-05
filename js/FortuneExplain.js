@@ -230,9 +230,9 @@ function DecideTell(){
             }
         }
         else{
-            console.log(`생지월생 ${skyTag[v-1].name}${skyTag[v-1].type} 용사`);
-            frameSet.push(v);
-            frameMsg = `생지월생 ${skyTag[v-1].name}${skyTag[v-1].type} 용사`;
+            console.log(`생지월생 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사`);
+            frameSet.push(fix);
+            frameMsg = `생지월생 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사`;
         }
 
     }

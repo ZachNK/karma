@@ -1,8 +1,13 @@
-var point = [];
-var sky_tag = [];
-var land_tag = [];
-var sky = [];
-var land =[];
+const point = [];
+const sky_tag = [];
+const land_tag = [];
+const sky = [];
+const land =[];
+
+var mensis = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+var mensis2 = [...mensis];
+mensis2.splice(1,1,29);
+
 
 //const listEl = document.querySelector('ul');
 fetch('./js/sky.json')
@@ -156,7 +161,7 @@ function Fortune_img(){
     var starting = Starting(a, num, yyyy, nowYear);
 
     //사령번호 0, 1, 2
-    order = zm(yyyy, mm, dd)[2];
+    order = zm(yyyy, mm, dd)[3];
     
     document.getElementById("LIST0").innerText = "時";
     document.getElementById("LIST1").innerText = "日";
@@ -173,20 +178,28 @@ function Fortune_img(){
     document.getElementById("LAND2").src = p_img(land_tag[d]);
     document.getElementById("LAND3").src = p_img(land_tag[b]);
 
+    // 중기 지장간 이미지 처리: sky_tag를 거치지 않고 처리 ==> "aa"는 blank 이미지 (왕지의 중기)
+    const cenTag = [];
+    for(var i =0; i<4; i++){
+        var id = mens(result_data, (4-i))[1];
+        let cenId = (id !== "aa") ? sky_tag[id] : 0;
+        cenTag.push(cenId);
+    }
+    
     document.getElementById("time0").src = i_img(sky_tag[mens(result_data, 4)[0]]);
-    document.getElementById("time1").src = i_img(sky_tag[mens(result_data, 4)[1]]);
+    document.getElementById("time1").src = i_img(cenTag[0]);
     document.getElementById("time2").src = i_img(sky_tag[mens(result_data, 4)[2]]);
 
     document.getElementById("day0").src = i_img(sky_tag[mens(result_data, 3)[0]]);
-    document.getElementById("day1").src = i_img(sky_tag[mens(result_data, 3)[1]]);
+    document.getElementById("day1").src = i_img(cenTag[1]);
     document.getElementById("day2").src = i_img(sky_tag[mens(result_data, 3)[2]]);
 
     document.getElementById("month0").src = i_img(sky_tag[mens(result_data, 2)[0]]);
-    document.getElementById("month1").src = i_img(sky_tag[mens(result_data, 2)[1]]);
+    document.getElementById("month1").src = i_img(cenTag[2]);
     document.getElementById("month2").src = i_img(sky_tag[mens(result_data, 2)[2]]);
 
     document.getElementById("year0").src = i_img(sky_tag[mens(result_data, 1)[0]]);
-    document.getElementById("year1").src = i_img(sky_tag[mens(result_data, 1)[1]]);
+    document.getElementById("year1").src = i_img(cenTag[3]);
     document.getElementById("year2").src = i_img(sky_tag[mens(result_data, 1)[2]]);
 
     document.getElementById("month0").style.backgroundColor = `rgba(${0}, ${0}, ${0}, ${0})`;
@@ -234,8 +247,6 @@ function Fortune_img(){
             var picks = Number(Math.floor((parseInt(click)-1)/10))+1; // 클릭한 대운 순번
             clickNum = picks;
             blankNum.splice(clickNum-1, 1);
-            // console.log("greatNum", greatNum.toString().padStart(3, '0'), "clickNum", clickNum.toString().padStart(3, '0'));
-            // console.log(blankNum);
 
             document.getElementById('sky' + clickNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${220}, ${220}, ${220}, ${1})`;
             document.getElementById('land' + clickNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${220}, ${220}, ${220}, ${1})`;
@@ -331,16 +342,22 @@ function zm(year, month, day){
     var y = year;
     var m = month;
     var d = day;
-    var dletaDate = 0; // dletaDate = 절입일~생일 변수
-    var deltaMonth = parseInt(m); // deltaMonth = 월령변수
-    var od = 0; // 사령 0, 1, 2
+    var deltaDate = 0; // dletaDate = 절입일~생일 변수
+    var deltaMonth = parseInt(m); // deltaMonth = 십이지 순서로 보는 월령변수
+    var duty = 0; // 사령 0, 1, 2
+    var od = 0; // 당령 0, 1, 2
     var zodiac= (y-3)%60;
-    if(d >= point[m-1]){
-        deltaMonth += 1; 
-        dletaDate = d - point[m-1];
+    
+    deltaMonth += 1; // ex) 3월 16일 >= 3월 6일(경칩) => 묘월(4) => 3+1
+    //12월 24일 >=12월 6일 => 자월(1) => 12+1 =13 (천간을 생각해야 하므로 1로 바꾸지 않고 냅둔다)
+
+    if(d >= point[m-1]){ //생일이 생월의 절입일 이후 태어났을 때,
+        deltaDate = d - point[m-1]; // 절입일 부터 생일까지 경과된 날 수
     }
-    else{
-        dletaDate = point[m-1] - d;
+    else{ //생일이 생월의 절입일 이전에 태어났을때 생일부터 절입일 까지 경과된 날 수
+        deltaDate = (y%4===0) ? mensis2[deltaMonth-2]: mensis[deltaMonth-2]// ex) 3월 3일 < 3월 6일(경칩) => 인월(3) => 4, => 4-2 =>2월 절입일
+        deltaDate += d - point[deltaMonth-2];
+        deltaMonth -=1;
     }
 
     var temp = 12*((zodiac-1) % 5) + deltaMonth;
@@ -355,43 +372,49 @@ function zm(year, month, day){
     // 2, 5, 8, 11 (고지생 丑, 辰, 未, 戌) deltaMonth%3 == 2
     // 3, 6, 9, 12 (생지생 寅, 巳, 申, 亥) deltaMonth%3 == 0
 
-    if(m >= deltaMonth) dletaDate +=30; // dletaDate = 절입일~생일 변수 구함
+    //if(m >= deltaMonth) deltaDate +=30; // dletaDate = 절입일~생일 변수 구함
     
-    if(g==0){
-        if(dletaDate-7<0){
-            od = 0;
+    if(g==0){ // 3, 6, 9, 12 (생지생 寅, 巳, 申, 亥) deltaMonth%3 == 0
+        if(deltaDate-7<0){
+            duty = 0;
+            od = 1;
         }
-        else if(dletaDate-14<0){
+        else if(deltaDate-14<0){
+            duty = 1;
             od = 1;
         }
         else{
-            od = 2;
+            duty = 2;
+            od = 1;
         }
 
     }
-    else if(g==1){
-        if(dletaDate-10<0){
+    else if(g==1){ // 1, 4, 7, 10 (왕지생 子, 卯, 午, 酉) deltaMonth%3 == 1
+        if(deltaDate-15<0){
+            duty = 0;
             od = 0;
         }
-        else if(dletaDate-20<0){
+        else{
+            duty = (deltaMonth===7 && deltaDate-20<0) ? 1 : 2;
             od = 1;
         }
-        else{
-            od = 2;
-        }
     }
-    else{
-        if(dletaDate-9<0){
+    else{ // 2, 5, 8, 11 (고지생 丑, 辰, 未, 戌) deltaMonth%3 == 2
+        if(deltaDate-9<0){
+            duty = 0;
             od = 0;
         }
-        else if(dletaDate-12<0){
-            od = 1;
+        else if(deltaDate-12<0){
+            duty = 1;
+            od = 0;
         }
         else{
-            od = 2;
+            duty = 2;
+            od = 0;
         }
     }
-    result = [((temp-1) % 10), ((temp-1) % 12), od]; //월간, 월지, 사령번호
+    // console.log(temp, deltaMonth, deltaDate, od, duty);
+    result = [((temp-1) % 10), ((temp-1) % 12), od, duty]; //월간, 월지, 당령번호, 사령번호
 
     return result;
 }
@@ -407,7 +430,9 @@ function zd(y, m, d, h, s){
     var sec = parseInt(s);
     var lastYear = year-1;
     var endDays = 0;
-    var end = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30];
+    var end = [...mensis];
+    end.pop();
+    end.unshift(0);
 
     leap = check_leap(year);
     for(var i=1; i<year; i++){
@@ -417,7 +442,9 @@ function zd(y, m, d, h, s){
     }
 
     if(leap == true){
-        end = [0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30];
+        end = [...mensis2];
+        end.pop();
+        end.unshift(0);
     }
     
     for (var i = 1; i <= month; i++){
@@ -516,9 +543,9 @@ function when_num(check_sex, z_year, year, month, day){
     
     // length = [0:1월 ~ 11:12월]까지
     // 윤년 아닐때
-    var length = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var length = [...mensis];
     if(isLeap == true){
-        length = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        length = [...mensis2];
     }
 
     // * 순행: 이후 절입일 - 생일
@@ -555,7 +582,6 @@ function when_num(check_sex, z_year, year, month, day){
         if(after_month > 12){
             after_month -= 12;
         }
-        // console.log("이후 월 ", point[parseInt(after_month-1)]);
 
         // 순행자
         if(point[real_month-1] <= real_day){
@@ -770,9 +796,13 @@ function mens(list, x){
     var c = lall[list[(2*x-1)]].duty[1].name;
     var s = lall[list[(2*x-1)]].duty[2].name;
 
-    //console.log(r, c, s); 올바른 지장간 텍스트
-    if(c=='  ') c=s;
-    var x_men = [sall.find(e => e.name === r).id-1, sall.find(e => e.name === c).id-1, sall.find(e => e.name === s).id-1]; //이미지 파일을 읽기 위해 숫자로 변환 ex) 戊=5=> 4
+    var rem = sall.find(e => e.name === r).id-1; //여기 甲:0, 乙:1 ... 壬:8, 癸:9
+    var mid = (c !=='  ') ? sall.find(e => e.name === c).id-1 : "aa" //중기 甲:0, 乙:1 ... 壬:8, 癸:9, 
+    var std = sall.find(e => e.name === s).id-1; //정기 甲:0, 乙:1 ... 壬:8, 癸:9
+
+    //이미지 파일을 읽기 위해 숫자로 변환 ex) 戊=5=> 4
+    var x_men = [rem, mid, std]
+    
     return x_men;
 }
 
@@ -811,10 +841,7 @@ function Fortune_img_Today(){
 
     document.getElementById("debug2").innerHTML = "";
     document.getElementById("debug3").innerHTML = "";
-    document.getElementById("debug4").innerHTML = "";
-    document.getElementById("debug5").innerHTML = "";
-    document.getElementById("debug6").innerHTML = "";
-    document.getElementById("debug7").innerHTML = "";
+
 
     var todaySky = sky[sky_tag[g]-1] + " " + sky[sky_tag[e]-1] + " "  + sky[sky_tag[c]-1] + " " + sky[sky_tag[a]-1];
     var todayLand = land[land_tag[h]-1] + " " + land[land_tag[f]-1] + " " + land[land_tag[d]-1] + " " + land[land_tag[b]-1];
@@ -893,7 +920,7 @@ function this_year_coloring(startingYear, value_nowYear){
 }
 
 function Copy(){
-    var inter = document.getElementById("debug2").innerText+"\n\n"+document.getElementById("debug3").innerText+"\n"+document.getElementById("debug4").innerText+"\n"+document.getElementById("debug5").innerText+"\n"+document.getElementById("debug6").innerText+"\n"+document.getElementById("debug7").innerText;
+    var inter = document.getElementById("debug2").innerText+"\n\n"+document.getElementById("debug3").innerText;
     var str = fullName + "\n\n" +resultCopy + greatLuckCopy + "\n\n" + inter;
     CopyStringToClipboard(str);
 }
@@ -910,45 +937,6 @@ function CopyStringToClipboard (string) {
 }
 
 
-function Convert2Image(e){
-    
-    const canvas = document.getElementById("FRESH");
-    const context = canvas.getContext("2d");
-
-    context.reset();
-    const width = 500;
-    const height = 500;
-    const cw = width/2;
-    const ch = height/2;
-    context.fillStyle = "rgba(255,255,255,1)";
-    context.fillRect(0, 0, width, height);
-    context.textAlign = "center"
-    context.fillStyle = "rgba(0, 0, 0, 1)";
-    
-    context.font = "15pt 맑은고딕";
-    console.log(fullName.split(' '))
-    context.fillText(fullName.split(' ',8)[0], cw, ch-200);
-    context.fillText(fullName.slice(fullName.split(' ',8)[0].length+1, fullName.length), cw, ch-170);
-
-    // 추가
-    context.font = "22pt 맑은고딕";
-    context.fillText(resultCopy.split('\n',2)[0], cw, ch-40);
-    context.fillText(resultCopy.split('\n',2)[1], cw, ch);
-
-    context.fillText(greatLuckCopy.split('\n', 4)[2], cw, ch+100);
-    context.fillText(greatLuckCopy.split('\n', 4)[3], cw, ch+140);
-    
-    
-    var dataURL = canvas.toDataURL("image/png");
-    console.log(dataURL);
-    const linkEle = document.querySelector('a');
-    linkEle.download = fullName+'.png'
-    linkEle.href = dataURL;
-    linkEle.addEventListener('click', event => event.target.href = dataURL);
-
-
-    
-}
 
 function savePDF(){
     //저장 영역 div id
@@ -960,33 +948,33 @@ function savePDF(){
       scale : 2		// 기본 96dpi에서 해상도를 두 배로 증가
       
     }).then(function(canvas) {	
-      // 캔버스를 이미지로 변환
-      var imgData = canvas.toDataURL('image/png');
+        // 캔버스를 이미지로 변환
+        var imgData = canvas.toDataURL('image/png');
 
-      var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
-      var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
-      var imgHeight = canvas.height * imgWidth / canvas.width;
-      var heightLeft = imgHeight;
-      var margin = 10; // 출력 페이지 여백설정
-      var doc = new jsPDF('p', 'mm');
-      var position = 0;
+        var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
+        var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var heightLeft = imgHeight;
+        var margin = 10; // 출력 페이지 여백설정
+        var doc = new jsPDF('p', 'mm');
+        var position = 0;
 
-      // 첫 페이지 출력
-      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+        // 첫 페이지 출력
+        doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
 
-      // 한 페이지 이상일 경우 루프 돌면서 출력
-      while (heightLeft >= 20) {			// 35
-      position = heightLeft - imgHeight;
-      position = position - 20 ;		// -25
+        // 한 페이지 이상일 경우 루프 돌면서 출력
+        while (heightLeft >= 20) {			// 35
+        position = heightLeft - imgHeight;
+        position = position - 20 ;		// -25
 
-      doc.addPage();
-      doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      }
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        }
 
-      
-      // 파일 저장
-      doc.save(pdfFileName);
+        
+        // 파일 저장
+        doc.save(pdfFileName);
     });
-  }
+}

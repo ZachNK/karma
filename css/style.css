@@ -60,9 +60,10 @@ table.source{
     align-content: center;
     align-self: center;
     align-items: center;
-    width: 60%;
-    margin-left: 20%;
-    margin-right: 20%;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-bottom: 1%;
     table-layout: fixed;
 }
 
@@ -70,48 +71,63 @@ table.mens{
     align-content: center;
     align-self: center;
     align-items: center;    
-    width: 60%;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-bottom: 2%;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-bottom: 1%;
     table-layout: fixed;
 }
 #ms{
-    padding-top: 2px;
-    padding-bottom: 2px;
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
 }
 
 #ms0{
-    padding-top: 2px;
-    padding-bottom: 2px;
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
 }
 
 #ms1{
     /* padding-left: 20%;
     padding-right: 20%; */
-    padding-top: 2px;
-    padding-bottom: 2px;
+    /* padding-top: 2px;
+    padding-bottom: 2px; */
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
 }
 
 #ms2{
-    padding-top: 2px;
-    padding-bottom: 2px;
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
 }
 
 #time0, #time1, #time2, #day0, #day1, #day2, #month0, #month1, #month2, #year0, #year1, #year2{
-    max-width: 50px;
-    max-height: 50px;
-    width: auto;
-    height: auto;
+    /* padding-top: 2px;
+    padding-bottom: 2px; */
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    table-layout: fixed;
 }
 
 table.variety{
     align-content: center;
     align-self: center;
     align-items: center;
-    width: 60%;
-    margin-left: 20%;
-    margin-right: 20%;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
     table-layout: fixed;
 }
 
@@ -119,25 +135,16 @@ table.tenyears{
     align-content: center;
     align-self: center;
     align-items: center;    
-    width: 60%;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-bottom: 2%;
-    table-layout: fixed;
-}
-
-table.Fortune_Say{
-    text-align: center;
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
     table-layout: fixed;
 }
 
 th{
     text-align: center;
     display: table-cell;
-    font-size: 15px;
+    font-size: 5px;
 }
 
 
@@ -149,7 +156,7 @@ td{
 }
 
 img{
-    width: 75%;
+    width: 50%;
 }
 
 canvas.tutorial{
@@ -158,4 +165,13 @@ canvas.tutorial{
     align-items: center;    
     width: 100%;
 
+}
+
+#debug2, #debug3, #debug4{
+    align-content: center;
+    text-align: center;
+    align-self: center;
+    align-items: center; 
+    margin-top: 10px;
+    font-size: 12px;
 }

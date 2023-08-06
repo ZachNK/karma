@@ -119,17 +119,22 @@ function p_img(x){
     return src;
 }
 
+
 function Fortune_img(){
     great_luck_refresh(false);
     nameText = document.getElementById("name").value;
+    
     var yyyy = document.getElementById("year_msg").value;
-    var md = document.getElementById("monthday_msg").value
+    var md = document.getElementById("monthday_msg").value;
     var mm = md.substring(0,2).toString().padStart(2, '0');
     var dd = md.substring(2,4).toString().padStart(2, '0');
 
-    var hm = document.getElementById("hourmin_msg").value;
-    var hh = hm.substring(0,2).toString().padStart(2, '0');
-    var min = hm.substring(2,4).toString().padStart(2, '0');
+    var wholeTime = document.getElementById("time_msg").value;
+    
+    var hh = wholeTime.substring(0,2).toString().padStart(2, '0');
+    var min = wholeTime.substring(2,4).toString().padStart(2, '0');
+
+    console.log(wholeTime);
 
     var sexVar = document.querySelector('input[name="sex"]').checked;
     var thisSex = "";

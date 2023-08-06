@@ -24,16 +24,10 @@
         <input type="radio" id="select2" name="char" value="oracle">
         <label for="select2">갑골문</label>
     </h2>
-    <h2>
-        <ul>
-            <li>Today Check</li><li><input type="checkbox" id="today_check" onclick="is_checked()"/></li>
-        </ul>
-        
-    </h2>
-    
+    <h2>Today Check &nbsp;&nbsp;<input type="checkbox" id="today_check" onclick="is_checked()"/></h2>
     <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
         <thead>
-            <th style="margin: 0 auto; text-align: center; font-size: 15px;">
+            <th style="margin: 0 auto; text-align: center; font-size: 12px;">
                 <input type="radio" id="Choice1" name="sex" value="male" checked>
                 <label for="Choice1">Male</label>
                 <input type="radio" id="Choice2" name="sex" value="female">
@@ -41,32 +35,22 @@
             </th>
         </thead>
         <tbody>
-            
             <tr>
-                <td><input type="text" id="name" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="이름"/></td>
+                <td><input type="text" id="name" style="font-size: 12px; text-align:center; width:300px; height:25px;" placeholder="이름 (생략 가능)"/></td>
             </tr>
             <tr>
-                <td><input type="number" min="1" max="9999" id="year_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)"  autofocus/></td>
+                <td><input type="number" min="1" max="9999" id="year_msg" style="font-size: 12px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)" autofocus/></td>
             </tr>
             <tr>
-                <td><input type="number" min="101" max="1231" id="monthday_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></td>
+                <td><input type="number" min="01" max="1231" id="monthday_msg" style="font-size: 12px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></td>
             </tr>
             <tr>
-                <td><input type="number" min="0" max="2359" id="hourmin_msg" style="font-size: 18px; text-align:center; width:300px; height:25px;" placeholder="출생시분 (hhmm)"/></td>
-            </tr>
-            <tr>
-                
-            </tr>
-            
-        </tbody>
-        <tbody>
-            <tr>
-                
+                <td><input type="number" min="0" max="2359" id="time_msg" style="font-size: 12px; text-align:center; width:300px; height:25px;" placeholder="출생시 출생분 (HHMM)"/></td>
             </tr>
         </tbody>
         <tbody>
             <tr>
-                <td><button onclick="Fortune_img(); DecideTell();"  style="font-size: 18px; text-align:center; width:300px; height: 40px; font-weight: bold;">Search</button></td>
+                <td><button onclick="Fortune_img(); DecideTell();"  style="font-size: 12px; font-weight: 750; text-align:center; width:300px; height: 28px;">입력</button></td>
             </tr>
         </tbody>
     </table>
@@ -77,52 +61,34 @@
         </thead>
         <tbody>
             <tr>
-                <td><button onClick="Copy()" style="font-size: 18px; text-align:center; width:150px; height: 30px;">Copy Text</button></td>
-                <td><button  onclick="savePDF()" style="font-size: 18px; text-align:center;width:150px;  height: 30px;">Download PDF</button></td>
+                <td><button onClick="Copy()" style="font-size: 12px; font-weight: 750; text-align:center; width:150px; height: 28px;">텍스트 복사</button></td>
+                <td><button  onclick="savePDF()" style="font-size: 12px; font-weight: 750; text-align:center;width:150px;  height: 28px;">PDF 다운로드</button></td>
             </tr>
             <tr>
-                <td><button onClick="Fortune_img_Today()" style="font-size: 18px; text-align:center; width:150px;  height: 30px;">Day Fortune</button></td>
-                <td><button  onclick="ShowRow()" style="font-size: 18px; text-align:center; width:150px; height: 30px;">지장간</button></td>
+                <td><button onClick="Fortune_img_Today()" style="font-size: 12px; font-weight: 750; text-align:center; width:150px;  height: 28px;">일진보기</button></td>
+                <td><button  onclick="ShowRow()" style="font-size: 12px; font-weight: 750; text-align:center; width:150px; height: 28px;">지장간</button></td>
             </tr>
         </tbody>
     </table>
+
     <div id="pdfArea">
-        <ul>
-            <li>
-                <div id="debug4" ></div>
-            </li>
-        </ul>
-        <h2>
-            <div id="debug1" style="margin-top: 10px;"></div>
-        </h2>
+        <ul><li><h6><div id="debug4" ></div></h6></li></ul>
+        <h2><div id="debug1" style="margin-top: 10px;"></div></h2>
         <table class="source" >
             <thead>
-                <tr>
-                    <th id="LIST0"></th><th id="LIST1"></th><th id="LIST2"></th><th id="LIST3"></th>
-                </tr>
+                <tr><th id="LIST0"></th><th id="LIST1"></th><th id="LIST2"></th><th id="LIST3"></th></tr>
             </thead>
-            
             <tbody>
-                <tr>
-                    <td id="time_sky"><img id="SKY0" src=""/></td><td id="day_sky"><img id="SKY1" src=""/></td><td id="month_sky"><img id="SKY2" src=""/></td><td id="year_sky"><img id="SKY3" src=""/></td>
-                </tr>
-                <tr>
-                    <td id="time_land"><img id="LAND0" src=""/></td><td id="day_land"><img id="LAND1" src=""/></td><td id="month_land"><img id="LAND2" src=""/></td><td id="year_land"><img id="LAND3" src=""/></td>
-                </tr>
+                <tr><td id="time_sky"><img id="SKY0" src=""/></td><td id="day_sky"><img id="SKY1" src=""/></td><td id="month_sky"><img id="SKY2" src=""/></td><td id="year_sky"><img id="SKY3" src=""/></td></tr>
+                <tr><td id="time_land"><img id="LAND0" src=""/></td><td id="day_land"><img id="LAND1" src=""/></td><td id="month_land"><img id="LAND2" src=""/></td><td id="year_land"><img id="LAND3" src=""/></td></tr>
             </tbody>
         </table>
             
         <table class="mens" id="source_men" style="display: none">
             <tbody>
-                <tr>
-                    <td id="ms"><img id="time0" src=""/></td><td id="ms"><img id="day0" src=""/></td><td id="ms0"><img id="month0" src=""/></td><td id="ms"><img id="year0" src=""/></td>
-                </tr>
-                <tr>
-                    <td id="ms"><img id="time1" src=""/></td><td id="ms"><img id="day1" src=""/></td><td id="ms1"><img id="month1" src=""/></td><td id="ms"><img id="year1" src=""/></td>
-                </tr>
-                <tr>
-                    <td id="ms"><img id="time2" src=""/></td><td id="ms"><img id="day2" src=""/></td><td id="ms2"><img id="month2" src=""/></td><td id="ms"><img id="year2" src=""/></td>
-                </tr>
+                <tr><td id="ms"><img id="time0" src=""/></td><td id="ms"><img id="day0" src=""/></td><td id="ms0"><img id="month0" src=""/></td><td id="ms"><img id="year0" src=""/></td></tr>
+                <tr><td id="ms"><img id="time1" src=""/></td><td id="ms"><img id="day1" src=""/></td><td id="ms1"><img id="month1" src=""/></td><td id="ms"><img id="year1" src=""/></td></tr>
+                <tr><td id="ms"><img id="time2" src=""/></td><td id="ms"><img id="day2" src=""/></td><td id="ms2"><img id="month2" src=""/></td><td id="ms"><img id="year2" src=""/></td></tr>
             </tbody>
         </table>
 
@@ -178,17 +144,16 @@
                 </tr>
             </tbody>
         </table>
-        
-        <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
+        <table class="Telling">
             <thead>
                 <th></th>
             </thead>
             <tbody>
                 <tr>
-                    <td><div id="debug2" style="font-size:small; font-weight: 900; width:500px; margin:0 auto;"></div></td>
+                    <td><div class="Title1" id="debug2"></div></td>
                 </tr>
                 <tr>
-                    <td><div id="debug3" style="font-size:small; width:500px; margin:0 auto;"></div></td>
+                    <td><div class="Content1" id="debug3"></div></td>
                 </tr>
             </tbody>
         </table>

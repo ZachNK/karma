@@ -4,17 +4,13 @@ html, body {
 }
 body {
 	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	/* margin: 0; */
 	padding: 0;
 	width: 100%;
 	margin: 0 auto;
     align-items: center;
-    height: 100vh;
+
 }
 ul{
-    text-align: center;
-    float: center;
     list-style: none;
     margin-top: 3px;
     margin-bottom: 3px;
@@ -60,9 +56,9 @@ table.source{
     align-content: center;
     align-self: center;
     align-items: center;
-    width: 50%;
-    margin-left: 25%;
-    margin-right: 25%;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
     margin-bottom: 1%;
     table-layout: fixed;
 }
@@ -71,47 +67,14 @@ table.mens{
     align-content: center;
     align-self: center;
     align-items: center;    
-    width: 50%;
-    margin-left: 25%;
-    margin-right: 25%;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
     margin-bottom: 1%;
     table-layout: fixed;
 }
-#ms{
-    max-width: 100px;
-    max-height: 100px;
-    width: auto;
-    height: auto;
-}
-
-#ms0{
-    max-width: 100px;
-    max-height: 100px;
-    width: auto;
-    height: auto;
-}
-
-#ms1{
-    /* padding-left: 20%;
-    padding-right: 20%; */
-    /* padding-top: 2px;
-    padding-bottom: 2px; */
-    max-width: 100px;
-    max-height: 100px;
-    width: auto;
-    height: auto;
-}
-
-#ms2{
-    max-width: 100px;
-    max-height: 100px;
-    width: auto;
-    height: auto;
-}
 
 #time0, #time1, #time2, #day0, #day1, #day2, #month0, #month1, #month2, #year0, #year1, #year2{
-    /* padding-top: 2px;
-    padding-bottom: 2px; */
     align-content: center;
     align-self: center;
     align-items: center;
@@ -125,9 +88,9 @@ table.variety{
     align-content: center;
     align-self: center;
     align-items: center;
-    width: 40%;
-    margin-left: 30%;
-    margin-right: 30%;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
     table-layout: fixed;
 }
 
@@ -135,28 +98,40 @@ table.tenyears{
     align-content: center;
     align-self: center;
     align-items: center;    
-    width: 40%;
-    margin-left: 30%;
-    margin-right: 30%;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
     table-layout: fixed;
 }
 
 th{
     text-align: center;
     display: table-cell;
-    font-size: 5px;
+    font-size: 1px;
+}
+
+th#LIST0, #LIST1, #LIST2, #LIST3{
+    font-size: 15px;
 }
 
 
 td{
+    font-size: 8px;
     text-align: center;
-    font-size: 15px;
-    font-weight: 10px;
-    display: table-cell;
+}
+
+td#time_sky, #day_sky, #month_sky, #year_sky, #time_land, #day_land, #month_land, #year_land{
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    width: 10%;
+    margin-left: 45%;
+    margin-right: 45%;
+    table-layout: fixed;
 }
 
 img{
-    width: 40%;
+    width: 60%;
 }
 
 canvas.tutorial{
@@ -166,3 +141,27 @@ canvas.tutorial{
     width: 100%;
 
 }
+
+table.Telling{
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    table-layout: fixed;
+    
+}
+
+td.Title1{
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    text-align: center;
+    font-size:small; 
+    font-weight: 900; 
+    width:500px; 
+    margin:0 auto;
+}
+ 
+td.Content1{
+    text-align: left;
+    margin:0 auto;
+} 

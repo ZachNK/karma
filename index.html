@@ -36,21 +36,21 @@
         </thead>
         <tbody>
             <tr>
-                <td><input type="text" id="name" style="font-size: 12px; text-align:center; width:300px; height:25px;" placeholder="이름 (생략 가능)"/></td>
+                <td><div><input type="text" id="name" style="font-size: 20px; text-align:center; width:300px; height:25px;" placeholder="이름 (생략 가능)"/></div></td>
             </tr>
             <tr>
-                <td><input type="number" min="1" max="9999" id="year_msg" style="font-size: 12px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)" autofocus/></td>
+                <td><div><input type="number" min="1" max="9999" id="year_msg" style="font-size: 20px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)" autofocus/></div></td>
             </tr>
             <tr>
-                <td><input type="number" min="01" max="1231" id="monthday_msg" style="font-size: 12px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></td>
+                <td><div><input type="number" min="01" max="1231" id="monthday_msg" style="font-size: 20px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></div></td>
             </tr>
             <tr>
-                <td><input type="number" min="0" max="2359" id="time_msg" style="font-size: 12px; text-align:center; width:300px; height:25px;" placeholder="출생시 출생분 (HHMM)"/></td>
+                <td><div><input type="number" min="0" max="2359" id="time_msg" style="font-size: 20px; text-align:center; width:300px; height:25px;" placeholder="출생시 출생분 (HHMM)"/></div></td>
             </tr>
         </tbody>
         <tbody>
             <tr>
-                <td><button onclick="Fortune_img(); DecideTell();"  style="font-size: 12px; font-weight: 750; text-align:center; width:300px; height: 28px;">입력</button></td>
+                <td><div><button tabindex="0" onclick="Fortune_img(); DecideTell();"  style="font-size: 20px; font-weight: 750; text-align:center; width:300px; height: 28px;">입력</button></div></td>
             </tr>
         </tbody>
     </table>
@@ -61,19 +61,19 @@
         </thead>
         <tbody>
             <tr>
-                <td><button onClick="Copy()" style="font-size: 12px; font-weight: 750; text-align:center; width:150px; height: 28px;">텍스트 복사</button></td>
-                <td><button  onclick="savePDF()" style="font-size: 12px; font-weight: 750; text-align:center;width:150px;  height: 28px;">PDF 다운로드</button></td>
+                <td><button onClick="Copy()" style="font-size: 16px; font-weight: 750; text-align:center; width:150px; height: 28px;">텍스트 복사</button></td>
+                <td><button onclick="savePDF()" style="font-size: 16px; font-weight: 750; text-align:center;width:150px;  height: 28px;">PDF 다운로드</button></td>
             </tr>
             <tr>
-                <td><button onClick="Fortune_img_Today()" style="font-size: 12px; font-weight: 750; text-align:center; width:150px;  height: 28px;">일진보기</button></td>
-                <td><button  onclick="ShowRow()" style="font-size: 12px; font-weight: 750; text-align:center; width:150px; height: 28px;">지장간</button></td>
+                <td><button onClick="Fortune_img_Today()" style="font-size: 16px; font-weight: 750; text-align:center; width:150px;  height: 28px;">일진보기</button></td>
+                <td><button onclick="ShowRow()" style="font-size: 16px; font-weight: 750; text-align:center; width:150px; height: 28px;">지장간</button></td>
             </tr>
         </tbody>
     </table>
 
     <div id="pdfArea">
         <ul><li><h6><div id="debug4" ></div></h6></li></ul>
-        <h2><div id="debug1" style="margin-top: 10px;"></div></h2>
+        <h2><div id="debug1" style="margin-top: 16px;"></div></h2>
         <table class="source" >
             <thead>
                 <tr><th id="LIST0"></th><th id="LIST1"></th><th id="LIST2"></th><th id="LIST3"></th></tr>
@@ -144,16 +144,16 @@
                 </tr>
             </tbody>
         </table>
-        <table class="Telling">
+        <table class="Telling" >
             <thead>
                 <th></th>
             </thead>
             <tbody>
                 <tr>
-                    <td><div class="Title1" id="debug2"></div></td>
+                    <td><div class="Title1" id="debug2" style="font-size: 14px; font-weight: 700;"></div></td>
                 </tr>
                 <tr>
-                    <td><div class="Content1" id="debug3"></div></td>
+                    <td><div class="Content1" id="debug3" style="font-size: 12px;"></div></td>
                 </tr>
             </tbody>
         </table>

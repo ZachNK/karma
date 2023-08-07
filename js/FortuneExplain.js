@@ -96,6 +96,7 @@ function DecideTell(){
     var monthb = Number(out('month_land')[1]);
     var yearb = Number(out('year_land')[1]);
     
+    
     var yyyy = document.getElementById("year_msg").value;
     var md = document.getElementById("monthday_msg").value;
     var mm = md.substring(0,2).toString().padStart(2, '0');
@@ -130,13 +131,15 @@ function DecideTell(){
                         days, 
                         months, 
                         years,
-                        skyTag.find(e => e.name === use.tag).id
+                        landTag[monthb-1].duty[2].idN // 월지 정기 지장간은 천간과 같다.
                     ];
     
     //console.log(ideaSet); // 천간 4개와 월지의 월령 배열로 얻음, 월령용신이 맨 뒤
     let myID = ideaSet[1]; // 일간에 해당되는 용희신을 myString에 할당
+    console.log("myID ", myID);
 
-    let orderID = ideaSet.pop(); // result배열의 맨 마지막에 있는 월령을 빼고, orderString에 할당시킴
+    let orderID = skyTag.find(e => e.name === use.tag).id; 
+    
 
     let set = ideaSet.filter((item, index) => ideaSet.indexOf(item) === index); // set 배열에는, 월령을 제외하고, 천간 중에 중복된 값을 뺀 새로운 배열
     
@@ -201,14 +204,18 @@ function DecideTell(){
     for(var i=0; i< wSet.length; i++){
         if((wSet[i].id%3) === 0){ //생지 일때
             subSet.push(wSet[i].duty[2].idN);
-            // console.log('생지 정기', objSet[i].duty[2].idN);
+            // console.log('생지 정기', wSet[i].duty[2].idN);
         }
 
         if((wSet[i].id%3) === 1){ //왕지 일때
             subSet.push(wSet[i].duty[0].idN);
             subSet.push(wSet[i].duty[2].idN);
-            // console.log('왕지 여기', objSet[i].duty[0].idN);
-            // console.log('왕지 정기', objSet[i].duty[2].idN);
+            // console.log('왕지 여기', wSet[i].duty[0].idN);
+            // console.log('왕지 정기', wSet[i].duty[2].idN);
+        }
+
+        if((wSet[i].id%3) === 2){
+            subSet.push(wSet[i].duty[2].idN);
         }
     }
     // idea = 모든 천간, set = 중복 제거 천간, inSet = 모든 지장간, subSet = 정기 지장간, 왕지 여기 지장간, setT[1] 월지삼합으로쓰는 setS[1] 월지방합으로쓰는 지장간, otherT[1] 월지 외 삼합 쓰는 지장간, otherS[1] 월지 외 방합 쓰는 지장간
@@ -236,24 +243,42 @@ function DecideTell(){
     // console.log('nowGod', nowGod); //용신에 맞는 희신 맞게 할당 되었는지 확인
 
     let check1 = [...set];
-    let check2 = check1.concat(combineSet); 
+    let allIdea = check1.concat(combineSet); 
 
-    let difference = inSet.filter(x => !check2.includes(x));
-    difference = [...difference.filter((i, inx)=> difference.indexOf(i) === inx)];
+    let potential = inSet.filter(x => !allIdea.includes(x));
+    potential = [...potential.filter((i, inx)=> potential.indexOf(i) === inx)];
 
     // 모든 지장간 (생지 여기 무토 제거)
     console.log("모든 지장간 ", inSet);
+
+    //구응성패, 생화극제용
+    console.log("근 유무 ", inSet.find(e => skyTag[e-1].type !== skyTag[myID-1].type));
+
     // 사용가능한 천간 
     console.log("사용가능한 천간 ", set);
+
+    //구응성패, 생화극제용
+    let p_allIdea = [...set];
+    p_allIdea.splice(0,1);
+    console.log("일간 제외 사용가능한 천간 ", p_allIdea);
+
     // 사용가능한 지장간 (천간과도 중복 제거)
     console.log("사용가능한 지장간 (천간과도 중복 제거) ", combineSet);
+    
+    //구응성패, 생화극제용
+    let p_al2 = [...combineSet];
+    let p_allIdea2 = p_al2.filter(e => skyTag[e-1].type !== skyTag[myID-1].type);
+    
+    console.log("근 제외 사용가능한 지장간  ", p_allIdea2, skyTag[myID-1].type);
+
+
     //천간, 지장간의 사용 가능한 용희신 모두 합, (중복 없음)
-    console.log("천간, 지장간의 사용 가능한 용희신 모두 합, (중복 없음) ", check2);
+    console.log("천간, 지장간의 사용 가능한 용희신 모두 합, (중복 없음) ", allIdea);
     //대기상태 지장간의 용희신 모두 합, (중복 없음)
-    console.log("사용 대기 용희신 지장간, (중복 없음) ", difference);
+    console.log("사용 대기 용희신 지장간, (중복 없음) ", potential);
     
 
-    var isTalent = check2.find(e => e === nowGod);
+    var isTalent = allIdea.find(e => e === nowGod);
     
     /****************************************************debugging***************************************************************/
 
@@ -266,7 +291,7 @@ function DecideTell(){
 
     let skySetKey = [...set];
     let landSetKey = [...combineSet];
-    let potKey = [...difference];
+    let potKey = [...potential];
     console.log("천간에 해석할 용신 희기신 ", skySetKey);
     console.log("지지에 해석할 용신 희기신 ", landSetKey);
 
@@ -303,8 +328,8 @@ function DecideTell(){
         msg1 = `(${skyTag[orderID-1].name}${skyTag[nowGod-1].name}) ${useSet[nowGod-1].key}`;
         subMsg.push(msg1);
     }
-    else if(difference.find(e => useSet[e-1].god === "희신") !== undefined){
-        nowGod = difference.find(e => useSet[e-1].god === "희신");
+    else if(potential.find(e => useSet[e-1].god === "희신") !== undefined){
+        nowGod = potential.find(e => useSet[e-1].god === "희신");
         potKey.splice(potKey.indexOf(nowGod), 1);
         msg1 = `(${skyTag[orderID-1].name}${skyTag[nowGod-1].name}△) ${useSet[nowGod-1].key}`;
         potenMsg.push(msg1);
@@ -319,19 +344,19 @@ function DecideTell(){
     if(set.find(e => useSet[e-1].god === "지속") !== undefined){
         befGod = set.find(e => useSet[e-1].god === "지속");
         skySetKey.splice(skySetKey.indexOf(befGod), 1);
-        msg2 = `(${skyTag[befGod-1].name}${skyTag[orderID-1].name}${skyTag[nowGod-1].name}) ${useSet[befGod-1].key}`;
+        msg2 = `(${skyTag[befGod-1].name}${skyTag[orderID-1].name}) ${useSet[befGod-1].key}`;
         mainMsg.push(msg2);
     }
     else if(combineSet.find(e => useSet[e-1].god === "지속") !== undefined){
         befGod = combineSet.find(e => useSet[e-1].god === "지속");
         landSetKey.splice(landSetKey.indexOf(befGod), 1);
-        msg2 = `(${skyTag[befGod-1].name}${skyTag[orderID-1].name}${skyTag[nowGod-1].name}) ${useSet[befGod-1].key}`;
+        msg2 = `(${skyTag[befGod-1].name}${skyTag[orderID-1].name}) ${useSet[befGod-1].key}`;
         subMsg.push(msg2);
     }
-    else if(difference.find(e => useSet[e-1].god === "지속") !== undefined){
-        befGod = difference.find(e => useSet[e-1].god === "지속");
+    else if(potential.find(e => useSet[e-1].god === "지속") !== undefined){
+        befGod = potential.find(e => useSet[e-1].god === "지속");
         potKey.splice(potKey.indexOf(befGod), 1);
-        msg2 = `(${skyTag[befGod-1].name}${skyTag[orderID-1].name}${skyTag[nowGod-1].name}△) ${useSet[befGod-1].key}`;
+        msg2 = `(${skyTag[befGod-1].name}${skyTag[orderID-1].name}△) ${useSet[befGod-1].key}`;
         potenMsg.push(msg2);
     }
     else{
@@ -344,19 +369,19 @@ function DecideTell(){
     if(set.find(e => useSet[e-1].god === "중화1") !== undefined){
         knowGod = set.find(e => useSet[e-1].god === "중화1");
         skySetKey.splice(skySetKey.indexOf(knowGod), 1);
-        msg3 = `(${skyTag[orderID-1].name}${skyTag[knowGod-1].name}) ${useSet[knowGod-1].key}`;
+        msg3 = `(${skyTag[knowGod-1].name}${skyTag[orderID-1].name}) ${useSet[knowGod-1].key}`;
         mainMsg.push(msg3);
     }
     else if(combineSet.find(e => useSet[e-1].god === "중화1") !== undefined){
         knowGod = combineSet.find(e => useSet[e-1].god === "중화1");
         landSetKey.splice(landSetKey.indexOf(knowGod), 1);
-        msg3 = `(${skyTag[orderID-1].name}${skyTag[knowGod-1].name}) ${useSet[knowGod-1].key}`;
+        msg3 = `(${skyTag[knowGod-1].name}${skyTag[orderID-1].name}) ${useSet[knowGod-1].key}`;
         subMsg.push(msg3);
     }
-    else if(difference.find(e => useSet[e-1].god === "중화1") !== undefined){
-        knowGod = difference.find(e => useSet[e-1].god === "중화1");
+    else if(potential.find(e => useSet[e-1].god === "중화1") !== undefined){
+        knowGod = potential.find(e => useSet[e-1].god === "중화1");
         potKey.splice(potKey.indexOf(knowGod), 1);
-        msg3 = `(${skyTag[orderID-1].name}${skyTag[knowGod-1].name}△) ${useSet[knowGod-1].key}`;
+        msg3 = `(${skyTag[knowGod-1].name}${skyTag[orderID-1].name}△) ${useSet[knowGod-1].key}`;
         potenMsg.push(msg3);
     }
     else{
@@ -369,19 +394,19 @@ function DecideTell(){
     if(set.find(e => useSet[e-1].god === "확장") !== undefined){
         nextGod = set.find(e => useSet[e-1].god === "확장");
         skySetKey.splice(skySetKey.indexOf(nextGod), 1);
-        msg4 = `(${skyTag[orderID-1].name}${skyTag[nowGod-1].name}${skyTag[nextGod-1].name}) ${useSet[nextGod-1].key}`;
+        msg4 = `(${skyTag[orderID-1].name}${skyTag[nextGod-1].name}) ${useSet[nextGod-1].key}`;
         mainMsg.push(msg4);
     }
     else if(combineSet.find(e => useSet[e-1].god === "확장") !== undefined){
         nextGod = combineSet.find(e => useSet[e-1].god === "확장");
         landSetKey.splice(landSetKey.indexOf(nextGod), 1);
-        msg4 = `(${skyTag[orderID-1].name}${skyTag[nowGod-1].name}${skyTag[nextGod-1].name}) ${useSet[nextGod-1].key}`;
+        msg4 = `(${skyTag[orderID-1].name}${skyTag[nextGod-1].name}) ${useSet[nextGod-1].key}`;
         subMsg.push(msg4);
     }
-    else if(difference.find(e => useSet[e-1].god === "확장") !== undefined){
-        nextGod = difference.find(e => useSet[e-1].god === "확장");
+    else if(potential.find(e => useSet[e-1].god === "확장") !== undefined){
+        nextGod = potential.find(e => useSet[e-1].god === "확장");
         potKey.splice(potKey.indexOf(nextGod), 1);
-        msg4 = `(${skyTag[orderID-1].name}${skyTag[nowGod-1].name}${skyTag[nextGod-1].name}△) ${useSet[nextGod-1].key}`;
+        msg4 = `(${skyTag[orderID-1].name}${skyTag[nextGod-1].name}△) ${useSet[nextGod-1].key}`;
         potenMsg.push(msg4);
     }
     else{
@@ -400,17 +425,17 @@ function DecideTell(){
     if(set.find(e => useSet[e-1].god === "기신1") !== undefined){
         let x = set.find(e => useSet[e-1].god === "기신1");
         skySetKey.splice(skySetKey.indexOf(x), 1);
-        xmsg1 = `(${skyTag[x-1].name}${skyTag[nowGod-1].name}${(isTalent === undefined) ? "X" : "O"}) ${useSet[x-1].key}`;
+        xmsg1 = `(${skyTag[x-1].name}${skyTag[nowGod-1].name}) ${useSet[x-1].key}`;
         mainMsg.push(xmsg1);
     }
     else if(combineSet.find(e => useSet[e-1].god === "기신1") !== undefined){
         let x = combineSet.find(e => useSet[e-1].god === "기신1");
         landSetKey.splice(landSetKey.indexOf(x), 1);
-        xmsg1 = `(${skyTag[x-1].name}${skyTag[nowGod-1].name}${(isTalent === undefined) ? "X" : "O"}) ${useSet[x-1].key}`;
+        xmsg1 = `(${skyTag[x-1].name}${skyTag[nowGod-1].name}) ${useSet[x-1].key}`;
         subMsg.push(xmsg1);
     }
-    else if(difference.find(e => useSet[e-1].god === "기신1") !== undefined){
-        let x = difference.find(e => useSet[e-1].god === "기신1");
+    else if(potential.find(e => useSet[e-1].god === "기신1") !== undefined){
+        let x = potential.find(e => useSet[e-1].god === "기신1");
         potKey.splice(potKey.indexOf(x), 1);
         xmsg1 = `(${skyTag[x-1].name}${skyTag[nowGod-1].name}△) ${useSet[x-1].key}`;
         potenMsg.push(xmsg1);
@@ -432,8 +457,8 @@ function DecideTell(){
         xmsg2 = `(${skyTag[orderID-1].name}${skyTag[x-1].name}) ${useSet[x-1].key}`;
         subMsg.push(xmsg2);
     }
-    else if(difference.find(e => useSet[e-1].god === "기신2") !== undefined){
-        let x = difference.find(e => useSet[e-1].god === "기신2");
+    else if(potential.find(e => useSet[e-1].god === "기신2") !== undefined){
+        let x = potential.find(e => useSet[e-1].god === "기신2");
         potKey.splice(potKey.indexOf(x), 1);
         xmsg2 = `(${skyTag[orderID-1].name}${skyTag[x-1].name}△) ${useSet[x-1].key}`;
         potenMsg.push(xmsg2);
@@ -446,19 +471,19 @@ function DecideTell(){
     if(set.find(e => useSet[e-1].god === "중화2") !== undefined){
         let x = set.find(e => useSet[e-1].god === "중화2");
         skySetKey.splice(skySetKey.indexOf(x), 1);
-        xmsg3 = `(${skyTag[orderID-1].name}${skyTag[x-1].name}) ${useSet[x-1].key}`;
+        xmsg3 = `(${skyTag[x-1].name}${skyTag[orderID-1].name}) ${useSet[x-1].key}`;
         mainMsg.push(xmsg3);
     }
     else if(combineSet.find(e => useSet[e-1].god === "중화2") !== undefined){
         let x = combineSet.find(e => useSet[e-1].god === "중화2");
         landSetKey.splice(landSetKey.indexOf(x), 1);
-        xmsg3 = `(${skyTag[orderID-1].name}${skyTag[x-1].name}) ${useSet[x-1].key}`;
+        xmsg3 = `(${skyTag[x-1].name}${skyTag[orderID-1].name}) ${useSet[x-1].key}`;
         subMsg.push(xmsg3);
     }
-    else if(difference.find(e => useSet[e-1].god === "중화2") !== undefined){
-        let x = difference.find(e => useSet[e-1].god === "중화2");
+    else if(potential.find(e => useSet[e-1].god === "중화2") !== undefined){
+        let x = potential.find(e => useSet[e-1].god === "중화2");
         potKey.splice(potKey.indexOf(x), 1);
-        xmsg3 = `(${skyTag[orderID-1].name}${skyTag[x-1].name}△) ${useSet[x-1].key}`;
+        xmsg3 = `(${skyTag[x-1].name}${skyTag[orderID-1].name}△) ${useSet[x-1].key}`;
         potenMsg.push(xmsg3);
     }
     else{
@@ -478,8 +503,8 @@ function DecideTell(){
         umsg1 = `(${skyTag[x-1].name}${skyTag[nowGod-1].name}) ${useSet[x-1].key}`;
         subMsg.push(umsg1);
     }
-    else if(difference.find(e => useSet[e-1].god === "한신1") !== undefined){
-        let x = difference.find(e => useSet[e-1].god === "한신1");
+    else if(potential.find(e => useSet[e-1].god === "한신1") !== undefined){
+        let x = potential.find(e => useSet[e-1].god === "한신1");
         potKey.splice(potKey.indexOf(x), 1);
         umsg1 = `(${skyTag[x-1].name}${skyTag[nowGod-1].name}△) ${useSet[x-1].key}`;
         potenMsg.push(umsg1);
@@ -501,10 +526,10 @@ function DecideTell(){
         umsg2 = `(${skyTag[orderID-1].name}${skyTag[x-1].name}) ${useSet[x-1].key}`;
         subMsg.push(umsg2);
     }
-    else if(difference.find(e => useSet[e-1].god === "한신2") !== undefined){
-        let x = difference.find(e => useSet[e-1].god === "한신2");
+    else if(potential.find(e => useSet[e-1].god === "한신2") !== undefined){
+        let x = potential.find(e => useSet[e-1].god === "한신2");
         potKey.splice(potKey.indexOf(x), 1);
-        umsg2 = `(${skyTag[orderID-1].name}${skyTag[x-1].name}) ${useSet[x-1].key}`;
+        umsg2 = `(${skyTag[orderID-1].name}${skyTag[x-1].name}△) ${useSet[x-1].key}`;
         potenMsg.push(umsg2);
     }
     else{
@@ -635,7 +660,7 @@ function DecideTell(){
 
     /****************************************************debugging***************************************************************/
     // 
-    // 격
+    // 구응성패
     let s = roles[frameSet[0]]
     let rs = roles[frameSet[0]-1].mr.find(e => e.id == frameSet[1]-1).tag
     console.log(frame.find(e => e.tag === rs).fr);
@@ -645,7 +670,179 @@ function DecideTell(){
     frameSet.push(frame.find(e => e.tag === rs).C);
     frameSet.push(frame.find(e => e.tag === rs).D);
     
+    // frameSet = 일간id, 격용신id, 격국, 상신, 구신기신, 상신기신, 구신
+    console.log(frameSet);
     
+    // 생화극제용, 사용가능 일간 제외 천간 (p_allIdea) + 근 제외 지장간 (p_allIdea2)
+    let p_idea = p_allIdea.concat(p_allIdea2);
+    console.log("일간 제외 사용 가능 천간 ", p_allIdea);
+    console.log("근 제외 사용 가능 지장간 ", p_allIdea2);
+    console.log("일간과 근 제외 사용 대기 천간 지장간 ", potential);
+
+    let typeRole = [];
+    let wtypeRoe = [];
+    let untypeRole = [];
+    
+    // 상신
+    for(var i=0; i<p_allIdea.length; i++){
+        let x = skyTag[p_allIdea[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[3]){
+            typeRole.push('A');
+        }
+        
+    }
+    for(var i=0; i<p_allIdea2.length; i++){
+        let x = skyTag[p_allIdea2[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[3]){
+            wtypeRoe.push('A');
+        }
+        
+    }
+    for(var i=0; i<potential.length; i++){
+        let x = skyTag[potential[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[3]){
+            untypeRole.push('A');
+        }
+        
+    }
+    //구신
+    for(var i=0; i<p_allIdea.length; i++){
+        let x = skyTag[p_allIdea[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[6]){
+            typeRole.push('D');
+        }
+        
+    }
+    for(var i=0; i<p_allIdea2.length; i++){
+        let x = skyTag[p_allIdea2[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[6]){
+            wtypeRoe.push('D');
+        }
+        
+    }
+    for(var i=0; i<potential.length; i++){
+        let x = skyTag[potential[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[6]){
+            untypeRole.push('D');
+        }
+        
+    }
+    //상신기신
+    for(var i=0; i<p_allIdea.length; i++){
+        let x = skyTag[p_allIdea[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[5]){
+            typeRole.push('C');
+        }
+        
+    }
+    for(var i=0; i<p_allIdea2.length; i++){
+        let x = skyTag[p_allIdea2[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[5]){
+            wtypeRoe.push('C');
+        }
+        
+    }
+    for(var i=0; i<potential.length; i++){
+        let x = skyTag[potential[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[5]){
+            untypeRole.push('C');
+        }
+        
+    }
+    //구신기신
+    for(var i=0; i<p_allIdea.length; i++){
+        let x = skyTag[p_allIdea[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[4]){
+            typeRole.push('B');
+        }
+        
+    }
+    for(var i=0; i<p_allIdea2.length; i++){
+        let x = skyTag[p_allIdea2[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[4]){
+            wtypeRoe.push('B');
+        }
+        
+    }
+    for(var i=0; i<potential.length; i++){
+        let x = skyTag[potential[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[4]){
+            untypeRole.push('B');
+        }
+        
+    }
+    
+    // 활용가능 천간의 구응성패
+    console.log(typeRole);
+    // 활용가능 지지의 구응성패
+    console.log(wtypeRoe);
+    // 상태 대기 천간의 구응성패
+    console.log(untypeRole);
+
+    let roleMsg = "";
+    let uroleMsg ="";
+    
+    if(frameSet[2] === "偏官格" || frameSet[2] === "傷官格" || frameSet[2] === "羊刃格" || frameSet[2] === "建祿格"){
+        roleMsg += (typeRole.find(e => e === 'A') ? ` 상신: ${frameSet[3]}, ` : ``)
+        + (typeRole.find(e => e === 'D') ? `구신: ${frameSet[6]}, ` : ``)
+        + (typeRole.find(e => e === 'C') ? `상신기신: ${frameSet[5]}, ` : ``)
+        + (typeRole.find(e => e === 'B') ? `구신기신: ${frameSet[4]} ` : ``);
+        
+    }
+    else{
+        roleMsg += (typeRole.find(e => e === 'A') ? ` 상신 ${frameSet[3]}, ` : ``)
+        + (typeRole.find(e => e === 'D') ? `구신: ${frameSet[6]}, ` : ``)
+        + (typeRole.find(e => e === 'C') ? `상신기신: ${frameSet[5]}, ` : ``)
+        + (typeRole.find(e => e === 'B') ? `격기신: ${frameSet[4]} ` : ``);
+
+    }
+
+    if(frameSet[2] === "偏官格" || frameSet[2] === "傷官格" || frameSet[2] === "羊刃格" || frameSet[2] === "建祿格"){
+        roleMsg += (wtypeRoe.find(e => e === 'A') ? ` 지지 상신: ${frameSet[3]}, ` : ``)
+        + (wtypeRoe.find(e => e === 'D') ? `지지 구신: ${frameSet[6]}, ` : ``)
+        + (wtypeRoe.find(e => e === 'C') ? `지지 상신기신: ${frameSet[5]}, ` : ``)
+        + (wtypeRoe.find(e => e === 'B') ? `지지 구신기신: ${frameSet[4]} ` : ``);
+        
+    }
+    else{
+        roleMsg += (wtypeRoe.find(e => e === 'A') ? ` 지지 상신 ${frameSet[3]}, ` : ``)
+        + (wtypeRoe.find(e => e === 'D') ? `지지 구신: ${frameSet[6]}, ` : ``)
+        + (wtypeRoe.find(e => e === 'C') ? `지지 상신기신: ${frameSet[5]}, ` : ``)
+        + (wtypeRoe.find(e => e === 'B') ? `지지 격기신: ${frameSet[4]} ` : ``);
+
+    }
+
+    if(frameSet[2] === "偏官格" || frameSet[2] === "傷官格" || frameSet[2] === "羊刃格" || frameSet[2] === "建祿格"){
+        uroleMsg += (untypeRole.find(e => e === 'A') ? ` 상신: ${frameSet[3]}△, ` : ``)
+        + (untypeRole.find(e => e === 'D') ? `구신: ${frameSet[6]}△, ` : ``)
+        + (untypeRole.find(e => e === 'C') ? `상신기신: ${frameSet[5]}△, ` : ``)
+        + (untypeRole.find(e => e === 'B') ? `구신기신: ${frameSet[4]}△, ` : ``);
+
+    }
+    else{
+        uroleMsg += (untypeRole.find(e => e === 'A') ? ` 상신: ${frameSet[3]}△, ` : ``)
+        + (untypeRole.find(e => e === 'D') ? `구신: ${frameSet[6]}△, ` : ``)
+        + (untypeRole.find(e => e === 'C') ? `상신기신: ${frameSet[5]}△, ` : ``)
+        + (untypeRole.find(e => e === 'B') ? `격기신: ${frameSet[4]}△, ` : ``);
+
+    }
+    
+    console.log(roleMsg);
+
+
+
     /****************************************************debugging***************************************************************/
     
     let mainNotice = "";
@@ -665,8 +862,9 @@ function DecideTell(){
     
 
     document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신 통변) ※" + "<br/>" +
-    "(" + frontMsg +  frameMsg +", "+ `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간  ${frameSet[2]}`+ ") <br/>";
+    "(" + frontMsg + ") <br/>";
     
+
     //set의 길이에 따라 각각 다르게 통변 메세지 부여
 
     var addArray = ["또한 ", "그리고 ", "게다가 ", "그 외에도 ", "그 밖에도 ", "이와 더불어 "];
@@ -674,41 +872,19 @@ function DecideTell(){
 
 
     
-    if(mainMsg.length == 1){
-        document.getElementById("debug3").innerHTML += mainNotice + "<br/>" +
-        useSet[orderID-1].key + "이 요구되는 사회 환경에" + "<br/>" + 
-        mainMsg[0] + "을 삼아 재능을 발휘 하려고 합니다.";
+    document.getElementById("debug3").innerHTML = mainNotice + "<br/>" + useSet[orderID-1].key + "이 요구되는 사회 환경에" +"<br/>"
+    for(var i=0; i<mainMsg.length; i++){
+        document.getElementById("debug3").innerHTML += mainMsg[i] + " 있습니다." +"<br/>";
     }
-    else if(mainMsg.length == 2){
-        document.getElementById("debug3").innerHTML = mainNotice + "<br/>" +
-        useSet[orderID-1].key + "이 요구되는 사회 환경에" +"<br/>" + 
-        mainMsg[0] + "을 하려고 하며" +"<br/>" + 
-        mainMsg[1] + "을 삼아 재능을 발휘 하려고 합니다.";
-    }
-    else if(mainMsg.length == 3){
-        document.getElementById("debug3").innerHTML = mainNotice + "<br/>" +
-        useSet[orderID-1].key + "이 요구되는 사회 환경에" +"<br/>" +
-        mainMsg[0] + "을 하려고 합니다."+"<br/>" +
-        addArray[Math.floor(Math.random() * addArray.length)] + mainMsg[1] + "을 갖추고 있으며" +"<br/>" +
-        mainMsg[2] + "을 삼아 재능을 발휘 하려고 합니다.";
-    }
-    else{
-        document.getElementById("debug3").innerHTML = mainNotice + "<br/>" +
-        useSet[orderID-1].key + "이 요구되는 사회 환경에" +"<br/>" +
-        mainMsg[0] + "을 하려고 합니다." + "<br/>" +
-        addArray[Math.floor(Math.random() * addArray.length)] + mainMsg[1] + "을 갖추고 있으며" +"<br/>" + 
-        mainMsg[2] + "과 " + "<br/>" + mainMsg[3] +"을 삼아 재능을 발휘 하려고 합니다." + "<br/>";
-    }
+    
 
     if(subMsg.length !== 0){
-        document.getElementById("debug3").innerHTML += "실무 적으로 ";
+        document.getElementById("debug3").innerHTML += "실무 적으로, ";
     }
     
     for(var i=0; i<subMsg.length; i++){
-        if(i>0){
-            document.getElementById("debug3").innerHTML += addArray[Math.floor(Math.random() * addArray.length)];
-        }
-        document.getElementById("debug3").innerHTML += subMsg[i] + "으로도 잘 하고 있습니다." + "<br/>";
+        
+        document.getElementById("debug3").innerHTML += subMsg[i] + "도 늘 합니다." + "<br/>";
     }
 
     if(potenMsg.length !== 0){
@@ -716,26 +892,24 @@ function DecideTell(){
     }
 
     for(var i=0; i<potenMsg.length; i++){
-        if(i>0){
-            document.getElementById("debug3").innerHTML += addArray[Math.floor(Math.random() * addArray.length)];
-        }
-        document.getElementById("debug3").innerHTML += potenMsg[i] + "으로도 할 수 있습니다." + "<br/>";
+        
+        document.getElementById("debug3").innerHTML += potenMsg[i] + "도 할 수 있습니다." + "<br/>";
     }
 
     
     // 삼합 방합 충 풀이
     if(setT[0].length !==0 && setO[0].length !==0){
         document.getElementById("debug3").innerHTML += 
-        addArray[Math.floor(Math.random() * addArray.length)] + "자신의 실력이 더 좋아지고 자신의 전문 기술력이 점점 발전됩니다. " + "<br/>" 
+        addArray[Math.floor(Math.random() * addArray.length)] + "자신의 실력이 점진적으로 더 업데이트 되어 전문 기술력을 갖춥니다. " + "<br/>" 
     }
     else if(setT[0].length !==0 && setO[0].length ===0){
         document.getElementById("debug3").innerHTML += 
-        addArray[Math.floor(Math.random() * addArray.length)] + "꾸준히 능력 개발하여 중년 이후 전문 기술을 갖춥니다. " + "<br/>";
+        addArray[Math.floor(Math.random() * addArray.length)] + "꾸준히 능력 개발해 중년 이후 실력을 갖춥니다. " + "<br/>";
     }
 
     if(setS[0].length !==0 && setO[0].length !==0){
         document.getElementById("debug3").innerHTML += 
-        addArray[Math.floor(Math.random() * addArray.length)] + "자신의 우호적인 세력이 더 좋아지고 자신의 지위가 점점 발전됩니다. " + "<br/>";
+        addArray[Math.floor(Math.random() * addArray.length)] + "자신의 인맥 및 세력이 우호적으로 더 업데이트 되어 넓은 인맥과 세력으로 발전됩니다. " + "<br/>";
     }
     else if(setS[0].length !==0 && setO[0].length ===0){
         document.getElementById("debug3").innerHTML += 
@@ -747,6 +921,16 @@ function DecideTell(){
         addArray[Math.floor(Math.random() * addArray.length)] + "자신의 능력과 주변 환경을 늘 새롭게 바꿔갑니다. " + "<br/>";
     }
 
+    if(setJ.length !==0){
+        document.getElementById("debug3").innerHTML += 
+        addArray[Math.floor(Math.random() * addArray.length)] + "주변 사람과 모의해 사적 관계에서 공적 관계로 만들어가지만, 관계 스트레스에 유념해야 합니다. " + "<br/>";
+    }
+
+
+    document.getElementById("debug4").innerHTML = "※ 직업적 의지 (격국 구응성패) ※" + "<br/>" +
+    "(" + frameMsg +", "+ frameSet[2]+", " + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" +"<br/>";
+
+    document.getElementById("debug5").innerHTML = "(" + roleMsg + " " + uroleMsg  + ")" +"<br/>";
     // useSet.length = 0; // 제거
     // mainDuty.length = 0; //제거
     // idea.length = 0;
@@ -933,3 +1117,30 @@ function Jup(t_tag, d_tag, m_tag, y_tag){ //육합
     return result;
 }
 
+function Use_lucks(_useGod, _nowGod, num){
+    // 자축월: 용신>희신>확장>중화>지속
+    // 인묘월: 희신>용신>확장>중화>지속
+    // 묘진월: 지속>용신>희신>중화>확장
+    // 사오월: 지속>희신>용신>중화>확장
+    // 오미월: 확장>지속>용신>중화>희신
+    // 신유월: 확장>지속>희신>중화>용신
+    // 유술월: 희신>확장>지속>중화>용신
+    // 해자월: 용신>확장>지속>중화>희신
+
+    let one = [];
+    let two = [];
+    let three = [];
+    let four = [];
+    let five = [];
+    let six = [];
+    let seven = [];
+    let eight = [];
+
+
+    let use_luck ="";
+    let now_luck ="";
+    let forw_luck ="";
+    let know_luck ="";
+    let befr_luck ="";
+
+}

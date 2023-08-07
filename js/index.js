@@ -121,6 +121,7 @@ function p_img(x){
 
 
 function Fortune_img(){
+
     great_luck_refresh(false);
     nameText = document.getElementById("name").value;
     

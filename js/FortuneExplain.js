@@ -8,19 +8,7 @@ const notice = [];
 const roles = [];
 const frame = [];
 
-let mainMsg = [];
-let subMsg = [];
-let potenMsg = [];
-let mainGod = 0;
-let befGod = 0;
-let knowGod = 0;
-let nextGod = 0;
 
-let xmsg1 = ""
-let xmsg2 = ""
-let xmsg3 = ""
-let umsg1 = ""
-let umsg2 = ""
 
 
 fetch('./js/initialdate.json')
@@ -72,14 +60,33 @@ fetch('./js/frames.json')
     });
 
 
-const useSet = []; //월령용신의 甲~癸까지
-const mainDuty = []; //정기 지장간 불러오기
 
 
 
 function DecideTell(){
-    useSet.length = 0; // 제거
-    mainDuty.length = 0; //제거
+
+    document.getElementById("debug2").innerHTML = "";
+    document.getElementById("debug3").innerHTML = "";
+
+    let mainMsg = [];
+    let subMsg = [];
+    let potenMsg = [];
+
+    let useSet = []; //월령용신의 甲~癸까지
+    let mainDuty = []; //정기 지장간 불러오기
+
+
+    let mainGod = 0;
+    let befGod = 0;
+    let knowGod = 0;
+    let nextGod = 0;
+
+    let xmsg1 = ""
+    let xmsg2 = ""
+    let xmsg3 = ""
+    let umsg1 = ""
+    let umsg2 = ""
+
     var times = Number(out('time_sky')[1]);
     var days = Number(out('day_sky')[1]);
     var months = Number(out('month_sky')[1]);
@@ -127,13 +134,13 @@ function DecideTell(){
                     ];
     
     //console.log(ideaSet); // 천간 4개와 월지의 월령 배열로 얻음, 월령용신이 맨 뒤
-    const myID = ideaSet[1]; // 일간에 해당되는 용희신을 myString에 할당
+    let myID = ideaSet[1]; // 일간에 해당되는 용희신을 myString에 할당
 
-    const orderID = ideaSet.pop(); // result배열의 맨 마지막에 있는 월령을 빼고, orderString에 할당시킴
+    let orderID = ideaSet.pop(); // result배열의 맨 마지막에 있는 월령을 빼고, orderString에 할당시킴
 
-    const set = ideaSet.filter((item, index) => ideaSet.indexOf(item) === index); // set 배열에는, 월령을 제외하고, 천간 중에 중복된 값을 뺀 새로운 배열
+    let set = ideaSet.filter((item, index) => ideaSet.indexOf(item) === index); // set 배열에는, 월령을 제외하고, 천간 중에 중복된 값을 뺀 새로운 배열
     
-    const idea = [...ideaSet];
+    let idea = [...ideaSet];
 
     var my =0; //set 배열 중 일간 위치 index값
     for(var i=0; i<set.length;i++){
@@ -152,18 +159,22 @@ function DecideTell(){
     let otherT = Tri('time_land', 'day_land', 'month_land', 'year_land', false);
     let otherS = Sqr('time_land', 'day_land', 'month_land', 'year_land', false);
 
-    console.log("월지제외 삼합 ", otherT);
-    console.log("월지제외 방합 ", otherS);
+    let setJ = Jup('time_land', 'day_land', 'month_land', 'year_land');
+    
+    console.log("월지 제외 삼합 ", otherT);
+    console.log("월지 제외 방합 ", otherS);
+    console.log("일지와 년지 육합 ",setJ);
+
 
     let tObj = landTag[timeb-1]; //시지 객체
     let dObj = landTag[dayb-1]; //일지 객체
     let mObj = landTag[monthb-1]; //월지 객체
     let yObj = landTag[yearb-1]; //년지 객체
     //console.log(tObj.duty[0].idN, tObj.duty[1].idN, tObj.duty[2].idN);//시지 지장간의 천간 숫자
-    const objSet = [tObj, dObj, mObj, yObj];
-    const wSet = [tObj, dObj, yObj];
+    let objSet = [tObj, dObj, mObj, yObj];
+    let wSet = [tObj, dObj, yObj];
 
-    const inSet = []; //모든 지장간
+    let inSet = []; //모든 지장간
     for(var i=0; i< wSet.length; i++){
         
         if((wSet[i].id%3) === 0){ 
@@ -186,7 +197,7 @@ function DecideTell(){
 
     // 지장간 풀이
     
-    const subSet = []; // 활용 가능한 지장간
+    let subSet = []; // 활용 가능한 지장간
     for(var i=0; i< wSet.length; i++){
         if((wSet[i].id%3) === 0){ //생지 일때
             subSet.push(wSet[i].duty[2].idN);
@@ -514,54 +525,30 @@ function DecideTell(){
     /****************************************************debugging***************************************************************/
     //격국 통변
     //일간, 격용신, 격상신, 격기신, 상신기신, 격구신
-    const frameSet =[]; 
+    let frameSet =[]; 
     let frameMsg = ""
     frameSet.push(myID);
     var otherIdea = [idea[0], idea[2], idea[3]];
+    console.log(otherIdea = [idea[3], idea[2], idea[0]]);
 
-    let posSky = ["時干 투간", "月干 투간", "年干 투간"];
+    let posSky = ["年干 투간", "月干 투간", "時干 투간"];
 
     if(mObj.id%3 === 0){
         
-        let v = landTag[mObj.id-1].duty[dty].idN;
         let fix = landTag[mObj.id-1].duty[2].idN;
-        console.log("생지월생", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령`);
-        if(dty === 1 && setT[0].length !== 0){
-            console.log(setT[0]) 
-            let cnt = v;
-            let h = cnt+1;
-            //투간여부
-            let checkOriginSky = otherIdea.find(e => e === cnt);
-            let checkOtherSky = otherIdea.find(e => e === h);
-            if(checkOriginSky !== undefined && checkOtherSky !== undefined){
-                console.log(`생지월생 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]}`);
-                frameSet.push(cnt);
-                frameMsg = `생지월생 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]}`;
-            }
-            else if(checkOriginSky === undefined && checkOtherSky !== undefined){
-                console.log(`생지월생 ${skyTag[h-1].name}${skyTag[h-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]}`);
-                    frameSet.push(h);
-                    frameMsg = `생지월생 ${skyTag[h-1].name}${skyTag[h-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]}`;
-            
-                    
-            }
-            else{
-                if(skyTag[myID-1].type !== skyTag[v-1].type){
-                    console.log(`생지월생 중기 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사`);
-                    frameSet.push(cnt);
-                    frameMsg =`생지월생 중기 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사`;
-                }
-                else{
-                    console.log(`생지월생 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === fix))]}`);
-                    frameSet.push(fix);
-                    frameMsg = `생지월생 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === fix))]}`;
-                }
-            }
+        console.log("生支月", `${landTag[mObj.id-1].duty[dty].name}${skyTag[landTag[mObj.id-1].duty[dty].idN-1].type} 사령`);
+
+        console.log(fix);
+        let checkOriginSky = otherIdea.find(e => e === fix);
+        if(checkOriginSky !== undefined){
+            console.log(`生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === fix))]}`);
+            frameSet.push(fix);
+            frameMsg = `生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === fix))]}`;
         }
         else{
-            console.log(`생지월생 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사`);
+            console.log(`生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사`);
             frameSet.push(fix);
-            frameMsg = `생지월생 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사`;
+            frameMsg = `生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사`;
         }
 
     }
@@ -569,25 +556,24 @@ function DecideTell(){
     if(mObj.id%3 === 1){
         
         let v = landTag[mObj.id-1].duty[dty].idN;
-        console.log("왕지월생", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령`);
+        console.log("旺支月 ", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령`);
         if(dty===0 && otherIdea.find(e => e === v) !== undefined && otherIdea.find(e => e === v+1) === undefined){
-            console.log(`왕지월생 ${skyTag[v-1].name}${skyTag[v-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`);
+            console.log(`旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`);
             frameSet.push(v);
-            frameMsg = `왕지월생 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`;
+            frameMsg = `旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`;
         }
         else{
             let k = landTag[mObj.id-1].duty[2].idN;
-            console.log(`왕지월생 ${skyTag[k-1].name}${skyTag[k-1].type} 용사`);
+            console.log(`旺支月 ${skyTag[k-1].name}${skyTag[k-1].type} 용사`);
             frameSet.push(k);
-            frameMsg = `왕지월생 ${skyTag[k-1].name}${skyTag[k-1].type} 용사`;
+            frameMsg = `旺支月 ${skyTag[k-1].name}${skyTag[k-1].type} 용사`;
         }
-         
     }
 
     
     if(mObj.id%3 === 2){
         
-        console.log("고지월생", `${landTag[mObj.id-1].duty[dty].name}${skyTag[landTag[mObj.id-1].duty[dty].idN-1].type} 사령`);
+        console.log("庫支月", `${landTag[mObj.id-1].duty[dty].name}${skyTag[landTag[mObj.id-1].duty[dty].idN-1].type} 사령`);
         if(setT[0].length !== 0 && skyTag[myID-1].type !== skyTag[landTag[mObj.id-1].duty[1].idN-1].type){
             //중기 용사 (숫자)
             let cnt = landTag[mObj.id-1].duty[1].idN;
@@ -597,19 +583,19 @@ function DecideTell(){
             let checkOtherSky = otherIdea.find(e => e === hcnt);
             //투간여부에 따른 용사 (숫자)
             if(checkOriginSky !== undefined){
-                console.log(`고지월생 중기 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]}`);
+                console.log(`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]}`);
                 frameSet.push(cnt);
-                frameMsg = `고지월생 중기 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]}`;
+                frameMsg = `庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]}`;
             }
             else if(checkOriginSky === undefined && checkOtherSky !== undefined){
-                console.log(`고지월생 중기 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === hcnt))]}`);
+                console.log(`庫支月 中氣 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === hcnt))]}`);
                 frameSet.push(hcnt);
-                frameMsg = `고지월생 중기 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === hcnt))]}`;
+                frameMsg = `庫支月 中氣 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === hcnt))]}`;
             }
             else{
-                console.log(`고지월생 중기 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사`);
+                console.log(`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사`);
                 frameSet.push(cnt);
-                frameMsg =`고지월생 중기 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사`;
+                frameMsg =`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사`;
             }
         }
         else{
@@ -630,19 +616,19 @@ function DecideTell(){
             let checkOriginSky = otherIdea.find(e => e === v);
             let checkOtherSky = otherIdea.find(e => e === h);
             if(checkOriginSky !== undefined){
-                console.log(`고지월생${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`);
                 frameSet.push(v);
-                frameMsg = `고지월생${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`;
             }
             else if(checkOriginSky === undefined && checkOtherSky !== undefined){
-                console.log(`고지월생${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]}`);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]}`);
                 frameSet.push(h);
-                frameMsg = `고지월생${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]}`;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]}`;
             }
             else{
-                console.log(`고지월생${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type}`);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type}`);
                 frameSet.push(v);
-                frameMsg = `고지월생${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type}`;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type}`;
             }
         }
     }
@@ -711,11 +697,11 @@ function DecideTell(){
         useSet[orderID-1].key + "이 요구되는 사회 환경에" +"<br/>" +
         mainMsg[0] + "을 하려고 합니다." + "<br/>" +
         addArray[Math.floor(Math.random() * addArray.length)] + mainMsg[1] + "을 갖추고 있으며" +"<br/>" + 
-        mainMsg[2] + "과 " + "<br/>" + mainMsg[3] +"을 삼아 재능을 발휘 하려고 합니다.";
+        mainMsg[2] + "과 " + "<br/>" + mainMsg[3] +"을 삼아 재능을 발휘 하려고 합니다." + "<br/>";
     }
 
     if(subMsg.length !== 0){
-        document.getElementById("debug3").innerHTML += "<br/>" +"실무 적으로 ";
+        document.getElementById("debug3").innerHTML += "실무 적으로 ";
     }
     
     for(var i=0; i<subMsg.length; i++){
@@ -726,7 +712,7 @@ function DecideTell(){
     }
 
     if(potenMsg.length !== 0){
-        document.getElementById("debug3").innerHTML += "때가 된다면, ";
+        document.getElementById("debug3").innerHTML +=  "때가 된다면, ";
     }
 
     for(var i=0; i<potenMsg.length; i++){
@@ -761,6 +747,13 @@ function DecideTell(){
         addArray[Math.floor(Math.random() * addArray.length)] + "자신의 능력과 주변 환경을 늘 새롭게 바꿔갑니다. " + "<br/>";
     }
 
+    // useSet.length = 0; // 제거
+    // mainDuty.length = 0; //제거
+    // idea.length = 0;
+    // set.length = 0; 
+    // inSet.length = 0; 
+    // subSet.length = 0;
+
 }
 
 function out(id_tag){
@@ -786,7 +779,7 @@ function Tri(t_tag, d_tag, m_tag, y_tag, isMonth){ //삼합
     let mObj = landTag[m-1]; //월지 객체
     let yObj = landTag[y-1]; //년지 객체
 
-    const formSet = [{id:0, value: tObj}, {id:1, value: dObj}, {id:2, value: yObj}]; //월지 제외 나머지 지지의 배열 0:시지, 1:일지, 2:년지
+    let formSet = [{id:0, value: tObj}, {id:1, value: dObj}, {id:2, value: yObj}]; //월지 제외 나머지 지지의 배열 0:시지, 1:일지, 2:년지
     
     // console.log(tObj.id); //시지 지지 순번
     // console.log(tObj.name);  //시지 이름
@@ -803,7 +796,7 @@ function Tri(t_tag, d_tag, m_tag, y_tag, isMonth){ //삼합
     }
     
     // 지장간 중 활용 가능한 set = keyWord
-    const keyWord = [];
+    let keyWord = [];
     for(var i=0; i<result.length; i++){
         let p = result[i];
         let inNum = p.value.id;
@@ -837,7 +830,7 @@ function Sqr(t_tag, d_tag, m_tag, y_tag, isMonth){ //방합
     let mObj = landTag[m-1]; //월지 객체
     let yObj = landTag[y-1]; //년지 객체
 
-    const formSet = [{id:0, value: tObj}, {id:1, value: dObj}, {id:2, value: yObj}]; //월지 제외 나머지 지지의 배열 0:시지, 1:일지, 2:년지
+    let formSet = [{id:0, value: tObj}, {id:1, value: dObj}, {id:2, value: yObj}]; //월지 제외 나머지 지지의 배열 0:시지, 1:일지, 2:년지
 
     var result = [];
     if(isMonth === true){
@@ -852,7 +845,7 @@ function Sqr(t_tag, d_tag, m_tag, y_tag, isMonth){ //방합
     
 
     // 지장간 중 활용 가능한 set = keyWord
-    const keyWord = [];
+    let keyWord = [];
     for(var i=0; i<result.length; i++){
         let p = result[i];
         let inNum = p.value.id;
@@ -889,22 +882,54 @@ function Opp(t_tag, d_tag, m_tag, y_tag, isMonth){ //충
     let mObj = landTag[m-1]; //월지 객체
     let yObj = landTag[y-1]; //년지 객체
 
-    const formSet = [{id:0, value: tObj}, {id:1, value: dObj}, {id:2, value: yObj}]; //월지 제외 나머지 지지의 배열 0:시지, 1:일지, 2:년지
+    let formSet = [{id:0, value: tObj}, {id:1, value: dObj}, {id:2, value: yObj}]; //월지 제외 나머지 지지의 배열 0:시지, 1:일지, 2:년지
     // 지장간 중 활용 가능한 set = keyWord
     
-    const keyWord = [];
+    let keyWord = [];
 
     var result = [];
     if(isMonth === true){
         result = [...formSet.filter(e => Math.abs(e['value'].id - Math.abs(mObj.id)) === 6)];
     }
     else{
-        var yearFocus = [...formSet.filter(e => Math.abs(e['value'].id - Math.abs(mObj.id)) === 6)];
-        var dayFocus = [...formSet.filter(e => Math.abs(e['value'].id - Math.abs(mObj.id)) === 6)];
+        var yearFocus = [...formSet.filter(e => Math.abs(e['value'].id - Math.abs(yObj.id)) === 6)];
+        var dayFocus = [...formSet.filter(e => Math.abs(e['value'].id - Math.abs(dObj.id)) === 6)];
         result = yearFocus.concat(dayFocus);
         result = [...result.filter((item, index) => result.indexOf(item) === index )];
     }
     
     return [result, keyWord];
+}
+
+
+function Jup(t_tag, d_tag, m_tag, y_tag){ //육합
+    // t=시지 tag id: Number(out('time_land')[1]), d=일지 tag id: Number(out('day_land')[1]),  
+    // m=월지 tag id: Number(out('month_land')[1]), y=년지 tag id: Number(out('year_land')[1])
+
+    let t = Number(out(t_tag)[1]);
+    let d = Number(out(d_tag)[1]);
+    let m = Number(out(m_tag)[1]);
+    let y = Number(out(y_tag)[1]);
+
+    let tObj = landTag[t-1]; //시지 객체
+    let dObj = landTag[d-1]; //일지 객체
+    let mObj = landTag[m-1]; //월지 객체
+    let yObj = landTag[y-1]; //년지 객체
+
+    let formSet = [{id:0, value: tObj}, {id:1, value: dObj}, {id:2, value: mObj}, {id:3, value: yObj}]; //월지 제외 나머지 지지의 배열 0:시지, 1:일지, 2:년지
+    // 지장간 중 활용 가능한 set = keyWord
+    
+
+    let result = [];
+
+    let yearFocus = [...formSet.filter(e => (e['value'].id + Math.abs(yObj.id))%12 === 3)];
+    console.log("yearFocus", yearFocus);
+    let dayFocus = [...formSet.filter(e => (e['value'].id + Math.abs(dObj.id))%12 === 3)];
+    console.log("dayFocus", dayFocus)
+    result = yearFocus.concat(dayFocus);
+    //result = [...result.filter((item, index) => result.indexOf(item) === index )];
+
+    
+    return result;
 }
 

@@ -107,17 +107,18 @@ table.tenyears{
 th{
     text-align: center;
     display: table-cell;
-    font-size: 1px;
+    font-size: 16px;
 }
 
 th#LIST0, #LIST1, #LIST2, #LIST3{
-    font-size: 15px;
+    font-size: 20px;
 }
 
 
 td{
     font-size: 8px;
     text-align: center;
+    font-size: 20px;
 }
 
 td#time_sky, #day_sky, #month_sky, #year_sky, #time_land, #day_land, #month_land, #year_land{

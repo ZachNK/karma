@@ -926,7 +926,10 @@ function this_year_coloring(startingYear, value_nowYear){
 }
 
 function Copy(){
-    var inter = document.getElementById("debug2").innerText+"\n\n"+document.getElementById("debug3").innerText;
+    var inter = document.getElementById("debug2").innerText+"\n"+document.getElementById("debug3").innerText+"\n\n"+
+    document.getElementById("debugLuck_title").innerText+"\n"+document.getElementById("debugLuck1").innerText+"\n\n"+
+    document.getElementById("debug4").innerText+"\n"+document.getElementById("debug5").innerText;
+    
     var str = fullName + "\n\n" +resultCopy + greatLuckCopy + "\n\n" + inter;
     CopyStringToClipboard(str);
 }

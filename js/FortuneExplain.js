@@ -7,7 +7,7 @@ const landTag = [];
 const notice = [];
 const roles = [];
 const frame = [];
-
+const luck1 = [];
 
 
 
@@ -59,7 +59,13 @@ fetch('./js/frames.json')
         });
     });
 
-
+fetch('./js/luck1.json')
+    .then(results => results.json())
+    .then(data => {
+        data.forEach(post => {
+            luck1.push(post);
+        });
+    });
 
 
 
@@ -292,6 +298,7 @@ function DecideTell(){
     let skySetKey = [...set];
     let landSetKey = [...combineSet];
     let potKey = [...potential];
+    let godAwake = 0; //희신 상태 2: 있음, 1: 대기, 0: 없음
     console.log("천간에 해석할 용신 희기신 ", skySetKey);
     console.log("지지에 해석할 용신 희기신 ", landSetKey);
 
@@ -321,18 +328,21 @@ function DecideTell(){
         skySetKey.splice(skySetKey.indexOf(nowGod), 1);
         msg1 = `(${skyTag[orderID-1].name}${skyTag[nowGod-1].name}) ${useSet[nowGod-1].key}`;
         mainMsg.push(msg1);
+        godAwake = 2;
     }
     else if(combineSet.find(e => useSet[e-1].god === "희신") !== undefined){
         nowGod = combineSet.find(e => useSet[e-1].god === "희신");
         landSetKey.splice(landSetKey.indexOf(nowGod), 1);
         msg1 = `(${skyTag[orderID-1].name}${skyTag[nowGod-1].name}) ${useSet[nowGod-1].key}`;
         subMsg.push(msg1);
+        godAwake = 2;
     }
     else if(potential.find(e => useSet[e-1].god === "희신") !== undefined){
         nowGod = potential.find(e => useSet[e-1].god === "희신");
         potKey.splice(potKey.indexOf(nowGod), 1);
         msg1 = `(${skyTag[orderID-1].name}${skyTag[nowGod-1].name}△) ${useSet[nowGod-1].key}`;
         potenMsg.push(msg1);
+        godAwake = 1;
     }
     else{
         console.log("희신 없음");
@@ -544,6 +554,7 @@ function DecideTell(){
     console.log(mainMsg);
     console.log(subMsg);
     console.log(potenMsg);
+    console.log(godAwake);
     
 
 
@@ -861,8 +872,8 @@ function DecideTell(){
     frontMsg += `${skyTag[nowGod-1].name}${skyTag[nowGod-1].type} 喜神 ${(isTalent === undefined) ? "없음" : "있음"}. `;
     
 
-    document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신 통변) ※" + "<br/>" +
-    "(" + frontMsg + ") <br/>";
+    document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신 통변) ※" + 
+    " (" + frontMsg + ") <br/>";
     
 
     //set의 길이에 따라 각각 다르게 통변 메세지 부여
@@ -927,8 +938,8 @@ function DecideTell(){
     }
 
 
-    document.getElementById("debug4").innerHTML = "※ 직업적 의지 (격국 구응성패) ※" + "<br/>" +
-    "(" + frameMsg +", "+ frameSet[2]+", " + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" +"<br/>";
+    document.getElementById("debug4").innerHTML = "※ 직업적 의지 (격국 구응성패) ※" + 
+    " (" + frameMsg +", "+ frameSet[2]+", " + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" +"<br/>";
 
     document.getElementById("debug5").innerHTML = "(" + roleMsg + " " + uroleMsg  + ")" +"<br/>";
     // useSet.length = 0; // 제거
@@ -937,6 +948,16 @@ function DecideTell(){
     // set.length = 0; 
     // inSet.length = 0; 
     // subSet.length = 0;
+
+    document.getElementById('debugA').innerText = orderID;
+    document.getElementById('debugA').style.color = `rgba(${0}, ${0}, ${0}, ${0})`;
+    document.getElementById('debugB').innerText = godAwake;
+    document.getElementById('debugB').style.color = `rgba(${0}, ${0}, ${0}, ${0})`;
+    // let jup_lucks = Use_lucks(orderID, godAwake);
+    console.log("orderID", orderID, "godAwake", godAwake)
+
+    document.getElementById('debug6').innerHTML = 
+    `<td><button onClick="Use_lucks()" style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">운세보기</button></td>`
 
 }
 
@@ -1117,30 +1138,122 @@ function Jup(t_tag, d_tag, m_tag, y_tag){ //육합
     return result;
 }
 
-function Use_lucks(_useGod, _nowGod, num){
-    // 자축월: 용신>희신>확장>중화>지속
-    // 인묘월: 희신>용신>확장>중화>지속
-    // 묘진월: 지속>용신>희신>중화>확장
-    // 사오월: 지속>희신>용신>중화>확장
-    // 오미월: 확장>지속>용신>중화>희신
-    // 신유월: 확장>지속>희신>중화>용신
-    // 유술월: 희신>확장>지속>중화>용신
-    // 해자월: 용신>확장>지속>중화>희신
+function Use_lucks(){
+    document.getElementById("debugLuck1").innerText = "";
+    
+    let _useGod = document.getElementById('debugA').innerText*1;
+    let _state = document.getElementById('debugB').innerText*1;
+    let firstYear = document.getElementById('j01').innerText*1;
+    console.log(_useGod, _state)
 
-    let one = [];
-    let two = [];
-    let three = [];
-    let four = [];
-    let five = [];
-    let six = [];
-    let seven = [];
-    let eight = [];
+    // 1,2  3,4  5,6  7,8  9,10
+    let awake = 2-_state;
+    let start = (firstYear+57)%10;
+    if(start === 0) start = 10;
 
 
-    let use_luck ="";
-    let now_luck ="";
-    let forw_luck ="";
-    let know_luck ="";
-    let befr_luck ="";
+    let aset = luck1.find(e => e.name === skyTag[_useGod-1].name);
+    let godSet = Object.keys(aset).filter(e => e !== 'name');
+    console.log(aset);
+    console.log(godSet);
+    let set = [...godSet];
+
+    let allYear = [];
+    for(var i=0; i<godSet.length*2; i++){
+        allYear.push(godSet[parseInt(i/2)]);
+    }
+    let a = [...allYear.splice(start-1, 11-start)]
+    let b = [...allYear.splice(0, start-1)]
+    let size = 0;
+
+    (a.length%2!==0) ? size = 6 : size =5;
+    console.log("size", size);
+
+
+    let sum =  a.concat(b);
+    console.log(sum);
+    
+    let result = [];
+    
+    if(size === 5){
+        for(var i=0; i<size; i++){
+            
+            let fy = 2*(i)+firstYear;
+            let by = 2*(i)+1+firstYear;
+            let key  =set[i];
+
+            let t = aset[set[key]][awake];
+    
+            let u = t.indexOf("(확장운)");
+            let str = [...t]
+            let gap = 0; 
+            if(u >= 0){
+    
+                let forward1 = 0;
+                let forward2 = 0;
+                if(_useGod === 10 || _useGod === 1) gap = 4;
+                if(_useGod === 2 || _useGod === 3) gap = 2;
+                if(_useGod === 4 || _useGod === 7) gap = 2;
+                if(_useGod === 8 || _useGod === 9) gap = 2;
+                forward1 = fy-gap;
+                forward2 = by-gap;
+    
+                str.splice(u,5, `${forward1}년과 ${forward2}년`)
+            }
+    
+            console.log(`${fy}년과 ${by}년: `, str.join('')); // 0 1 / 2 3 / 4 5
+            result.push(`${fy}년과 ${by}년: `+ str.join(''));
+    
+        }
+    }
+    else if(size === 6){
+        let startYear = firstYear-1;
+        for(var i=0; i<size; i++){
+            
+            let fy = 2*(i)+startYear;
+            let by = 2*(i)+1+startYear;
+            let key  =set[i];
+            
+            console.log(aset[set[key]]);
+            let t = aset[set[key]][awake];
+
+
+            console.log(i, fy, by);
+            console.log(set[key][i]);
+            console.log(typeof set[i]);
+    
+            let u = t.indexOf("(확장운)");
+            let str = [...t]
+            let gap = 0; 
+            if(u >= 0){
+    
+                let forward1 = 0;
+                let forward2 = 0;
+                if(_useGod === 10 || _useGod === 1) gap = 4;
+                if(_useGod === 2 || _useGod === 3) gap = 2;
+                if(_useGod === 4 || _useGod === 7) gap = 2;
+                if(_useGod === 8 || _useGod === 9) gap = 2;
+                forward1 = fy-gap;
+                forward2 = by-gap;
+    
+                str.splice(u,5, `${forward1}년과 ${forward2}년`)
+            }
+    
+            console.log(`${fy}년과 ${by}년: `, str.join('')); // 0 1 / 2 3 / 4 5
+            result.push(`${fy}년과 ${by}년: `+ str.join(''));
+    
+        }
+
+
+    }
+
+    
+    document.getElementById("debugLuck1").innerText = "※ 년도별 운세 (용신과 희기신 통변) ※" + "\n";
+    for(var i = 0; i<size; i++){
+        document.getElementById("debugLuck1").innerText  += result[i] + "\n";
+    }
+
+    
+
 
 }

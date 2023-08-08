@@ -1,113 +1,82 @@
 
-function convert2Image(){
+
+
+function Convert2Image(){
     var c = document.getElementById('result');
     var ctx = c.getContext("2d");
     ctx.reset();
     ctx.fillStyle = "rgba(255,255,255,1)";
     ctx.fillRect(0, 0, 500, 750);
     
-    var main00 = new Image();
-    var main01 = new Image();
-    var main02 = new Image();
-    var main03 = new Image();
-    var main10 = new Image();
-    var main11 = new Image();
-    var main12 = new Image();
-    var main13 = new Image();
-    
-    main00.src = document.getElementById("SKY0").src.split("karma/")[1];
-    main01.src = document.getElementById("SKY1").src.split("karma/")[1];
-    main02.src = document.getElementById("SKY2").src.split("karma/")[1];
-    main03.src = document.getElementById("SKY3").src.split("karma/")[1];
-    main10.src = document.getElementById("LAND0").src.split("karma/")[1];
-    main11.src = document.getElementById("LAND1").src.split("karma/")[1];
-    main12.src = document.getElementById("LAND2").src.split("karma/")[1];
-    main13.src = document.getElementById("LAND3").src.split("karma/")[1];
+    var m = [8];
+    for (i=0; i<8; i++){
+        m[i] = new Image();
+        
+        var k = i%4;
+        var idN = '';
+        if(i<4){
+            idN = 'SKY';
+        }
+        else{
+            idN = 'LAND'
+        }
 
-    main00.onload = function() {ctx.drawImage(main00, 60, 50, 80, 80);}
-    main01.onload = function() {ctx.drawImage(main01, 160, 50, 80, 80);}
-    main02.onload = function() {ctx.drawImage(main02, 260, 50, 80, 80);}
-    main03.onload = function() {ctx.drawImage(main03, 360, 50, 80, 80);}
-    main10.onload = function() {ctx.drawImage(main10, 60, 140, 80, 80);}
-    main11.onload = function() {ctx.drawImage(main11, 160, 140, 80, 80);}
-    main12.onload = function() {ctx.drawImage(main12, 260, 140, 80, 80);}
-    main13.onload = function() {ctx.drawImage(main13, 360, 140, 80, 80);}
+        idN += k.toString();
+        m[i].src = document.getElementById(idN).src.split('karma/')[1];
+    }
 
-    var weather00 = new Image();
-    var weather01 = new Image();
-    var weather02 = new Image();
-    var weather03 = new Image();
-    var weather04 = new Image();
-    var weather05 = new Image();
-    var weather06 = new Image();
-    var weather07 = new Image();
-    var weather08 = new Image();
-    var weather09 = new Image();
+    m[0].onload = function() {ctx.drawImage(m[0], 60, 50, 80, 80);}
+    m[1].onload = function() {ctx.drawImage(m[1], 160, 50, 80, 80);}
+    m[2].onload = function() {ctx.drawImage(m[2], 260, 50, 80, 80);}
+    m[3].onload = function() {ctx.drawImage(m[3], 360, 50, 80, 80);}
+    m[4].onload = function() {ctx.drawImage(m[4], 60, 140, 80, 80);}
+    m[5].onload = function() {ctx.drawImage(m[5], 160, 140, 80, 80);}
+    m[6].onload = function() {ctx.drawImage(m[6], 260, 140, 80, 80);}
+    m[7].onload = function() {ctx.drawImage(m[7], 360, 140, 80, 80);}
 
-    var weather10 = new Image();
-    var weather11 = new Image();
-    var weather12 = new Image();
-    var weather13 = new Image();
-    var weather14 = new Image();
-    var weather15 = new Image();
-    var weather16 = new Image();
-    var weather17 = new Image();
-    var weather18 = new Image();
-    var weather19 = new Image();
+    var luck = [20];
+    for(i=0; i<20; i++){
+        luck[i] = new Image();
+        var k = '';
+        if(i<10){
+            k = 'i';
+        }
+        else{
+            k = 'p';
+        }
+        var n = (i%10)+1;
+        luck[i].src = document.getElementById(n.toString().padStart(3, '0') + k).src.split('karma/')[1];
+    }
 
-    weather00.src = document.getElementById("001i").src.split("karma/")[1];
-    weather01.src = document.getElementById("002i").src.split("karma/")[1];
-    weather02.src = document.getElementById("003i").src.split("karma/")[1];
-    weather03.src = document.getElementById("004i").src.split("karma/")[1];
-    weather04.src = document.getElementById("005i").src.split("karma/")[1];
-    weather05.src = document.getElementById("006i").src.split("karma/")[1];
-    weather06.src = document.getElementById("007i").src.split("karma/")[1];
-    weather07.src = document.getElementById("008i").src.split("karma/")[1];
-    weather08.src = document.getElementById("009i").src.split("karma/")[1];
-    weather09.src = document.getElementById("010i").src.split("karma/")[1];
+    luck[0].onload = function() {ctx.drawImage(luck[0], 410, 250, 40, 40);}
+    luck[1].onload = function() {ctx.drawImage(luck[1], 370, 250, 40, 40);}
+    luck[2].onload = function() {ctx.drawImage(luck[2], 330, 250, 40, 40);}
+    luck[3].onload = function() {ctx.drawImage(luck[3], 290, 250, 40, 40);}
+    luck[4].onload = function() {ctx.drawImage(luck[4], 250, 250, 40, 40);}
+    luck[5].onload = function() {ctx.drawImage(luck[5], 210, 250, 40, 40);}
+    luck[6].onload = function() {ctx.drawImage(luck[6], 170, 250, 40, 40);}
+    luck[7].onload = function() {ctx.drawImage(luck[7], 130, 250, 40, 40);}
+    luck[8].onload = function() {ctx.drawImage(luck[8], 90, 250, 40, 40);}
+    luck[9].onload = function() {ctx.drawImage(luck[9], 50, 250, 40, 40);}
+    luck[10].onload = function() {ctx.drawImage(luck[10], 410, 300, 40, 40);}
+    luck[11].onload = function() {ctx.drawImage(luck[11], 370, 300, 40, 40);}
+    luck[12].onload = function() {ctx.drawImage(luck[12], 330, 300, 40, 40);}
+    luck[13].onload = function() {ctx.drawImage(luck[13], 290, 300, 40, 40);}
+    luck[14].onload = function() {ctx.drawImage(luck[14], 250, 300, 40, 40);}
+    luck[15].onload = function() {ctx.drawImage(luck[15], 210, 300, 40, 40);}
+    luck[16].onload = function() {ctx.drawImage(luck[16], 170, 300, 40, 40);}
+    luck[17].onload = function() {ctx.drawImage(luck[17], 130, 300, 40, 40);}
+    luck[18].onload = function() {ctx.drawImage(luck[18], 90, 300, 40, 40);}
+    luck[19].onload = function() {ctx.drawImage(luck[19], 50, 300, 40, 40);}
 
-    weather10.src = document.getElementById("001p").src.split("karma/")[1];
-    weather11.src = document.getElementById("002p").src.split("karma/")[1];
-    weather12.src = document.getElementById("003p").src.split("karma/")[1];
-    weather13.src = document.getElementById("004p").src.split("karma/")[1];
-    weather14.src = document.getElementById("005p").src.split("karma/")[1];
-    weather15.src = document.getElementById("006p").src.split("karma/")[1];
-    weather16.src = document.getElementById("007p").src.split("karma/")[1];
-    weather17.src = document.getElementById("008p").src.split("karma/")[1];
-    weather18.src = document.getElementById("009p").src.split("karma/")[1];
-    weather19.src = document.getElementById("010p").src.split("karma/")[1];
-
-    weather00.onload = function() {ctx.drawImage(weather00, 410, 250, 40, 40);}
-    weather01.onload = function() {ctx.drawImage(weather01, 370, 250, 40, 40);}
-    weather02.onload = function() {ctx.drawImage(weather02, 330, 250, 40, 40);}
-    weather03.onload = function() {ctx.drawImage(weather03, 290, 250, 40, 40);}
-    weather04.onload = function() {ctx.drawImage(weather04, 250, 250, 40, 40);}
-    weather05.onload = function() {ctx.drawImage(weather05, 210, 250, 40, 40);}
-    weather06.onload = function() {ctx.drawImage(weather06, 170, 250, 40, 40);}
-    weather07.onload = function() {ctx.drawImage(weather07, 130, 250, 40, 40);}
-    weather08.onload = function() {ctx.drawImage(weather08, 90, 250, 40, 40);}
-    weather09.onload = function() {ctx.drawImage(weather09, 50, 250, 40, 40);}
-    
-    weather10.onload = function() {ctx.drawImage(weather10, 410, 300, 40, 40);}
-    weather11.onload = function() {ctx.drawImage(weather11, 370, 300, 40, 40);}
-    weather12.onload = function() {ctx.drawImage(weather12, 330, 300, 40, 40);}
-    weather13.onload = function() {ctx.drawImage(weather13, 290, 300, 40, 40);}
-    weather14.onload = function() {ctx.drawImage(weather14, 250, 300, 40, 40);}
-    weather15.onload = function() {ctx.drawImage(weather15, 210, 300, 40, 40);}
-    weather16.onload = function() {ctx.drawImage(weather16, 170, 300, 40, 40);}
-    weather17.onload = function() {ctx.drawImage(weather17, 130, 300, 40, 40);}
-    weather18.onload = function() {ctx.drawImage(weather18, 90, 300, 40, 40);}
-    weather19.onload = function() {ctx.drawImage(weather19, 50, 300, 40, 40);}
-
-    var base64String = c.toDataURL('image/png');
-
-    
-
+    let times = new Date();
+    let today_date = (times.getMonth()+1).toString().padStart(2, '0') + times.getDate().toString().padStart(2, '0') + '_' + times.getHours().toString().padStart(2, '0') + times.getMinutes().toString().padStart(2, '0');
+    var base64String = c.toDataURL('image/jpeg');
     var link = document.createElement('a');
-
     link.href = base64String;
-    link.download = 'print-js-img';
+    link.download = today_date;
     link.click();
-
 }
+
+
 

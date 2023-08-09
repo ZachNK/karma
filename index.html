@@ -36,21 +36,21 @@
         </thead>
         <tbody>
             <tr>
-                <td><div><input type="text" id="name" style="font-size: 20px; text-align:center; width:300px; height:25px;" placeholder="이름 (생략 가능)"/></div></td>
+                <td><div><input type="text" id="name" style="font-size: 16px; text-align:center; width:300px; height:25px;" placeholder="이름 (생략 가능)"/></div></td>
             </tr>
             <tr>
-                <td><div><input type="number" min="1" max="9999" id="year_msg" style="font-size: 20px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)" autofocus/></div></td>
+                <td><div><input type="number" min="1" max="9999" id="year_msg" style="font-size: 16px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)" autofocus/></div></td>
             </tr>
             <tr>
-                <td><div><input type="number" min="01" max="1231" id="monthday_msg" style="font-size: 20px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></div></td>
+                <td><div><input type="number" min="01" max="1231" id="monthday_msg" style="font-size: 16px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></div></td>
             </tr>
             <tr>
-                <td><div><input type="number" min="0" max="2359" id="time_msg" style="font-size: 20px; text-align:center; width:300px; height:25px;" placeholder="출생시 출생분 (HHMM)"/></div></td>
+                <td><div><input type="number" min="0" max="2359" id="time_msg" style="font-size: 16px; text-align:center; width:300px; height:25px;" placeholder="출생시 출생분 (HHMM)"/></div></td>
             </tr>
         </tbody>
         <tbody>
             <tr>
-                <td><div><button tabindex="0" onclick="Fortune_img(); DecideTell();"  style="font-size: 20px; font-weight: 750; text-align:center; width:300px; height: 28px;">입력</button></div></td>
+                <td><div><button tabindex="0" onclick="Fortune_img(); DecideTell();"  style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">입력</button></div></td>
             </tr>
         </tbody>
     </table>
@@ -67,6 +67,15 @@
             <tr>
                 <td><button onClick="Fortune_img_Today()" style="font-size: 16px; font-weight: 750; text-align:center; width:150px;  height: 28px;">일진보기</button></td>
                 <td><button onclick="ShowRow()" style="font-size: 16px; font-weight: 750; text-align:center; width:150px; height: 28px;">지장간</button></td>
+            </tr>
+        </tbody>
+        
+    </table>
+    <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
+        <thead><th></th></thead>
+        <tbody>
+            <tr>
+                <td id="lucks" style="font-size: 16px; font-weight: 750; text-align:center; margin: 0 auto; width: 50%; margin-left: 25%; margin-right: 25%;"></td>
             </tr>
         </tbody>
     </table>
@@ -150,16 +159,37 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><div class="Title1" id="debug2" style="font-size: 14px; font-weight: 700;"></div></td>
+                    <td><div class="Title1" id="Year_Lucks" style="font-size: 12px; font-weight: 700;"></div></td>
                 </tr>
                 <tr>
-                    <td><div class="Content1" id="debug3" style="font-size: 12px;"></div></td>
+                    <td><div class="Content1" id="year_lucks" style="font-size: 10px; text-align: left;"></div></td>
                 </tr>
                 <tr>
-                    <td><div class="Title1" id="debug4" style="font-size: 14px; font-weight: 700;"></div></td>
+                    <td></div></td>
                 </tr>
                 <tr>
-                    <td><div class="Content1" id="debug5" style="font-size: 12px;"></div></td>
+                    <td><div class="Title1" id="debug2" style="font-size: 12px; font-weight: 700;"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Content1" id="debug3" style="font-size: 10px; text-align: left;"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="useGod"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Title1" id="debug4" style="font-size: 12px; font-weight: 700;"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Content1" id="debug5" style="font-size: 10px; text-align: left;"></div></td>
+                </tr>
+                <tr>
+                    <td><div id="god_state"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Title1" id="debug6" style="font-size: 12px; font-weight: 700;"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Content1" id="debug7" style="font-size: 10px; text-align: left;"></div></td>
                 </tr>
             </tbody>
         </table>

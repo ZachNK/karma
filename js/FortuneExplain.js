@@ -609,7 +609,7 @@ function DecideTell(){
         
         let v = landTag[mObj.id-1].duty[dty].idN;
         console.log("旺支月 ", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령`);
-        if(dty===0 && otherIdea.find(e => e === v) !== undefined && otherIdea.find(e => e === v+1) === undefined){
+        if(dty===0 && otherIdea.find(e => e === v) !== undefined){
             console.log(`旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`);
             frameSet.push(v);
             frameMsg = `旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`;

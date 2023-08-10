@@ -588,19 +588,19 @@ function DecideTell(){
     if(mObj.id%3 === 0){
         
         let fix = landTag[mObj.id-1].duty[2].idN;
-        console.log("生支月", `${landTag[mObj.id-1].duty[dty].name}${skyTag[landTag[mObj.id-1].duty[dty].idN-1].type} 사령`);
+        console.log("生支月", `${landTag[mObj.id-1].duty[dty].name}${skyTag[landTag[mObj.id-1].duty[dty].idN-1].type} 사령 `);
 
         console.log(fix);
         let checkOriginSky = otherIdea.find(e => e === fix);
         if(checkOriginSky !== undefined){
-            console.log(`生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === fix))]}`);
+            console.log(`生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === fix))]} `);
             frameSet.push(fix);
-            frameMsg = `生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === fix))]}`;
+            frameMsg = `生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === fix))]} `;
         }
         else{
-            console.log(`生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사`);
+            console.log(`生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 `);
             frameSet.push(fix);
-            frameMsg = `生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사`;
+            frameMsg = `生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 `;
         }
 
     }
@@ -608,24 +608,24 @@ function DecideTell(){
     if(mObj.id%3 === 1){
         
         let v = landTag[mObj.id-1].duty[dty].idN;
-        console.log("旺支月 ", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령`);
+        console.log("旺支月 ", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령 `);
         if(dty===0 && otherIdea.find(e => e === v) !== undefined){
-            console.log(`旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`);
+            console.log(`旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]} `);
             frameSet.push(v);
-            frameMsg = `旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`;
+            frameMsg = `旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]} `;
         }
         else{
             let k = landTag[mObj.id-1].duty[2].idN;
-            console.log(`旺支月 ${skyTag[k-1].name}${skyTag[k-1].type} 용사`);
+            console.log(`旺支月 ${skyTag[k-1].name}${skyTag[k-1].type} 용사 `);
             frameSet.push(k);
-            frameMsg = `旺支月 ${skyTag[k-1].name}${skyTag[k-1].type} 용사`;
+            frameMsg = `旺支月 ${skyTag[k-1].name}${skyTag[k-1].type} 용사 `;
         }
     }
 
     
     if(mObj.id%3 === 2){
         
-        console.log("庫支月", `${landTag[mObj.id-1].duty[dty].name}${skyTag[landTag[mObj.id-1].duty[dty].idN-1].type} 사령`);
+        console.log("庫支月", `${landTag[mObj.id-1].duty[dty].name}${skyTag[landTag[mObj.id-1].duty[dty].idN-1].type} 사령 `);
         if(setT[0].length !== 0 && skyTag[myID-1].type !== skyTag[landTag[mObj.id-1].duty[1].idN-1].type){
             //중기 용사 (숫자)
             let cnt = landTag[mObj.id-1].duty[1].idN;
@@ -635,19 +635,19 @@ function DecideTell(){
             let checkOtherSky = otherIdea.find(e => e === hcnt);
             //투간여부에 따른 용사 (숫자)
             if(checkOriginSky !== undefined){
-                console.log(`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]}`);
+                console.log(`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]} `);
                 frameSet.push(cnt);
-                frameMsg = `庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]}`;
+                frameMsg = `庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === cnt))]} `;
             }
             else if(checkOriginSky === undefined && checkOtherSky !== undefined){
-                console.log(`庫支月 中氣 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === hcnt))]}`);
+                console.log(`庫支月 中氣 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === hcnt))]} `);
                 frameSet.push(hcnt);
-                frameMsg = `庫支月 中氣 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === hcnt))]}`;
+                frameMsg = `庫支月 中氣 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[otherIdea.indexOf(otherIdea.find(e => e === hcnt))]} `;
             }
             else{
-                console.log(`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사`);
+                console.log(`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 `);
                 frameSet.push(cnt);
-                frameMsg =`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사`;
+                frameMsg =`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 `;
             }
         }
         else{
@@ -668,19 +668,19 @@ function DecideTell(){
             let checkOriginSky = otherIdea.find(e => e === v);
             let checkOtherSky = otherIdea.find(e => e === h);
             if(checkOriginSky !== undefined){
-                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]} `);
                 frameSet.push(v);
-                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]}`;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === v))]} `;
             }
             else if(checkOriginSky === undefined && checkOtherSky !== undefined){
-                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]}`);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]} `);
                 frameSet.push(h);
-                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]}`;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[otherIdea.indexOf(otherIdea.find(e => e === h))]} `;
             }
             else{
-                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type}`);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} `);
                 frameSet.push(v);
-                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type}`;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} `;
             }
         }
     }
@@ -830,18 +830,30 @@ function DecideTell(){
     let roleMsg = "";
     let uroleMsg ="";
     let htmlMsg = "";
-    
+
+    // 상신과 구신 유무에 대한 통변 방법
+    let addMsg = ""
+    let roleSky = [];
+    let roleLand = [];
+
     if(frameSet[2] === "偏官格" || frameSet[2] === "傷官格" || frameSet[2] === "羊刃格" || frameSet[2] === "建祿格"){
         roleMsg += (typeRole.find(e => e === 'A') ? ` 상신: ${frameSet[3]} ` : ``)
         + (typeRole.find(e => e === 'D') ? `구신: ${frameSet[6]} ` : ``)
         + (typeRole.find(e => e === 'C') ? `상신기신: ${frameSet[5]} ` : ``)
         + (typeRole.find(e => e === 'B') ? `구신기신: ${frameSet[4]} ` : ``);
-
-        htmlMsg += (typeRole.find(e => e === 'A') ? `(상신) 실력을 입증하고 자격 인허가로 나이들수록 신분이 높아집니다. `+"<br/>" : ``)
-        + (typeRole.find(e => e === 'D') ? `(구신) 지위, 역할에 대한 지지 세력을 얻어 인정 받을 수 있습니다. `+"<br/>" : ``)
-        + (typeRole.find(e => e === 'C') ? `(상신의 기신) 자신의 신분을 통해 검증 받아 사람을 모읍니다. `+"<br/>" : ``)
-        + (typeRole.find(e => e === 'B') ? `(구신기신) 자신의 세력을 모아 세력을 넓힐 수 있습니다. `+"<br/>" : ``);
         
+        let a = (typeRole.find(e => e === 'A') !== undefined) ? 1: 0; 
+        let b = (typeRole.find(e => e === 'B') !== undefined) ? 1: 0; 
+        let c = (typeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
+        let d = (typeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
+        roleSky = [a, b, c, d];
+
+        htmlMsg += (typeRole.find(e => e === 'A') ? `(상신) 능동적으로 실력을 입증하려 하고 자격 인허가로 나이들수록 신분이 높아집니다. `+"<br/>" : ``)
+        + (typeRole.find(e => e === 'D') ? `(구신) 지위, 역할에 대한 지지 세력을 능동적으로 얻으려고 합니다. `+"<br/>" : ``)
+        + (typeRole.find(e => e === 'C') ? `(상신의 기신) 자신의 신분을 통해 검증 받아 지지 세력을 모읍니다. `+"<br/>" : ``)
+        + (typeRole.find(e => e === 'B') ? `(구신기신) 자신의 지지 세력을 넓힐 수 있습니다. `+"<br/>" : ``);
+        
+
     }
     else{
         roleMsg += (typeRole.find(e => e === 'A') ? ` 상신 ${frameSet[3]} ` : ``)
@@ -849,10 +861,17 @@ function DecideTell(){
         + (typeRole.find(e => e === 'C') ? `상신기신: ${frameSet[5]} ` : ``)
         + (typeRole.find(e => e === 'B') ? `격기신: ${frameSet[4]} ` : ``);
 
+        let a = (typeRole.find(e => e === 'A') !== undefined) ? 1: 0; 
+        let b = (typeRole.find(e => e === 'B') !== undefined) ? 1: 0; 
+        let c = (typeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
+        let d = (typeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
+        roleSky = [a, b, c, d];
+
         htmlMsg += (typeRole.find(e => e === 'A') ? `(상신) 타고난 사회의 규칙에 맞춰 자신의 역할을 수행합니다. `+"<br/>" : ``)
-        + (typeRole.find(e => e === 'D') ? `(구신) 운이 좋게도 결과가 잘 나오며 어딜 가도 대우 받습니다. `+"<br/>" : ``)
+        + (typeRole.find(e => e === 'D') ? `(구신) 운이 좋게도 결과가 잘 나오며 성과에 따른 대우 받으려고 합니다. `+"<br/>" : ``)
         + (typeRole.find(e => e === 'C') ? `(상신기신) 주변에 경쟁자가 많고 금전적 이득을 만들어내며 우위를 점합니다. `+"<br/>" : ``)
-        + (typeRole.find(e => e === 'B') ? `(격기신) 검증을 통해 명성과 인정 받을 수 있으나, 잘못이 드러나기도 합니다. `+"<br/>" : ``); 
+        + (typeRole.find(e => e === 'B') ? `(격기신) 검증을 통해 명성과 인정 받으려고 하지만, 잘못이 드러나기도 합니다. `+"<br/>" : ``); 
+
 
     }
 
@@ -862,10 +881,18 @@ function DecideTell(){
         + (wtypeRole.find(e => e === 'C') ? `지지 상신기신: ${frameSet[5]} ` : ``)
         + (wtypeRole.find(e => e === 'B') ? `지지 구신기신: ${frameSet[4]} ` : ``);
 
-        htmlMsg += (wtypeRole.find(e => e === 'A') ? `(지지 상신) 실무에서 자격 및 신분을 사용하고 지지 기반을 만들어 갑니다. `+"<br/>" : ``)
+        let a = (typeRole.find(e => e === 'A') !== undefined) ? 1: 0; 
+        let b = (typeRole.find(e => e === 'B') !== undefined) ? 1: 0; 
+        let c = (typeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
+        let d = (typeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
+        roleLand = [a, b, c, d];
+
+        htmlMsg += (wtypeRole.find(e => e === 'A') ? `(지지 상신) 실무에서 타인의 요청에 의해 자격 및 신분으로 지지 기반을 수동적으로 만들어 갑니다. `+"<br/>" : ``)
         + (wtypeRole.find(e => e === 'D') ? `(지지 구신) 실무에서 신분에 대한 지지 세력을 얻어 인정 받습니다. `+"<br/>" : ``)
         + (wtypeRole.find(e => e === 'C') ? `(지지 상신기신) 실무능력이 우수해 자신의 몸 값이 높아집니다. `+"<br/>" : ``)
         + (wtypeRole.find(e => e === 'B') ? `(지지 구신기신) 자신의 성과를 인정 받아 더 큰 지위로 나아갈 수 있습니다. `+"<br/>" : ``);
+        
+        
         
     }
     else{
@@ -874,10 +901,17 @@ function DecideTell(){
         + (wtypeRole.find(e => e === 'C') ? `지지 상신기신: ${frameSet[5]} ` : ``)
         + (wtypeRole.find(e => e === 'B') ? `지지 격기신: ${frameSet[4]} ` : ``);
 
+        let a = (typeRole.find(e => e === 'A') !== undefined) ? 1: 0; 
+        let b = (typeRole.find(e => e === 'B') !== undefined) ? 1: 0; 
+        let c = (typeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
+        let d = (typeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
+        roleLand = [a, b, c, d];
+
         htmlMsg += (wtypeRole.find(e => e === 'A') ? `(지지 상신) 실무에서 격을 사용해가서 지지 기반을 만들어 갑니다. `+"<br/>" : ``)
         + (wtypeRole.find(e => e === 'D') ? `(지지 구신) 그동안 해온것에 대한 성과를 만들어 냅니다. `+"<br/>" : ``)
         + (wtypeRole.find(e => e === 'C') ? `(지지 상신기신) 하극상이나 아랫사람의 무시가 있을 수 있습니다. `+"<br/>" : ``)
         + (wtypeRole.find(e => e === 'B') ? `(지지 격기신) 자신이 일하면서 생기는 문제와 잘못이 자꾸 드러납니다. `+"<br/>" : ``);
+
 
     }
 
@@ -886,6 +920,8 @@ function DecideTell(){
         + (untypeRole.find(e => e === 'D') ? `구신: ${frameSet[6]}△ ` : ``)
         + (untypeRole.find(e => e === 'C') ? `상신기신: ${frameSet[5]}△ ` : ``)
         + (untypeRole.find(e => e === 'B') ? `구신기신: ${frameSet[4]}△ ` : ``);
+        
+        
 
     }
     else{
@@ -893,6 +929,8 @@ function DecideTell(){
         + (untypeRole.find(e => e === 'D') ? `구신: ${frameSet[6]}△ ` : ``)
         + (untypeRole.find(e => e === 'C') ? `상신기신: ${frameSet[5]}△ ` : ``)
         + (untypeRole.find(e => e === 'B') ? `격기신: ${frameSet[4]}△ ` : ``);
+
+
 
     }
     
@@ -938,12 +976,6 @@ function DecideTell(){
     var addArray = ["또한 ", "그리고 ", "게다가 ", "그 외에도 ", "그 밖에도 ", "이와 더불어 "];
     // 천간과 지장간 해석 set 갯수
 
-
-
-
-
-
-    
     document.getElementById("debug3").innerHTML = mainNotice + "<br/>" + useSet[orderID-1].key + "이 요구되는 사회 환경에" +"<br/>"
     for(var i=0; i<mainMsg.length; i++){
         document.getElementById("debug3").innerHTML += mainMsg[i] + " 있습니다." +"<br/>";
@@ -998,15 +1030,58 @@ function DecideTell(){
         addArray[Math.floor(Math.random() * addArray.length)] + "주변 사람과 모의해 사적 관계에서 공적 관계로 만들어가지만, 관계 스트레스에 유념해야 합니다. " + "<br/>";
     }
 
+    console.log((typeRole.find(e => e === 'A') === undefined && wtypeRole.find(e => e === 'A') === undefined));
+    console.log((wtypeRole.find(e => e === 'D') === undefined && typeRole.find(e => e === 'D') === undefined));
 
-    let addMsg = ""
-    if((typeRole.find(e => e !== 'A') || wtypeRole.find(e => e !== 'A')) && (typeRole.find(e => e !== 'D') || wtypeRole.find(e => e !== 'D'))){
-        addMsg += "(상신X 구신X) 역할, 신분, 성과, 세력을 얻어야야 할 사회적 역할 보다 자신의 능력위주로 살아갑니다."
-        
+
+
+
+
+    if((typeRole.find(e => e === 'A') === undefined && wtypeRole.find(e => e === 'A') === undefined) && (wtypeRole.find(e => e === 'D') === undefined && typeRole.find(e => e === 'D') === undefined)){
+        addMsg += "(상신X 구신X) 역할과 성과에 대한 타인의 기대를 부응하기 보다 자신의 적성과 능력 위주로 살아갑니다. 이번 생은 휴가오셨습니다."  
     }
 
     document.getElementById("debug4").innerHTML = "※ 직업적 의지 (격국 구응성패) ※"+"<br/>"+  
-    "(" + roleMsg + " " + uroleMsg  + ")" +"<br/>";
+    "(" + frameSet[2]+", " + roleMsg + " " + uroleMsg  + ")" +"<br/>";
+
+
+    // 구응성패 천간과 지지 위치별 특성 통변
+        
+    if(roleSky[0] !== undefined && roleLand[0] !== undefined){
+        addMsg += "(상신 통근) 자신의 역할을 확실하게 잘하며 살아가는데 문제 없습니다. ";
+    }
+    else if(roleSky[0] !== undefined && roleLand[0] === undefined){
+        addMsg += "(천간 상신) 자신의 역할을 의식적으로 염두해 능동적으로 살아갑니다. ";
+    }
+    // 상신 vs. 상신기신
+    // 상신O 상신기신X
+    if((roleSky[0] !== 0 || roleLand[0] !== 0) && (roleSky[2] === 0 || roleLand[2] === 0)){
+        addMsg += "(상신 + 상신기신X) 자신의 신분에 대한 능력 검증이 없으므로, 보수적이고 안일함에 빠질 수 있습니다. ";
+    } //상신X 상신기신O
+    else if((roleSky[0] === 0 || roleLand[0] === 0) && (roleSky[2] !== 0 || roleLand[2] !== 0)){
+        addMsg += "(상신X + 상신기신) 자신의 신분에 대한 능력 검증에 좋은 평가 받기 어려워 사람을 모으기 어렵습니다. ";
+    } //상신O 상신기신O
+    else if((roleSky[0] !== 0 || roleLand[0] !== 0) && (roleSky[2] !== 0 || roleLand[2] !== 0)){
+        addMsg += "(상신 + 상신기신) 자신의 신분에 대한 능력 검증받아 세력을 모읍니다. ";
+    }
+
+    // 상신, 지장간 상신기신
+    if(roleSky[0] !== 0 && roleLand[2] === 0){
+        addMsg += "(상신 + 지장간 상신기신) 의욕 대비 결과가 부족하여 하극상이나 아랫사람의 무시가 있을 수 있습니다. ";
+    } //상신 지장간, 상신기신
+    else if(roleSky[2] === 0 && roleLand[0] !== 0){
+        addMsg += "(지장간 상신 + 상신기신) 자신의 실력을 쌓아 좋은 성과를 만들어 냅니다. ";
+    } //상신O 상신기신O
+    else if(roleSky[0] === 0 && roleLand[2] !== 0){
+        addMsg += "(지장간 상신 + 지장간 상신기신) 실무능력이 우수해 자신의 몸 값이 높아집니다. ";
+    }
+
+    // 상신 vs. 구신
+
+    // 구신 vs. 격기신, 구신기신
+
+
+
 
     document.getElementById("debug5").innerHTML = htmlMsg + addMsg;
     // useSet.length = 0; // 제거
@@ -1025,7 +1100,7 @@ function DecideTell(){
 
 
     document.getElementById("debug6").innerHTML = "※ 직무능력 (육신의 생화극제) ※"+"<br/>"+ 
-    " (" + frameMsg +", "+ frameSet[2]+", " + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" +"<br/>";
+    " (" + frameMsg + frameSet[2]+", " + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" +"<br/>";
     document.getElementById("debug7").innerHTML = rp;
 
 
@@ -1443,7 +1518,7 @@ function RolePlay(me, fr, skyR, landR, nullR, skyt, landt, selfR){
                 }  
         }
         else{
-            console.log("조직의 규칙보다 개인 욕심 및 윗사람의 무능함에 치를 떱니다. 시장에 대한 이해력 높고, 자영업/유통업에 적합니다.");
+            console.log("(根旺 傷官格) 조직의 규칙보다 개인을 더 중시하며 윗사람의 무능함에 치를 떱니다. 시장에 대한 이해력 높고, 자영업/유통업에 적합니다.");
             role_playMsg += "(根旺 傷官格 生財) 조직의 규칙보다 개인 욕심 및 윗사람의 무능함에 치를 떱니다. 시장에 대한 이해력 높고, 자영업/유통업에 적합니다."+"</br>";
             if(skyR.find(e => e === 'A')){
                 console.log("어쩔 수 없이 조직생활 하지만 불평이 많아집니다.");
@@ -1693,7 +1768,7 @@ function RolePlay(me, fr, skyR, landR, nullR, skyt, landt, selfR){
         }
     }
     else if(fr === "食神格"){
-        role_playMsg += "(食神格) 자신의 능력을 중시하고 한 분야에 매진 연구하기 좋아합니다."+"</br>";
+        role_playMsg += "(食神格) 자신의 능력을 중시하고 한 분야에 연구 매진하기 좋아합니다."+"</br>";
         if(selfR !== true){
             role_playMsg += "(根弱 食神格) 전문성 유통기한이 빠르므로 주변 사람들을 통해 성장해야 합니다."+"</br>";
             if(skyt.find(e => skyTag[e-1].type === skyTag[one-1].type)){

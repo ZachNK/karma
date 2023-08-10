@@ -1047,34 +1047,34 @@ function DecideTell(){
 
     // 구응성패 천간과 지지 위치별 특성 통변
         
-    if(roleSky[0] !== undefined && roleLand[0] !== undefined){
-        addMsg += "(상신 통근) 자신의 역할을 확실하게 잘하며 살아가는데 문제 없습니다. ";
-    }
-    else if(roleSky[0] !== undefined && roleLand[0] === undefined){
-        addMsg += "(천간 상신) 자신의 역할을 의식적으로 염두해 능동적으로 살아갑니다. ";
-    }
-    // 상신 vs. 상신기신
-    // 상신O 상신기신X
-    if((roleSky[0] !== 0 || roleLand[0] !== 0) && (roleSky[2] === 0 || roleLand[2] === 0)){
-        addMsg += "(상신 + 상신기신X) 자신의 신분에 대한 능력 검증이 없으므로, 보수적이고 안일함에 빠질 수 있습니다. ";
-    } //상신X 상신기신O
-    else if((roleSky[0] === 0 || roleLand[0] === 0) && (roleSky[2] !== 0 || roleLand[2] !== 0)){
-        addMsg += "(상신X + 상신기신) 자신의 신분에 대한 능력 검증에 좋은 평가 받기 어려워 사람을 모으기 어렵습니다. ";
-    } //상신O 상신기신O
-    else if((roleSky[0] !== 0 || roleLand[0] !== 0) && (roleSky[2] !== 0 || roleLand[2] !== 0)){
-        addMsg += "(상신 + 상신기신) 자신의 신분에 대한 능력 검증받아 세력을 모읍니다. ";
-    }
+    // if(roleSky[0] !== undefined && roleLand[0] !== undefined){
+    //     addMsg += "(상신 통근) 자신의 역할을 확실하게 잘하며 살아가는데 문제 없습니다. ";
+    // }
+    // else if(roleSky[0] !== undefined && roleLand[0] === undefined){
+    //     addMsg += "(천간 상신) 자신의 역할을 의식적으로 염두해 능동적으로 살아갑니다. ";
+    // }
+    // // 상신 vs. 상신기신
+    // // 상신O 상신기신X
+    // if((roleSky[0] !== 0 || roleLand[0] !== 0) && (roleSky[2] === 0 || roleLand[2] === 0)){
+    //     addMsg += "(상신 + 상신기신X) 자신의 신분에 대한 능력 검증이 없으므로, 보수적이고 안일함에 빠질 수 있습니다. ";
+    // } //상신X 상신기신O
+    // else if((roleSky[0] === 0 || roleLand[0] === 0) && (roleSky[2] !== 0 || roleLand[2] !== 0)){
+    //     addMsg += "(상신X + 상신기신) 자신의 신분에 대한 능력 검증에 좋은 평가 받기 어려워 사람을 모으기 어렵습니다. ";
+    // } //상신O 상신기신O
+    // else if((roleSky[0] !== 0 || roleLand[0] !== 0) && (roleSky[2] !== 0 || roleLand[2] !== 0)){
+    //     addMsg += "(상신 + 상신기신) 자신의 신분에 대한 능력 검증받아 세력을 모읍니다. ";
+    // }
 
-    // 상신, 지장간 상신기신
-    if(roleSky[0] !== 0 && roleLand[2] === 0){
-        addMsg += "(상신 + 지장간 상신기신) 의욕 대비 결과가 부족하여 하극상이나 아랫사람의 무시가 있을 수 있습니다. ";
-    } //상신 지장간, 상신기신
-    else if(roleSky[2] === 0 && roleLand[0] !== 0){
-        addMsg += "(지장간 상신 + 상신기신) 자신의 실력을 쌓아 좋은 성과를 만들어 냅니다. ";
-    } //상신O 상신기신O
-    else if(roleSky[0] === 0 && roleLand[2] !== 0){
-        addMsg += "(지장간 상신 + 지장간 상신기신) 실무능력이 우수해 자신의 몸 값이 높아집니다. ";
-    }
+    // // 상신, 지장간 상신기신
+    // if(roleSky[0] !== 0 && roleLand[2] === 0){
+    //     addMsg += "(상신 + 지장간 상신기신) 의욕 대비 결과가 부족하여 하극상이나 아랫사람의 무시가 있을 수 있습니다. ";
+    // } //상신 지장간, 상신기신
+    // else if(roleSky[2] === 0 && roleLand[0] !== 0){
+    //     addMsg += "(지장간 상신 + 상신기신) 자신의 실력을 쌓아 좋은 성과를 만들어 냅니다. ";
+    // } //상신O 상신기신O
+    // else if(roleSky[0] === 0 && roleLand[2] !== 0){
+    //     addMsg += "(지장간 상신 + 지장간 상신기신) 실무능력이 우수해 자신의 몸 값이 높아집니다. ";
+    // }
 
     // 상신 vs. 구신
 

@@ -8,7 +8,7 @@ const notice = [];
 const roles = [];
 const frame = [];
 const luck1 = [];
-
+const luck2 = [];
 
 
 fetch('./js/initialdate.json')
@@ -67,6 +67,13 @@ fetch('./js/luck1.json')
         });
     });
 
+fetch('./js/framelucks.json')
+    .then(results => results.json())
+    .then(data => {
+        data.forEach(post => {
+            luck2.push(post);
+        });
+    });
 
 
 function DecideTell(){
@@ -1085,10 +1092,10 @@ function DecideTell(){
     // 상신 vs. 구신
     //상신O 구신O
     if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[3] === 1 || roleLand[3] === 1)){
-        htmlMsg += (follower === false) ? `(상신O 구신O) 능동적으로 자신의 사회적 자격과 세력를 얻고자 합니다. ` : `(상신O 구신O) 능동적으로 자신의 주어진 역할 수행과 그에 맞는 성과를 냅니다. ` + "<br/>";
+        htmlMsg += `(상신O 구신O) ${(follower === false) ? `능동적으로 자신의 사회적 자격과 세력를 얻고자 합니다. ` : `능동적으로 자신의 주어진 역할 수행과 그에 맞는 성과를 냅니다. `}` + "<br/>";
     }// 상신O 구신X
     else if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[3] === 0 && roleLand[3] === 0)){
-        htmlMsg += (follower === false) ? `(상신O 구신X) 자신의 사회적 자격 능력으로 세력을 얻는데 부족합니다. ` : `(상신O 구신X) 자신의 역할 수행에 대한 성과는 부족합니다. ` + "<br/>";
+        htmlMsg += `(상신O 구신X) ${(follower === false) ? `자신의 사회적 자격 능력으로 세력을 얻는데 부족합니다. ` : `(상신O 구신X) 자신의 역할 수행에 대한 성과는 부족합니다. `}` + "<br/>";
     } //상신X 구신O
     else if(roleSky[0] === 0 && roleLand[0] === 0 && roleSky[3] === 0 && roleLand[3] === 0){
         htmlMsg += `(상신X 구신X) ${ (follower === false) ? `사회적 자격과 지위에 대한 사명감 보다` : `사회적 역할 수행과 성과에 대한 사명감 보다` } 자신의 적성과 능력에만 집중하여 살아갑니다. 이번 생은 휴가오셨습니다. ` + "<br/>";
@@ -1098,7 +1105,7 @@ function DecideTell(){
     // 구신 vs. 격기신, 구신기신
     //구신O 구신기신O
     if((roleSky[3] === 1 || roleLand[3] === 1) && (roleSky[1] === 1 || roleLand[1] === 1)){
-        htmlMsg += (follower === false) ? `(구신O 구신기신O) 사회적 지위 능력으로 경쟁자를 누르는 정복자 및 최종 승리자입니다. ` : `(구신 + 격기신) 객관적 검증을 잘 받아서 자신의 역할 수행에 따른 성과를 유지합니다. ` + "<br/>";
+        htmlMsg += `(구신O ${(follower === false) ? `구신기신O) 사회적 지위 능력으로 경쟁자를 누르는 정복자 및 최종 승리자입니다. ` : `격기신O) 객관적 검증을 잘 받아서 자신의 역할 수행에 따른 성과를 유지합니다. `}` + "<br/>";
     }// 구신O 구신기신X
     else if((roleSky[3] === 1 || roleLand[3] === 1) && (roleSky[1] === 0 && roleLand[1] === 0)){
         htmlMsg += `(구신O ${(follower === false) ? `구신기신X) 사회적 지위로 세력을 모으는데 방어적이고 소극적으로 움직입니다. ` : `격기신X) 역할수행에 대한 성과를 검증받는데 방어적이고 소극적으로 움직입니다. `}`  + "<br/>";
@@ -1152,10 +1159,10 @@ function DecideTell(){
 
 
     
-    // document.getElementById('lucks').innerHTML = 
-    // `<td><button onClick="ShowLucks();" style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">운세보기</button></td>`
-
-
+    document.getElementById('lucks').innerHTML = 
+    `<td><button onClick="ShowLucks();" style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">운세보기</button></td>`
+    
+    Role_Lucks(frameSet, roleSky, roleLand);
 
 
 }
@@ -1178,6 +1185,7 @@ function ShowLucks(){
     if(lucksTitle.innerHTML === '' && lucks.innerHTML === ''){
         
         Use_lucks();
+        
     }
     else{
         
@@ -1476,6 +1484,81 @@ function Use_lucks(){
     }
 
 }
+
+function Role_Lucks(fkey, frSky, frLand){
+    let mon_img = document.getElementById("SKY2").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    let first_img = document.getElementById("001i").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    console.log(mon_img, first_img)
+
+    let roleAwake = [];
+    roleAwake.push(((frSky[3]===1 || frLand[3] ===1) ? 1:0)) //격 (구신유무)
+    roleAwake.push(((frSky[0]===1 || frLand[0] ===1) ? 1:0)) //상신 (상신유무)
+    roleAwake.push(((frSky[3]===1 || frLand[3] ===1) ? 1:0)) //구신기신 (구신유무)
+    roleAwake.push(((frSky[0]===1 || frLand[0] ===1) ? 1:0)) //상신기신 (상신유무)
+    roleAwake.push(((frSky[3]===1 || frLand[3] ===1) ? 1:0)) //구신 (구신유무)
+    console.log("구응성패 활성화", roleAwake)
+
+    let info = Object.values(fkey); // [10, 9, '羊刃格', '偏官', '偏財', '食神', '偏印']
+    console.log(info);
+    //상신 info[3]
+    //상신기신 info[5]
+    //구신 info[6]
+    //구신기신 info[4]
+
+    // [격, 상신, 구신기신, 상신기신, 구신]
+    let fTypes = [frame.find(e => e.fr === info[2]).type, frame.find(e => e.tag === info[3]).type, frame.find(e => e.tag === info[4]).type, frame.find(e => e.tag === info[5]).type, frame.find(e => e.tag === info[6]).type];
+    console.log(fTypes);
+    
+    
+
+    let goLuck = false;
+
+    if((mon_img > first_img) || (mon_img === 1 && first_img === 10)){
+        goLuck = false;
+    }else{
+        goLuck = true;
+    }
+
+    for(var i=0; i<12; i++){
+        let click = '#t' + String(i+1).padStart(2, '0');
+        $(click).click(function(){
+            let num = click.split('#t')[1]*1;
+            if(goLuck===false){
+                let cal = (20-num+first_img)%10;
+
+                let tagCal = roles[fkey[0]-1].mr.find(e=> e.id === cal).tag
+                
+                let typeCal = frame.find(e => e.tag === tagCal).type;
+                let clickKey = fTypes.indexOf(typeCal);
+                let a = roleAwake[clickKey];
+                
+                console.log("역행", clickKey, luck2[clickKey].key[a]);
+                document.getElementById('GLucks').innerHTML = luck2[clickKey].key[a];
+            }else{
+                let cal = (first_img+num-2)%10;
+                let tagCal = roles[fkey[0]-1].mr.find(e=> e.id === cal).tag
+                let typeCal = frame.find(e => e.tag === tagCal).type;
+                let clickKey = fTypes.indexOf(typeCal);
+                let a = roleAwake[clickKey];
+
+                console.log("순행", clickKey, luck2[clickKey].key[a]);
+                document.getElementById('GLucks').innerHTML = luck2[clickKey].key[a];
+            }
+            
+            
+        });
+
+    }
+
+    
+
+
+    
+}
+
+
+
+
 
 function RoleType(frame_set){
     result = 0;

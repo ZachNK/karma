@@ -839,7 +839,6 @@ function DecideTell(){
     let htmlMsg = "";
 
     // 상신과 구신 유무에 대한 통변 방법
-    let addMsg = ""
     let roleSky = [];
     let roleLand = [];
 
@@ -858,11 +857,6 @@ function DecideTell(){
         let d = (typeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
         roleSky = [a, b, c, d];
 
-        // htmlMsg += (typeRole.find(e => e === 'A') ? `(상신) 능동적으로 실력을 입증하려 하고 자격 인허가로 나이들수록 신분이 높아집니다. `+"<br/>" : ``)
-        // + (typeRole.find(e => e === 'D') ? `(구신) 지위, 역할에 대한 지지 세력을 능동적으로 얻으려고 합니다. `+"<br/>" : ``)
-        // + (typeRole.find(e => e === 'C') ? `(상신의 기신) 자신의 신분을 통해 검증 받아 지지 세력을 모읍니다. `+"<br/>" : ``)
-        // + (typeRole.find(e => e === 'B') ? `(구신기신) 자신의 지지 세력을 넓힐 수 있습니다. `+"<br/>" : ``);
-        
 
     }
     else{
@@ -876,11 +870,6 @@ function DecideTell(){
         let c = (typeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
         let d = (typeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
         roleSky = [a, b, c, d];
-
-        // htmlMsg += (typeRole.find(e => e === 'A') ? `(상신) 타고난 사회의 규칙에 맞춰 자신의 역할을 수행합니다. `+"<br/>" : ``)
-        // + (typeRole.find(e => e === 'D') ? `(구신) 운이 좋게도 결과가 잘 나오며 성과에 따른 대우 받으려고 합니다. `+"<br/>" : ``)
-        // + (typeRole.find(e => e === 'C') ? `(상신기신) 주변에 경쟁자가 많고 금전적 이득을 만들어내며 우위를 점합니다. `+"<br/>" : ``)
-        // + (typeRole.find(e => e === 'B') ? `(격기신) 검증을 통해 명성과 인정 받으려고 하지만, 잘못이 드러나기도 합니다. `+"<br/>" : ``); 
 
 
     }
@@ -897,12 +886,6 @@ function DecideTell(){
         let d = (wtypeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
         roleLand = [a, b, c, d];
 
-        // htmlMsg += (wtypeRole.find(e => e === 'A') ? `(지지 상신) 실무에서 타인의 요청에 의해 자격 및 신분으로 지지 기반을 수동적으로 만들어 갑니다. `+"<br/>" : ``)
-        // + (wtypeRole.find(e => e === 'D') ? `(지지 구신) 실무에서 신분에 대한 지지 세력을 얻어 인정 받습니다. `+"<br/>" : ``)
-        // + (wtypeRole.find(e => e === 'C') ? `(지지 상신기신) 실무능력이 우수해 자신의 몸 값이 높아집니다. `+"<br/>" : ``)
-        // + (wtypeRole.find(e => e === 'B') ? `(지지 구신기신) 자신의 성과를 인정 받아 더 큰 지위로 나아갈 수 있습니다. `+"<br/>" : ``);
-        
-        
         
     }
     else{
@@ -916,11 +899,6 @@ function DecideTell(){
         let c = (wtypeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
         let d = (wtypeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
         roleLand = [a, b, c, d];
-
-        // htmlMsg += (wtypeRole.find(e => e === 'A') ? `(지지 상신) 실무에서 격을 사용해가서 지지 기반을 만들어 갑니다. `+"<br/>" : ``)
-        // + (wtypeRole.find(e => e === 'D') ? `(지지 구신) 그동안 해온것에 대한 성과를 만들어 냅니다. `+"<br/>" : ``)
-        // + (wtypeRole.find(e => e === 'C') ? `(지지 상신기신) 하극상이나 아랫사람의 무시가 있을 수 있습니다. `+"<br/>" : ``)
-        // + (wtypeRole.find(e => e === 'B') ? `(지지 격기신) 자신이 일하면서 생기는 문제와 잘못이 자꾸 드러납니다. `+"<br/>" : ``);
 
 
     }
@@ -1000,7 +978,7 @@ function DecideTell(){
     
     for(var i=0; i<subMsg.length; i++){
         
-        document.getElementById("debug3").innerHTML += subMsg[i] + "도 늘 합니다." + "<br/>";
+        document.getElementById("debug3").innerHTML += subMsg[i] + " 늘 발휘 합니다." + "<br/>";
     }
 
     if(potenMsg.length !== 0){
@@ -1009,7 +987,7 @@ function DecideTell(){
 
     for(var i=0; i<potenMsg.length; i++){
         
-        document.getElementById("debug3").innerHTML += potenMsg[i] + "도 할 수 있습니다." + "<br/>";
+        document.getElementById("debug3").innerHTML += potenMsg[i] + "도 발휘 할 수 있습니다." + "<br/>";
     }
 
     
@@ -1054,105 +1032,97 @@ function DecideTell(){
 
     
     // 구응성패 천간과 지지 위치별 특성 통변
+    if(p_allIdea.find(e => e === frameSet[1]) !== undefined){
+        htmlMsg += `(격투간) 실질적인 역할 수행보다 ${(follower === false) ? `사회적 자격 타이틀에` : `사회적 역할 타이틀에`} 더 존중받으려는 마음이 강합니다.` + "<br/>";
+    }
+
+
     if(roleSky[0] === 1 && roleLand[0] === 1){
-        htmlMsg += "(상신 통근) 자신의 역할을 확실하게 잘하며 살아가는데 문제 없습니다. ";
+        htmlMsg += `(상신 통근) ${(follower === false) ? `자격에 맞는 역할을` : `주어진 사회적 역할을`} 확실하게 잘하며 살아가는데 문제 없습니다. ` + "<br/>";
     }
     else if(roleSky[0] === 1 && roleLand[0] === 0){
-        if(follower === false){
-            htmlMsg += "(천간 상신) 자신의 역할을 의식적으로 염두해 능동적으로 살아갑니다. ";
-        }else{
-            htmlMsg += "(천간 상신) 자신의 역할의 후광으로 살아갈 수 있습니다. ";
-        }
-        
+        htmlMsg += `(천간 상신) ${(follower === false) ? `사회적 자격을 의식적으로 염두해 능동적으로 살아갑니다. ` : `사회적 역할의 후광으로 살아갈 수 있습니다. `}` + "<br/>";
     }
     
     // 상신 vs. 상신기신
     //상신O 상신기신O
     if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[2] === 1 || roleLand[2] === 1)){
-        if(follower === false){
-            htmlMsg += "(상신 + 상신기신) 자신의 신분에 대한 능력 검증받아 세력을 모읍니다. ";
-        }else{
-            htmlMsg += "(상신 + 상신기신) 역할에 대한 준비력이 있어서 환경 혜택에 유리해 이득을 취할 수 있습니다. ";
-        }
+        htmlMsg += `(상신O 상신기신O) ${(follower === false) ? `사회적 자격 능력에 검증받아 지위를 갖추려고 합니다. ` : `사회적 역할 수행에 실력이 있어 유리한 환경 혜택으로 이득을 취하려고 합니다. `}` + "<br/>";
     }// 상신O 상신기신X
     else if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[2] === 0 && roleLand[2] === 0)){
-        htmlMsg += "(상신 + 상신기신X) 자신의 신분에 대한 능력 검증이 없으므로, 보수적이고 안일함에 빠질 수 있습니다. ";
+        htmlMsg += `(상신O 상신기신X) ${(follower === false) ? `자격 능력에 지속적인 경쟁과 검증이 없으므로, 보수적이고 안일함에 빠질 수 있습니다. ` : `역할 능력에 지속적인 경쟁과 검증이 없으므로, 보수적이고 안일함에 빠질 수 있습니다. `}` + "<br/>";
     } //상신X 상신기신O
     else if((roleSky[0] === 0 && roleLand[0] === 0) && (roleSky[2] === 1 || roleLand[2] === 1)){
-        if(follower === false){
-            htmlMsg += "(상신X + 상신기신) 자신의 신분에 대한 능력 검증에 좋은 평가 받기 어려워 사람을 모으기 어렵습니다. ";
-        }else{
-            htmlMsg += "(상신X + 상신기신) 역할에 대한 준비력이 약해 환경 혜택에 불리할 수 있습니다 ";
-        }
+        htmlMsg += `(상신X 상신기신O) ${(follower === false) ? `사회적 자격 능력에 부족한 평가를 받아 지위를 갖추기 어렵습니다. ` : `사회적 역할 수행 부족하여 경쟁력을 갖추기 어렵습니다. `}` + "<br/>";
+    }else if((roleSky[0] === 0 && roleLand[0] === 0) && (roleSky[2] === 0 && roleLand[2] === 0)){
+        htmlMsg += `(상신X 상신기신X) ${(follower === false) ? `기대 받는 사회적 자격이 주어지지 않았고 능력에 대한 경쟁력을 갖추지 않아도 됩니다. ` : `요청 받은 사회적 역할이 주어지지 않았고 역할 수행에 경쟁력을 갖추지 않아도 됩니다. `}` + "<br/>";
     }
 
     
     // 상신, 상신기신
     if(roleSky[0] === 1 && roleSky[2] === 1){
-        htmlMsg += "(천간 상신 + 천간 상신기신) 금수저처럼 환경적 혜택이 뛰어나지만 오만에 빠지지 않도록 주의해야 합니다. ";
+        htmlMsg += `(천간 상신 + 천간 상신기신) ${(follower === false) ? `사회적 자격에 경쟁력있는 능력을 갖추는데` : `실력있는 사회적 역할 수행에 환경적`} 혜택이 타고났지만 오만에 빠지지 않도록 주의해야 합니다. ` + "<br/>";
     }// 상신, 지장간 상신기신
     else if(roleSky[0] === 1 && roleLand[2] === 1){
-        htmlMsg += "(천간 상신 + 지장간 상신기신) 의욕 대비 결과가 부족하여 하극상이나 아랫사람의 무시가 있을 수 있습니다. ";
+        htmlMsg += `(천간 상신 + 지장간 상신기신) ${(follower === false) ? `자격에 맞는 역할 대비 검증된 능력이 부족하여` : `역할에 대한 의욕 대비 성과가 부족하여`} 하극상이나 아랫사람의 무시가 있을 수 있습니다. ` + "<br/>";
     } //상신 지장간, 상신기신
     else if(roleSky[2] === 1 && roleLand[0] === 1){
-        htmlMsg += "(지장간 상신 + 천간 상신기신) 자신의 실력을 쌓아 좋은 성과를 만들어 냅니다. ";
+        htmlMsg += `(지장간 상신 + 천간 상신기신) ${(follower === false) ? `자격 능력에 대한 지속적인 검증으로 경쟁력을 갖추게 됩니다.` : `주어진 역할에 대한 실력을 쌓아 좋은 성과를 만들어 냅니다.`} ` + "<br/>";
     } //지장간 상신O 지장간 상신기신O
     else if(roleLand[0] === 1 && roleLand[2] === 1){
-        htmlMsg += "(지장간 상신 + 지장간 상신기신) 실무능력이 우수해 자신의 몸 값이 높아집니다. ";
+        htmlMsg += `(지장간 상신 + 지장간 상신기신) ${(follower === false) ? `사회적 자격에 맞는 실무능력이 우수해` : `사회적 역할에 대한 실무능력이 우수해`} 자신의 몸 값이 높아집니다. ` + "<br/>";
     }
 
 
     
     if(roleSky[3] === 1 && roleLand[3] === 1){
-        htmlMsg += "(구신 통근) 역할에 대한 활동하는데 쉽게 지쳐 사람과 경쟁을 기피할 수 있습니다. ";
+        htmlMsg += `(구신 통근) ${(follower === false) ? `자격 능력으로 부터 얻은 지위에` : `주어진 역할 수행에`} 쉽게 지쳐 사람과 경쟁을 기피할 수 있습니다. ` + "<br/>";
     }
     else if(roleSky[3] === 1 && roleLand[3] === 0){
-        htmlMsg += "(천간 구신) 스스로 고평가해서 다른 사람과 자신을 비교하려고 합니다. ";
+        htmlMsg += `(천간 구신) ${(follower === false) ? `자격 능력으로 부터 얻은 지위에` : `자신의 역할 수행과 성과에`}  스스로 고평가해서 다른 사람과 자신을 비교하려고 합니다. ` + "<br/>";
     }
     
     // 상신 vs. 구신
     //상신O 구신O
     if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[3] === 1 || roleLand[3] === 1)){
-        htmlMsg += "(상신O 구신O) 자신의 신분 역할에 대한 능력과 활동을 능동적으로 합니다. ";
+        htmlMsg += (follower === false) ? `(상신O 구신O) 능동적으로 자신의 사회적 자격과 세력를 얻고자 합니다. ` : `(상신O 구신O) 능동적으로 자신의 주어진 역할 수행과 그에 맞는 성과를 냅니다. ` + "<br/>";
     }// 상신O 구신X
     else if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[3] === 0 && roleLand[3] === 0)){
-        htmlMsg += "(상신O 구신X) 자신의 신분 역할에 대비 능력 및 활동이 부족합니다. ";
+        htmlMsg += (follower === false) ? `(상신O 구신X) 자신의 사회적 자격 능력으로 세력을 얻는데 부족합니다. ` : `(상신O 구신X) 자신의 역할 수행에 대한 성과는 부족합니다. ` + "<br/>";
     } //상신X 구신O
     else if(roleSky[0] === 0 && roleLand[0] === 0 && roleSky[3] === 0 && roleLand[3] === 0){
-        htmlMsg += "(상신X 구신X) 역할과 성과에 대한 타인의 기대를 부응하기 보다 자신의 적성과 능력 위주로 살아갑니다. 이번 생은 휴가오셨습니다. "  
+        htmlMsg += `(상신X 구신X) ${ (follower === false) ? `사회적 자격과 지위에 대한 사명감 보다` : `사회적 역할 수행과 성과에 대한 사명감 보다` } 자신의 적성과 능력에만 집중하여 살아갑니다. 이번 생은 휴가오셨습니다. ` + "<br/>";
     }
     
 
     // 구신 vs. 격기신, 구신기신
     //구신O 구신기신O
     if((roleSky[3] === 1 || roleLand[3] === 1) && (roleSky[1] === 1 || roleLand[1] === 1)){
-        if(follower === false){
-            htmlMsg += "(구신 + 구신기신) 정복자. 최종 승리자이며 정복전쟁에서 이겨 자신의 존재를 보여줍니다. ";
-        }else{
-            htmlMsg += "(구신 + 격기신) 역할에 대한 성과를 유지하기 위한 객관정 검증을 통과하는 잘 보유합니다. ";
-        }
+        htmlMsg += (follower === false) ? `(구신O 구신기신O) 사회적 지위 능력으로 경쟁자를 누르는 정복자 및 최종 승리자입니다. ` : `(구신 + 격기신) 객관적 검증을 잘 받아서 자신의 역할 수행에 따른 성과를 유지합니다. ` + "<br/>";
     }// 구신O 구신기신X
     else if((roleSky[3] === 1 || roleLand[3] === 1) && (roleSky[1] === 0 && roleLand[1] === 0)){
-        htmlMsg += `(구신 + ${(follower === false) ? "구신기신" : "격기신"}X) 자신의 지위 역할에 대한 활동에 방어적이고 피해를 줄까봐 소극적으로 움직입니다. `;
+        htmlMsg += `(구신O ${(follower === false) ? `구신기신X) 사회적 지위로 세력을 모으는데 방어적이고 소극적으로 움직입니다. ` : `격기신X) 역할수행에 대한 성과를 검증받는데 방어적이고 소극적으로 움직입니다. `}`  + "<br/>";
     } //구신X 구신기신O 
     else if((roleSky[3] === 0 && roleLand[3] === 0) && (roleSky[1] === 1 || roleLand[1] === 1)){
-        htmlMsg += `(구신X + ${(follower === false) ? "구신기신" : "격기신"}) 자신의 지위 역할에 대한 활동에 시기, 질투가 발생할 수 있습니다. `;
+        htmlMsg += `(구신X ${(follower === false) ? `구신기신O) 지위 능력을 갖추기 보다 섣불리 경쟁자를 점유하려는 마음이 더 큽니다. ` : `격기신) 역할수행에 대한 성과에 대해 주변에서 시기 질투가 나타납니다. `}` + "<br/>";
+    }else if((roleSky[3] === 0 && roleLand[3] === 0) && (roleSky[1] === 0 && roleLand[1] === 0)){
+        htmlMsg += `(구신X ${(follower === false) ? `구신기신X) 세력과 지위를 갖출 일이 없고, 경쟁자를 점유하고 정복할 일이 없습니다. ` : `격기신X) 성과를 내지 않아도 되고, 성과에 검증받고 성과를 유지할 일이 없습니다. `}` + "<br/>";
     }
     
     
 
     // 구신, 구신기신
     if(roleSky[3] === 1 && roleSky[1] === 1){
-        htmlMsg += `(천간 구신 + ${(follower === false) ? "천간 구신기신" : "천간 격기신"}) 폼생 폼사형으로, 자신의 성과를 과시하는 면이 있습니다. `;
+        htmlMsg += `(천간 구신 + ${(follower === false) ? `천간 격기신) 폼생폼사형으로, 지위 능력으로 얻은 점유율에 과시하는 면이 있습니다. ` : `천간 격기신) 폼생폼사형으로, 자신의 성과를 과시하는 면이 있습니다. `}` + "<br/>";
     }// 구신, 지장간 구신기신
     else if(roleSky[3] === 1 && roleLand[1] === 1){
-        htmlMsg += '(지장간 구신 + 지장간 ${(follower === false) ? "천간 구신기신" : "천간 격기신"}) 자신의 성과를 인정 받아 더 큰 지위로 나아갈 수 있습니다. ';
+        htmlMsg += `(천간 구신 + ${(follower === false) ? `지장간 구신기신) 지위 능력을 발휘해 더 큰 점유을 높여 경쟁자를 압도할 수 있습니다. `: `지장간 격기신) 자신의 성과를 인정 받아 더 큰 지위로 나아갈 수 있습니다. `}` + "<br/>";
     } //구신 지장간, 구신기신
     else if(roleSky[1] === 1 && roleLand[3] === 1){
-        htmlMsg += `(지장간 구신 + ${(follower === false) ? "천간 구신기신" : "천간 격기신"}) 자신이 일하면서 생기는 문제와 잘못이 자꾸 드러납니다. `;
+        htmlMsg += `(지장간 구신 + ${(follower === false) ? `천간 구신기신) 일하면서 생기는 지위 능력 문제와 잘못이 자꾸 드러납니다. ` : `천간 격기신) 일하면서 생기는 성과 문제와 잘못이 자꾸 드러납니다. `}` + "<br/>";
     } //지장간 구신O 지장간 구신기신O
     else if(roleLand[3] === 1 && roleLand[1] === 1){
-        htmlMsg += `(지장간 구신 + 지장간 ${(follower === false) ? "천간 구신기신" : "천간 격기신"}) 검증과 시련을 통해 자신의 가치를 증명합니다. `;
+        htmlMsg += `(지장간 구신 + 지장간 ${(follower === false) ? `지장간 구신기신) 검증과 시련을 통해 자신의 사회적 가치를 증명합니다. ` : `지장간 격기신) 검증과 시련을 통해 자신의 사회적 가치를 증명합니다. `}` + "<br/>";
     }
     
 
@@ -1175,15 +1145,15 @@ function DecideTell(){
 
 
     document.getElementById("debug6").innerHTML = "※ 직무능력 (육신의 생화극제) ※"+"<br/>"+ 
-    " (" + frameMsg + frameSet[2]+", " + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" +"<br/>";
+    " (" + frameMsg + frameSet[2]+", " + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" + "<br/>";
     document.getElementById("debug7").innerHTML = rp;
 
 
 
 
-
-    document.getElementById('lucks').innerHTML = 
-    `<td><button onClick="Use_lucks()" style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">운세보기</button></td>`
+    
+    // document.getElementById('lucks').innerHTML = 
+    // `<td><button onClick="ShowLucks();" style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">운세보기</button></td>`
 
 
 
@@ -1197,6 +1167,23 @@ function out(id_tag){
     let stem_branch = imgFileName.split('')[0]; // i == 천간, p == 지지
     var result =[stem_branch, imgFileName.substring(1,3)]       
     return result;                                               
+}
+
+
+function ShowLucks(){
+    
+    const lucksTitle = document.getElementById("Year_LucksTitle");
+    const lucks = document.getElementById("year_lucks");
+
+    if(lucksTitle.innerHTML === '' && lucks.innerHTML === ''){
+        
+        Use_lucks();
+    }
+    else{
+        
+        lucksTitle.innerHTML = '';
+        lucks.innerHTML = '';
+    }
 }
 
 function Tri(t_tag, d_tag, m_tag, y_tag, isMonth){ //삼합

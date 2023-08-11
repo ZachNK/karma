@@ -246,6 +246,7 @@ function Fortune_img(){
         var greatNum = 0;
         var clickNum = 0;
         $(t_name).click(function(){
+            Use_lucks();
             var click = $(this).text();
             var blankNum = Array.from(new Array(12), (x, i) => i+1);
 

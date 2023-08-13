@@ -976,14 +976,23 @@ function Copy(){
     document.getElementById("debug6").innerText+
     document.getElementById("debug7").innerText+"\n\n";
 
+    inter +="※ 대운 (격국의 구응성패) ※\n";
+    for(var i=0; i<Doc_Role().length; i++){
+        inter += Doc_Role()[i] + "\n"
+    }
+
+    inter +="\n\n";
+
+    inter +="※ 세운 (용신의 희기신) ※\n";
     for(var i=0; i<Doc_Use().length; i++){
         inter += Doc_Use()[i] +"\n";
     }
 
     inter +="\n\n";
 
-    for(var i=0; i<Doc_Role().length; i++){
-        inter += Doc_Role()[i] + "\n"
+    inter +="※ 세운 (육신의 생화극제) ※\n";
+    for(var i=0; i<Doc_Years().length; i++){
+        inter += Doc_Years()[i] +"\n";
     }
     
     inter += document.getElementById("year_lucks").innerText;

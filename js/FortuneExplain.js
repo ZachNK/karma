@@ -84,6 +84,7 @@ function DecideTell(){
     document.getElementById("debug5").innerHTML = "";
     document.getElementById("debug7").innerHTML = "";
   
+    document.getElementById("GLucks").innerHTML = "";
     document.getElementById("Lucks_main").innerHTML = "";
     document.getElementById("year_lucks").innerHTML = "";
 
@@ -194,6 +195,13 @@ function DecideTell(){
         pObj[2].duty[0].idN,pObj[2].duty[1].idN,pObj[2].duty[2].idN,
         pObj[3].duty[0].idN,pObj[3].duty[1].idN,pObj[3].duty[2].idN,
     ]
+
+    //오중기토 제거
+    for(var i=0; i<4; i++){
+        if(pObj[i].id === 7){
+            eidos[(3*i)+1] = 0;
+        }
+    }
 
     eidos = [...eidos.filter((i,v)=>eidos.indexOf(i) === v)]
     //모든 지장간
@@ -445,6 +453,7 @@ function DecideTell(){
     let nowGod = mObj.use[ordId].pw
     let isTalent = [...soul, ...spirit].find(e => e === nowGod)
     let myID = days
+    console.log(`orderID: ${orderID} nowGod: ${nowGod} isTalent: ${isTalent} myID: ${myID}`)
     console.log(`${skyTag[orderID-1].name}${skyTag[orderID-1].type} 用神, ${skyTag[nowGod-1].name}${skyTag[nowGod-1].type} 喜神 갖고 있음? : ${(isTalent === undefined) ? "아니오" : "네"}`); 
     console.log(`${skyTag[myID-1].name}${skyTag[myID-1].type} 일간`); 
 
@@ -1156,13 +1165,13 @@ function DecideTell(){
     // 상신 vs. 상신기신
     //상신O 상신기신O
     if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[2] === 1 || roleLand[2] === 1)){
-        htmlMsg += `(상신O 상신기신O) ${(follower === false) ? `사회적 자격 능력에 검증받아 지위를 갖추려고 합니다. ` : `사회적 역할 수행에 실력이 있어 유리한 환경 혜택으로 이득을 취하려고 합니다. `}` + "<br/>";
+        htmlMsg += `(상신O 상신기신O) ${(follower === false) ? `사회적 자격을 갖췄을 뿐만 아니라, 능력에 검증받아 지위를 갖추려고 합니다. ` : `사회적 역할 충실히 하면서, 역할에 대한 실력이 있어 유리한 환경 혜택으로 이득을 취하려고 합니다. `}` + "<br/>";
     }// 상신O 상신기신X
     else if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[2] === 0 && roleLand[2] === 0)){
-        htmlMsg += `(상신O 상신기신X) ${(follower === false) ? `자격 능력에 지속적인 경쟁과 검증이 없으므로, 보수적이고 안일함에 빠질 수 있습니다. ` : `역할 능력에 지속적인 경쟁과 검증이 없으므로, 보수적이고 안일함에 빠질 수 있습니다. `}` + "<br/>";
+        htmlMsg += `(상신O 상신기신X) ${(follower === false) ? `자격 능력에 경쟁과 검증 지속적이지 않으므로, 보수적이고 안일함에 빠질 수 있습니다. ` : `역할 능력에 경쟁과 검증이 지속적이지 않으므로, 보수적이고 안일함에 빠질 수 있습니다. `}` + "<br/>";
     } //상신X 상신기신O
     else if((roleSky[0] === 0 && roleLand[0] === 0) && (roleSky[2] === 1 || roleLand[2] === 1)){
-        htmlMsg += `(상신X 상신기신O) ${(follower === false) ? `사회적 자격 능력에 부족한 평가를 받아 지위를 갖추기 어렵습니다. ` : `사회적 역할 수행 부족하여 경쟁력을 갖추기 어렵습니다. `}` + "<br/>";
+        htmlMsg += `(상신X 상신기신O) ${(follower === false) ? `사회적 자격 능력 대비 부족한 평가를 받아 지위를 갖추기 어렵습니다. ` : `사회적 역할 대비 검중이 많아 지속적인 경쟁력을 갖추기 어려워 합니다. `}` + "<br/>";
     }else if((roleSky[0] === 0 && roleLand[0] === 0) && (roleSky[2] === 0 && roleLand[2] === 0)){
         htmlMsg += `(상신X 상신기신X) ${(follower === false) ? `사회가 기대할 만한 자격이 주어지지 않았고 능력에 대한 경쟁력을 갖추지 않아도 됩니다. ` : `자신의 사회적 역할에 누가 기대하지 않았고 역할 능력에 경쟁력이 일정 부분 이상 의미 없습니다. `}` + "<br/>";
     }
@@ -1179,7 +1188,7 @@ function DecideTell(){
         htmlMsg += `(지장간 상신 + 천간 상신기신) ${(follower === false) ? `자격 능력에 대한 지속적인 검증으로 경쟁력을 갖추게 됩니다.` : `주어진 역할에 대한 실력을 쌓아 좋은 성과를 만들어 냅니다.`} ` + "<br/>";
     } //지장간 상신O 지장간 상신기신O
     else if(roleLand[0] === 1 && roleLand[2] === 1){
-        htmlMsg += `(지장간 상신 + 지장간 상신기신) ${(follower === false) ? `사회적 자격에 맞는 실무능력이 우수해` : `사회적 역할에 대한 실무능력이 우수해`} 자신의 몸 값이 높아집니다. ` + "<br/>";
+        htmlMsg += `(지장간 상신 + 지장간 상신기신) ${(follower === false) ? `사회적 자격 능력에 검증하는 환경에 스스로 놓이게 해야` : `사회적 역할에 대한 실무능력이 우수해`} 자신의 몸 값이 높아집니다. ` + "<br/>";
     }
 
 
@@ -1197,7 +1206,7 @@ function DecideTell(){
         htmlMsg += `(상신O 구신O) ${(follower === false) ? `능동적으로 자신의 사회적 자격과 세력를 얻고자 합니다. ` : `능동적으로 자신의 주어진 역할 수행과 그에 맞는 성과를 냅니다. `}` + "<br/>";
     }// 상신O 구신X
     else if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[3] === 0 && roleLand[3] === 0)){
-        htmlMsg += `(상신O 구신X) ${(follower === false) ? `자신의 사회적 자격 능력으로 세력을 얻는데 부족합니다. ` : `(상신O 구신X) 자신의 역할 수행에 대한 성과는 부족합니다. `}` + "<br/>";
+        htmlMsg += `(상신O 구신X) ${(follower === false) ? `자신의 사회적 자격 능력으로 세력을 얻는데 부족합니다. ` : `자신의 역할 수행 노력에 대한 댓가와 성과는 부족합니다. `}` + "<br/>";
     } //상신X 구신O
     else if(roleSky[0] === 0 && roleLand[0] === 0 && roleSky[3] === 0 && roleLand[3] === 0){
         htmlMsg += `(상신X 구신X) ${ (follower === false) ? `사회적 자격과 지위에 대한 사명감 보다` : `사회적 역할 수행과 성과에 대한 사명감 보다` } 오로지 자신의 적성과 능력에만 집중해 직업으로 정하여 살아갑니다. 이번 생은 휴가오셨습니다. ` + "<br/>";
@@ -1222,16 +1231,16 @@ function DecideTell(){
 
     // 구신, 구신기신
     if(roleSky[3] === 1 && roleSky[1] === 1){
-        htmlMsg += `(천간 구신 + ${(follower === false) ? `천간 격기신) 폼생폼사형으로, 지위 능력으로 얻은 점유율에 과시하는 면이 있습니다. ` : `천간 격기신) 폼생폼사형으로, 자신의 성과를 과시하는 면이 있습니다. `}` + "<br/>";
+        htmlMsg += `(천간 구신 + 천간 ${(follower === false) ? `격기신) 폼생폼사형으로, 지위 능력으로 얻은 점유율에 과시하는 면이 있습니다. ` : `격기신) 폼생폼사형으로, 자신의 성과를 과시하는 면이 있습니다. `}` + "<br/>";
     }// 구신, 지장간 구신기신
     else if(roleSky[3] === 1 && roleLand[1] === 1){
-        htmlMsg += `(천간 구신 + ${(follower === false) ? `지장간 구신기신) 지위 능력을 발휘해 더 큰 점유을 높여 경쟁자를 압도할 수 있습니다. `: `지장간 격기신) 자신의 성과를 인정 받아 더 큰 지위로 나아갈 수 있습니다. `}` + "<br/>";
+        htmlMsg += `(천간 구신 + 지장간 ${(follower === false) ? `구신기신) 지위 능력을 발휘해 더 큰 점유을 높여 경쟁자를 압도할 수 있습니다. `: `격기신) 자신의 성과를 인정 받아 더 큰 지위로 나아갈 수 있습니다. `}` + "<br/>";
     } //구신 지장간, 구신기신
     else if(roleSky[1] === 1 && roleLand[3] === 1){
-        htmlMsg += `(지장간 구신 + ${(follower === false) ? `천간 구신기신) 일하면서 생기는 지위 능력 문제와 잘못이 자꾸 드러납니다. ` : `천간 격기신) 일하면서 생기는 성과 문제와 잘못이 자꾸 드러납니다. `}` + "<br/>";
+        htmlMsg += `(지장간 구신 + 천간 ${(follower === false) ? `구신기신) 일하면서 생기는 지위 능력 문제와 잘못이 자꾸 드러납니다. ` : `격기신) 일하면서 생기는 성과 문제와 잘못이 자꾸 드러납니다. `}` + "<br/>";
     } //지장간 구신O 지장간 구신기신O
     else if(roleLand[3] === 1 && roleLand[1] === 1){
-        htmlMsg += `(지장간 구신 + 지장간 ${(follower === false) ? `지장간 구신기신) 검증과 시련을 통해 자신의 사회적 가치를 증명합니다. ` : `지장간 격기신) 검증과 시련을 통해 자신의 사회적 가치를 증명합니다. `}` + "<br/>";
+        htmlMsg += `(지장간 구신 + 지장간 ${(follower === false) ? `구신기신) 검증과 시련을 통해 자신의 사회적 가치를 증명합니다. ` : `격기신) 검증과 시련을 통해 자신의 사회적 가치를 증명합니다. `}` + "<br/>";
     }
     
 
@@ -1249,7 +1258,7 @@ function DecideTell(){
     // console.log("orderID", orderID, "godAwake", godAwake);
 
 
-    document.getElementById("debug6").innerHTML = "※ 직무능력 (육신의 생화극제) ※"+"<br/>"+ 
+    document.getElementById("debug6").innerHTML = "※ 직무능력 및 직업 형태 (육신의 생화극제) ※"+"<br/>"+ 
     " (" + frameMsg + frameSet[2]+" " + ((self===false) ? "근약 " : "근왕 ") + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" + "<br/>";
     document.getElementById("debug7").innerHTML = rp;
 
@@ -1271,8 +1280,9 @@ function DecideTell(){
     document.getElementById('god_state').innerText += roleAwake;
 
 
-   Doc_Role()
-   Doc_Use()
+   Doc_Role();
+   Doc_Use();
+   Doc_Years();
 
     
     
@@ -1308,128 +1318,10 @@ function ShowLucks(){
 }
 
 
-function Doc_Use(){
-    let size = 0;
-    document.getElementById("Lucks_main").innerText = "";
-    document.getElementById("year_lucks").innerText = "";
-    
-    let _useGod = document.getElementById('useGod').innerText*1;
-    let _state = document.getElementById('god_state').innerText.split('');
-    _state = _state.shift()*1;
-    let firstYear = document.getElementById('j01').innerText*1;
-    //용신과 희신 상태 (2, 1, 0)
-    // console.log("_useGod, _state ",_useGod, _state)
 
-    // 1,2  3,4  5,6  7,8  9,10
-    let awake = _state;
-    let start = (firstYear+57)%10;
-    if(start === 0) start = 10;
-    
-
-    let call = luck1.find(e => e.name === skyTag[_useGod-1].name);
-    let godSet = Object.keys(call).filter(e => e !== 'name');
-    let gods = [...godSet];
-
-    let front = gods.slice(gods.indexOf(gods.find(e => skyTag[(e*1)-1].type === skyTag[start-1].type)));
-    let back = gods.filter(e => !front.includes(e));
-    let years = front.concat(back);
-    if(start%2 === 0) years = years.concat([years[0]]);
-
-    size = years.length;
-    
-    let result = [];
-    if(size === 5){
-        let gap = 0;
-        if(_useGod === 10 || _useGod === 1) gap = 4;
-        if(_useGod === 2 || _useGod === 3) gap = 2;
-        if(_useGod === 4 || _useGod === 7) gap = 2;
-        if(_useGod === 8 || _useGod === 9) gap = 2;
-        for(var i=0; i<size; i++){
-            
-            let fy = 2*(i)+firstYear;
-            let by = fy+1;
-            // console.log(`${fy}년, ${by}년: `, call[years[i]][awake]);
-            // result.push(`${fy}년, ${by}년: `+ call[years[i]][awake]);
-    
-            let text = call[years[i]][awake];
-            let str = [...text];
-  
-            if(text.indexOf("(확장운)") >= 0){
-                str.splice(text.indexOf("(확장운)"), 5, `${fy-gap}년, ${by-gap}년`);
-                // console.log(`${fy}년, ${by}년: `, str.join(''));
-                result.push(`${fy}년, ${by}년: `+ str.join(''));
-            }
-            else if(text.indexOf("(확장운)") <0){
-                // console.log(`${fy}년, ${by}년: `, str.join(''));
-                result.push(`${fy}년, ${by}년: `+ str.join(''));
-            }
-    
-        }
-    }
-    else{
-        let gap = 0;
-        if(_useGod === 10 || _useGod === 1) gap = 4;
-        if(_useGod === 2 || _useGod === 3) gap = 2;
-        if(_useGod === 4 || _useGod === 7) gap = 2;
-        if(_useGod === 8 || _useGod === 9) gap = 2;
-
-        for(var i=0; i<size; i++){
-
-            if(i === 0){
-                let fy = firstYear;
-                let text = call[years[i]][awake];
-                let str = [...text];
-                if(text.indexOf("(확장운)") >= 0){
-                    str.splice(text.indexOf("(확장운)"), 5, `${fy-gap-1}년, ${fy-gap}년`);
-                    // console.log(`${fy}년: `, str.join(''));
-                    result.push(`${fy}년: `+ str.join(''));
-                }
-                else if(text.indexOf("(확장운)") <0){
-                    // console.log(`${fy}년: `, str.join(''));
-                    result.push(`${fy}년: `+ str.join(''));
-                }
-            }
-            else if( i >= 1 && i <=size-2){
-                let ify = 2*(i)+firstYear-1;
-                let iby = ify+1;
-                let itext = call[years[i]][awake];
-                let istr = [...itext];
-                if(itext.indexOf("(확장운)") >= 0){
-                    istr.splice(itext.indexOf("(확장운)"), 5, `${ify-gap}년, ${iby-gap}년`)
-                    // console.log(`${ify}년, ${iby}년: `, istr.join(''))
-                    result.push(`${ify}년, ${iby}년: `+ istr.join(''))
-                }
-                else if(itext.indexOf("(확장운)") <0){
-                    // console.log(`${ify}년, ${iby}년: `, istr.join(''))
-                    result.push(`${ify}년, ${iby}년: `+ istr.join(''))
-                }
-            }
-            else{
-                let lastY = firstYear + 9;
-                let last = call[years[(size-1)]][awake];
-                let strLast = [...last];
-                if(last.indexOf("(확장운)") >= 0){
-                    strLast.splice(last.indexOf("(확장운)"), 5, `${lastY-gap}년, ${lastY-gap+1}년`)
-                    // console.log(`${lastY}년: `, strLast.join(''))
-                    result.push(`${lastY}년: `+ strLast.join(''))
-                }
-                else if(last.indexOf("(확장운)") <0){
-                    // console.log(`${lastY}년: `, strLast.join(''))
-                    result.push(`${lastY}년: `+ strLast.join(''))
-                }
-
-            }
-            
-        }
-        
-    }
-    // console.log(result)
-
-    return result;
-}
 
 function ClickRole(num){
-    
+    document.getElementById('GLucks').innerHTML = ""
     var test = document.getElementById("debug4")
     var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
@@ -1465,57 +1357,8 @@ function ClickRole(num){
     document.getElementById('GLucks').innerHTML = result;
 }
 
-function Jupiter_Years(num){
-    var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
-    var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
-
-    var code = document.getElementById('god_state').innerText.split('');
-    code.shift()
-    //console.log(code)
-
-    text.shift()
-    text.pop()
-    var name = text.splice(0,1).toString()
-
-    //console.log(myIds, name)
-    
-
-
-    // let roleAwake = [];
-    // roleAwake.push((code[3] ==="1") ? 1:0) //격 (구신유무)
-    // roleAwake.push((code[0] ==="1") ? 1:0) //상신 (상신유무)
-    // roleAwake.push((code[3] ==="1") ? 1:0) //구신기신 (구신유무)
-    // roleAwake.push((code[0] ==="1") ? 1:0) //상신기신 (상신유무)
-    // roleAwake.push((code[3] ==="1") ? 1:0) //구신 (구신유무)
-    // //console.log("대운보는 구응성패 활성화", roleAwake)
-
-    // var frm = frame.find(e => e.fr === name)
-    // var info = [frm.fr, frm.A, frm.B, frm.C, frm.D]
-    // let fTypes = [frame.find(e => e.fr === info[0]).type, frame.find(e => e.tag === info[1]).type, frame.find(e => e.tag === info[2]).type, frame.find(e => e.tag === info[3]).type, frame.find(e => e.tag === info[4]).type];
-
-    
-    // //console.log(fTypes)
-
-
-    // var ids = String(num).padStart(3, '0') + "i";
-    // var idl = String(num).padStart(3, '0') + "p";
-    // //console.log(ids)
-    // var skyNum= document.getElementById(ids).src.split('img')[1].split("/")[2].split(".")[0].split('i')[1]*1;
-    // var landNum= document.getElementById(idl).src.split('img')[1].split("/")[2].split(".")[0].split('p')[1]*1;
-    // var skyR = roles[myIds-1].mr.find(e => e.id === (skyNum-1)).tag;
-    // var srtype = frame.find(e => e.tag === skyR).type
-    // //console.log(skyTag[skyNum-1].name, landTag[landNum-1].name, srtype)
-
-    // var ikey = fTypes.indexOf(fTypes.find(e=> e === srtype));
-    // var title = skyTag[skyNum-1].name + landTag[landNum-1].name;
-    // var result = `${title} (${luck2[ikey].name}) ${luck2[ikey].key[roleAwake[ikey]]}`
-    //document.getElementById('GLucks').innerHTML = result;
-}
-
 function ClickUse(num){
     document.getElementById("Lucks_main").innerText = "";
-    document.getElementById("year_lucks").innerText = "";
     
     let _useGod = document.getElementById('useGod').innerText*1;
     let _state = document.getElementById('god_state').innerText.split('');
@@ -1547,133 +1390,114 @@ function ClickUse(num){
         str.splice(text.indexOf("(확장운)"), 5, `${lastYear}년, ${lastYear+1}년`);
         
     }
-    var result = year.toString() + "년: "+ str.join('');
+    var result = `${year}년 (${skyTag[skyNum-1].type}運): ${str.join('')}`;
     document.getElementById('Lucks_main').innerHTML = result;
 }
 
-function Use_lucks(){
-    let size = 0;
-    document.getElementById("Lucks_main").innerText = "";
+function ClickYears(num){
     document.getElementById("year_lucks").innerText = "";
-    
-    let _useGod = document.getElementById('useGod').innerText*1;
-    let _state = document.getElementById('god_state').innerText.split('');
-    _state = _state.shift()*1;
-    let firstYear = document.getElementById('j01').innerText*1;
-    console.log(_useGod, _state)
+    var test = document.getElementById("debug4")
+    var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
+    var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    //=================================================================================================================
 
-    // 1,2  3,4  5,6  7,8  9,10
-    let awake = _state;
-    let start = (firstYear+57)%10;
-    if(start === 0) start = 10;
+    var sky0 = document.getElementById("SKY0").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    var sky2 = document.getElementById("SKY2").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    var sky3 = document.getElementById("SKY3").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    var land0 = document.getElementById("LAND0").src.split('img')[1].split('/')[2].split('.')[0].split('p')[1]*1;
+    var land1 = document.getElementById("LAND1").src.split('img')[1].split('/')[2].split('.')[0].split('p')[1]*1;
+    var land3 = document.getElementById("LAND3").src.split('img')[1].split('/')[2].split('.')[0].split('p')[1]*1;
+
+    var up = [sky0, sky2, sky3]
+    var dn = [land0, land1, land3]
+    var base1 = (up.filter(e=> skyTag[e-1].type === skyTag[myIds-1].type) > 0 ) ? true : false;
+    var base2 = (dn.filter(e=> landTag[e-1].type === skyTag[myIds-1].type) > 0 ) ? true : false;
+    //양인 건록격 용 비겁향 근왕 체크
+    // console.log("비겁향 ", up, "근왕", dn)
+    // console.log("비겁향 ", base1, "근왕", base2)
+    //=================================================================================================================
+    var ids = String(num).padStart(3, '0') + "ji";
+    var skyNum= document.getElementById(ids).src.split('img')[1].split("/")[2].split(".")[0].split('i')[1]*1;
+
+    var thids = "j" + String(num).padStart(2, '0');
+    let year = document.getElementById(thids).innerText;
     
 
-    let call = luck1.find(e => e.name === skyTag[_useGod-1].name);
-    let godSet = Object.keys(call).filter(e => e !== 'name');
-    let gods = [...godSet];
+    var code = document.getElementById('god_state').innerText.split('');
+    code.shift()
+    code = code.map(Number);
 
-    let front = gods.slice(gods.indexOf(gods.find(e => skyTag[(e*1)-1].type === skyTag[start-1].type)));
-    let back = gods.filter(e => !front.includes(e));
-    let years = front.concat(back);
-    if(start%2 === 0) years = years.concat([years[0]]);
+    // 구응성패 코드
+    // console.log(code)
 
-    size = years.length;
+    text.shift()
+    text.pop()
+    var name = text.splice(0,1).toString()
+    // 일간 숫자, 격이름, 선택한 칸의 천간 숫자
+    //console.log(myIds, name, skyNum)
     
-    let result = [];
-    if(size === 5){
-        let gap = 0;
-        if(_useGod === 10 || _useGod === 1) gap = 4;
-        if(_useGod === 2 || _useGod === 3) gap = 2;
-        if(_useGod === 4 || _useGod === 7) gap = 2;
-        if(_useGod === 8 || _useGod === 9) gap = 2;
-        for(var i=0; i<size; i++){
-            
-            let fy = 2*(i)+firstYear;
-            let by = fy+1;
-            // console.log(`${fy}년, ${by}년: `, call[years[i]][awake]);
-            // result.push(`${fy}년, ${by}년: `+ call[years[i]][awake]);
-    
-            let text = call[years[i]][awake];
-            let str = [...text];
-  
-            if(text.indexOf("(확장운)") >= 0){
-                str.splice(text.indexOf("(확장운)"), 5, `${fy-gap}년, ${by-gap}년`);
-                console.log(`${fy}년, ${by}년: `, str.join(''));
-                result.push(`${fy}년, ${by}년: `+ str.join(''));
-            }
-            else if(text.indexOf("(확장운)") <0){
-                console.log(`${fy}년, ${by}년: `, str.join(''));
-                result.push(`${fy}년, ${by}년: `+ str.join(''));
-            }
-    
+    // skyR = 육신 srtype 육친성
+    var skyR = roles[myIds-1].mr.find(e => e.id === (skyNum-1)).tag;
+    var srtype = frame.find(e => e.tag === skyR).type
+
+    // callSet 격별 운세 객체(꾸러미)
+    var callSet = frame.find(e=> e.fr === name).lucks;
+    // 클릭한(srtype) 부분에 따른 운세 객체(꾸러미)
+    var keySet = callSet.find(e=> e.tag === srtype)
+    // 클릭한(srtype) 운세 객체 중 말구(key) 가져오기
+    var key = keySet.key
+
+    // 클릭한(srtype) 육신이 운세 객체 순서에 몇번째 해당하는지 숫자
+    var inx = callSet.indexOf(keySet);
+
+
+    str = ""
+    if(name === "羊刃格" || name === "建祿格"){
+
+        if(inx === 0 || inx === 2){
+            str = (base1 === true) ?  key[1] : key[0]
+        }
+        else if(inx === 1){
+            str = (base2 === true) ? key[1] : key[0]
+        }
+        else{
+            str=key[0]
+        }
+    }
+    else if(name === "傷官格"){
+
+        if(inx<3){
+            str=key[code[0]]
+        }
+        else{
+            str=key[0]
+        }
+    }
+    else if(name === "偏官格"){
+
+        if(inx>=2){
+            str=key[code[0]]
+        }
+        else{
+            str=key[0]
         }
     }
     else{
-        let gap = 0;
-        if(_useGod === 10 || _useGod === 1) gap = 4;
-        if(_useGod === 2 || _useGod === 3) gap = 2;
-        if(_useGod === 4 || _useGod === 7) gap = 2;
-        if(_useGod === 8 || _useGod === 9) gap = 2;
-
-        for(var i=0; i<size; i++){
-
-            if(i === 0){
-                let fy = firstYear;
-                let text = call[years[i]][awake];
-                let str = [...text];
-                if(text.indexOf("(확장운)") >= 0){
-                    str.splice(text.indexOf("(확장운)"), 5, `${fy-gap-1}년, ${fy-gap}년`);
-                    console.log(`${fy}년: `, str.join(''));
-                    result.push(`${fy}년: `+ str.join(''));
-                }
-                else if(text.indexOf("(확장운)") <0){
-                    console.log(`${fy}년: `, str.join(''));
-                    result.push(`${fy}년: `+ str.join(''));
-                }
-            }
-            else if( i >= 1 && i <=size-2){
-                let ify = 2*(i)+firstYear-1;
-                let iby = ify+1;
-                let itext = call[years[i]][awake];
-                let istr = [...itext];
-                if(itext.indexOf("(확장운)") >= 0){
-                    istr.splice(itext.indexOf("(확장운)"), 5, `${ify-gap}년, ${iby-gap}년`)
-                    console.log(`${ify}년, ${iby}년: `, istr.join(''))
-                    result.push(`${ify}년, ${iby}년: `+ istr.join(''))
-                }
-                else if(itext.indexOf("(확장운)") <0){
-                    console.log(`${ify}년, ${iby}년: `, istr.join(''))
-                    result.push(`${ify}년, ${iby}년: `+ istr.join(''))
-                }
-            }
-            else{
-                let lastY = firstYear + 9;
-                let last = call[years[(size-1)]][awake];
-                let strLast = [...last];
-                if(last.indexOf("(확장운)") >= 0){
-                    strLast.splice(last.indexOf("(확장운)"), 5, `${lastY-gap}년, ${lastY-gap+1}년`)
-                    console.log(`${lastY}년: `, strLast.join(''))
-                    result.push(`${lastY}년: `+ strLast.join(''))
-                }
-                else if(last.indexOf("(확장운)") <0){
-                    console.log(`${lastY}년: `, strLast.join(''))
-                    result.push(`${lastY}년: `+ strLast.join(''))
-                }
-
-            }
-            
+        if(inx===1 || inx ===2 || inx === 4){
+            str=key[code[0]]
         }
-        
-    }
-    
-
-    
-    document.getElementById("Lucks_main").innterHTML = "※ 년도별 운세 (용신과 희기신 통변) ※" + "</br>";
-    for(var i = 0; i<size; i++){
-        document.getElementById("year_lucks").innerHTML  += result[i] + "</br>";
+        else{
+            str=key[code[3]]
+        }
+       
     }
 
+    var result = `${year}년 (${srtype}運): ${str}`;
+
+    document.getElementById("year_lucks").innerHTML = result;
 }
+
+
 
 function Doc_Role(){
     
@@ -1758,6 +1582,224 @@ function Doc_Role(){
     return result;
 }
 
+function Doc_Use(){
+    let _useGod = document.getElementById('useGod').innerText*1;
+    let _state = document.getElementById('god_state').innerText.split('');
+    _state = _state.shift()*1;
+    let firstYear = document.getElementById('j01').innerText*1;
+    //용신과 희신 상태 (2, 1, 0)
+    // console.log("_useGod, _state ",_useGod, _state)
+
+    // 1,2  3,4  5,6  7,8  9,10
+    let skyNum = (firstYear+57)%10;
+    if(skyNum === 0) skyNum = 10;
+    
+
+    let callSet = luck1.find(e => e.name === skyTag[_useGod-1].name);
+    var skyE = skyTag[skyNum-1].type;
+
+    // 천간 숫자(skyNum)만 알면, 월령용신의 용희신 운세 객체 (callSet)중, 어떤 운세 객체들인지 갖고 올수 있는 변수.
+    var inx = Object.keys(callSet).find(e=> skyTag[e-1].type === skyE);
+    // 천간 숫자 skyNum 경우, 월령용신의 용희신 운세
+    var keySet = callSet[inx][_state];
+
+    // 확장운, 지속운, 용신운, 희신운, 중화운 오행 순서로 됨(목:0~수:4)
+    //Object.keys(callSet).indexOf(inx)
+
+
+    // 이 리스트를 가지고 전체 10년동안 각각 운세객체에 어떤 천간으로 넣어야 할지 만들어줌
+    var listKeys = [];
+    for(var i=0; i<10; i++){
+        let add = (skyNum+i>10) ? skyNum+i-10 : skyNum+i;
+        var p = skyTag[add-1].type;
+        // x는 최종적으로 각 년간이 운세객체에 적용될 다른 천간으로 대체됨.
+        let x = Object.keys(callSet).find(e=> skyTag[e-1].type === p)
+        // 10년 짜리 운세 객체에 적용할 천간 숫자 리스트 
+        listKeys.push(x)
+    }
+
+
+    var result = []
+    // 본격적인 운세 문구들 모음
+    for(var i=0; i<10; i++){
+
+        let inx = listKeys[i]
+        let newYear = firstYear+i;
+        let keyStr = callSet[inx][_state];
+        let str = [...keyStr];
+
+        let gap = 0;
+        if(_useGod === 10 || _useGod === 1) gap = 4;
+        if(_useGod === 2 || _useGod === 3) gap = 2;
+        if(_useGod === 4 || _useGod === 7) gap = 2;
+        if(_useGod === 8 || _useGod === 9) gap = 2;
+
+        if(keyStr.indexOf("(확장운)") >= 0){
+            var lastYear = (newYear%2===0) ? newYear-gap : newYear-gap-1;
+            str.splice(keyStr.indexOf("(확장운)"), 5, `${lastYear}, ${lastYear+1}`)
+        }
+
+        var elem = skyNum+i 
+        if(elem>10) elem -=10;
+
+
+        result.push(`${newYear}년 (${skyTag[elem-1].type}運): ${str.join('')}`);
+    }
+
+    return result;
+}
+
+function Doc_Years(){
+    var test = document.getElementById("debug4")
+    var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
+    text.shift()
+    text.pop()
+    
+    // myIds 일간 숫자
+    var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+
+    // firstYear 현재 대운 첫 년도
+    let firstYear = document.getElementById('j01').innerText*1;
+
+    // code 구응성패 코드
+    var code = document.getElementById('god_state').innerText.split('');
+    code.shift()
+    code = code.map(Number);
+
+    // name 격이름
+    var name = text.splice(0,1).toString()
+    //=================================================================================================================
+    //양인 건록격 용 비겁향 근왕 체크
+    var sky0 = document.getElementById("SKY0").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    var sky2 = document.getElementById("SKY2").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    var sky3 = document.getElementById("SKY3").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
+    var land0 = document.getElementById("LAND0").src.split('img')[1].split('/')[2].split('.')[0].split('p')[1]*1;
+    var land1 = document.getElementById("LAND1").src.split('img')[1].split('/')[2].split('.')[0].split('p')[1]*1;
+    var land3 = document.getElementById("LAND3").src.split('img')[1].split('/')[2].split('.')[0].split('p')[1]*1;
+
+    var up = [sky0, sky2, sky3]
+    var dn = [land0, land1, land3]
+    var base1 = (up.filter(e=> skyTag[e-1].type === skyTag[myIds-1].type) > 0 ) ? true : false;
+    var base2 = (dn.filter(e=> landTag[e-1].type === skyTag[myIds-1].type) > 0 ) ? true : false;
+    
+    // console.log("비겁향 ", up, "근왕", dn)
+    // console.log("비겁향 ", base1, "근왕", base2)
+    //=================================================================================================================
+
+    // callSet 격별 운세 객체(꾸러미)
+    var callSet = frame.find(e=> e.fr === name).lucks;
+
+    // 1,2  3,4  5,6  7,8  9,10
+    // skyNum 현재 대운 첫년도의 천간 숫자
+    let skyNum = (firstYear+57)%10;
+    if(skyNum === 0) skyNum = 10;
+    
+    // skyR = 육신 (ex 正財) srtype 육친성 (ex 財星)
+    var skyR = roles[myIds-1].mr.find(e => e.id === (skyNum-1)).tag;
+    var srtype = frame.find(e => e.tag === skyR).type
+
+    // 대운첫년도 천간 육신(srtype) 부분에 따른 운세 객체(꾸러미)
+    var keySet = callSet.find(e=> e.tag === srtype)
+    // 대운첫년도 천간 육신(srtype) 운세 객체 중 말구(key) 가져오기
+    var key = keySet.key
+
+    // 대운첫년도 천간 육신(srtype) 육신이 운세 객체 순서에 몇번째 해당하는지 숫자
+    var inx = callSet.indexOf(keySet);
+
+    var listKeys = [];
+    for(var i=0; i<5; i++){
+        let add = (i+inx>4) ? i-5 : i;
+        if(skyNum%2===0 && i===0){
+            listKeys.push(add+inx)
+        }
+        else if(skyNum%2===0 && i===4){
+            listKeys.push(add+inx)
+            listKeys.push(add+inx)
+            listKeys.push(inx)
+        }
+        else{
+            listKeys.push(add+inx)
+            listKeys.push(add+inx)
+        }
+    }
+    
+    var result = []
+
+    var keyStr = ""
+    for(var i=0; i<10; i++){
+       var callkey = callSet[listKeys[i]].key;
+
+        
+        if(name === "羊刃格" || name === "建祿格"){
+
+            if(inx === 0 || inx === 2){
+                keyStr = (base1 === true) ?  callkey[1] : callkey[0]
+            }
+            else if(inx === 1){
+                keyStr = (base2 === true) ? callkey[1] : callkey[0]
+            }
+            else{
+                keyStr=callkey[0]
+            }
+        }
+        else if(name === "傷官格"){
+
+            if(inx<3){
+                keyStr=callkey[code[0]]
+            }
+            else{
+                keyStr=callkey[0]
+            }
+        }
+        else if(name === "偏官格"){
+
+            if(inx>=2){
+                keyStr=callkey[code[0]]
+            }
+            else{
+                keyStr=callkey[0]
+            }
+        }
+        else{
+            if(inx===1 || inx ===2 || inx === 4){
+                keyStr=callkey[code[0]]
+            }
+            else{
+                keyStr=callkey[code[3]]
+            }
+        
+        }
+
+        let str = [...keyStr];
+        
+        if(keyStr.indexOf("(0)") >= 0){
+            str.splice(keyStr.indexOf("(0)"), 3, `${firstYear + (2*(0-inx)-(firstYear%2))}, ${firstYear + (2*(0-inx)-(firstYear%2))+1}`)
+        }
+        else if(keyStr.indexOf("(1)") >= 0){
+            str.splice(keyStr.indexOf("(1)"), 3, `${firstYear + (2*(1-inx)-(firstYear%2))}, ${firstYear + (2*(1-inx)-(firstYear%2))+1}`)
+        }
+        else if(keyStr.indexOf("(2)") >= 0){
+            str.splice(keyStr.indexOf("(2)"), 3, `${firstYear + (2*(2-inx)-(firstYear%2))}, ${firstYear + (2*(2-inx)-(firstYear%2))+1}`)
+        }
+        else if(keyStr.indexOf("(3)") >= 0){
+            str.splice(keyStr.indexOf("(3)"), 3, `${firstYear + (2*(3-inx)-(firstYear%2))}, ${firstYear + (2*(3-inx)-(firstYear%2))+1}`)
+        }
+        else if(keyStr.indexOf("(4)") >= 0){
+            str.splice(keyStr.indexOf("(4)"), 3, `${firstYear + (2*(4-inx)-(firstYear%2))}, ${firstYear + (2*(4-inx)-(firstYear%2))+1}`)
+        }
+        else if(keyStr.indexOf("(5)") >= 0){
+            str.splice(keyStr.indexOf("(5)"), 3, `${firstYear + (2*(5-inx)-(firstYear%2))}, ${firstYear + (2*(5-inx)-(firstYear%2))+1}`)
+        }
+
+        result.push(`${(firstYear+i)}년 (${callSet[listKeys[i]].tag}運): ${str.join('')}`);
+
+    }
+    
+    return result;
+}
+
+
+
 
 
 function CopyText(){
@@ -1822,31 +1864,25 @@ function RolePlay(me, fr, skyR, landR, nullR, skyt, landt, selfR){
         if(selfR === true){
             if(skyR.find(e => e === 'A')){
                 role_playMsg += "(根旺 偏官格 食神制殺) 모두가 인정하는 자격증/학위/공식적 경력이 필수 입니다. 실적으로 남들이 못하는 특별한 일을 수행합니다."+"</br>"
-                console.log("모두가 인정하는 자격증/학위/공식적 경력이 필수 입니다. 실적으로 남들이 못하는 특별한 일을 수행합니다.");
                 if(skyR.find(e => e === 'B')){
-                    console.log("조직에서 리더로 성장합니다. 아마추어를 이끄는 리더로 활동합니다.");
                     role_playMsg += "(根旺 偏官格 財生殺) 조직에서 리더로 성장합니다. 아마추어를 이끄는 리더로 활동합니다."+"</br>";
                 }
                  
                 if(skyR.find(e => e === 'D')){
-                    console.log("비상한 두뇌와 독창적인 전략으로 자신이 속한 조직을 더 큰 세상으로 진출합니다.");
                     role_playMsg += "(根旺 偏官格 比食) 비상한 두뇌와 독창적인 전략으로 자신이 속한 조직을 더 큰 세상으로 진출합니다."+"</br>";
                 }
             }
             else{
-                console.log("파벌로부터 인허가 받지 못해 월권으로 기득권 마찰이 생깁니다.");
                 role_playMsg += "(根旺 偏官格 無食) 파벌로부터 인허가 받지 못해 월권으로 기득권 마찰이 생깁니다."+"</br>";
             }
             
         }
         else{
             if(skyR.find(e => e === 'C')){
-                console.log("조직을 리드하기 보다 뒤에서 보좌하며 기발한 아이디어로 자신의 업적을 만듦니다."); 
                 role_playMsg += "(根弱 偏官格 殺印相生) 조직을 리드하기 보다 뒤에서 보좌하며 기발한 아이디어로 자신의 업적을 만듦니다."+"</br>"; 
 
             }
             else if(skyR.find(e => e === 'A')){
-                console.log("불안 대비책으로 많은 시간 낭비해 스스로 극복이 아니라 조직의 보호를 받아야 합니다.");
                 role_playMsg += "(根弱 偏官格 食神) 불안 대비책으로 많은 시간 낭비해 스스로 극복이 아니라 조직의 보호를 받아야 합니다."+"</br>";
             }
         }
@@ -1854,26 +1890,20 @@ function RolePlay(me, fr, skyR, landR, nullR, skyt, landt, selfR){
     else if(fr === "傷官格"){
         if(selfR !== true){
             if(skyR.find(e => e === 'A') || landR.find(e => e === 'A'))
-                console.log("그 누구보다 조직에 맞추고 원칙주의자이지만, 주변인에게 맞추는 헌신적인 인물입니다.");
                 role_playMsg += "(根弱 傷官格 佩印) 그 누구보다 조직에 맞추고 원칙주의자이지만, 주변인에게 맞추는 헌신적인 인물입니다."+"</br>";
                 if(skyR.find(e => e === 'B')){
-                    console.log("능력에 대한 자격 요건 갖췄고, 조직에서 안정적인 생활을 유지하기 위해 삽니다.");
                     role_playMsg += "(根弱 傷官格 官印) 능력에 대한 자격 요건 갖췄고, 조직에서 안정적인 생활을 유지하기 위해 삽니다."+"</br>";
                 }
                 if(skyR.find(e => e === 'D')){
-                    console.log("조직의 안좋은 관행이나 유통구조를 개선해 혁신을 이끌지만 기득권의 마찰을 피할 수 없습니다.");
                     role_playMsg += "(根弱 傷官格 劫傷) 조직의 안좋은 관행이나 유통구조를 개선해 혁신을 이끌지만 기득권의 마찰을 피할 수 없습니다."+"</br>";
                     if(skyR.find(e => e === 'C')&& (isTalent !== undefined)){
-                        console.log("역사의 이름 남길 혁신의 주체가 되어 새로운 기득권으로 성장합니다. 만명 중 한명 인물 입니다.");
                         role_playMsg += "(根弱 傷官格 財剋印) 역사의 이름 남길 혁신의 주체가 되어 새로운 기득권으로 성장합니다. 만명 중 한명 인물 입니다."+"</br>";
                     }
                 }  
         }
         else{
-            console.log("(根旺 傷官格) 조직의 규칙보다 개인을 더 중시하며 윗사람의 무능함에 치를 떱니다. 시장에 대한 이해력 높고, 자영업/유통업에 적합니다.");
             role_playMsg += "(根旺 傷官格 生財) 조직의 규칙보다 개인 욕심 및 윗사람의 무능함에 치를 떱니다. 시장에 대한 이해력 높고, 자영업/유통업에 적합니다."+"</br>";
             if(skyR.find(e => e === 'A')){
-                console.log("어쩔 수 없이 조직생활 하지만 불평이 많아집니다.");
                 role_playMsg += "(根旺 傷官格 佩印) 어쩔 수 없이 조직생활 하지만 불평이 많아집니다."+"</br>";
             }
         }
@@ -1883,38 +1913,29 @@ function RolePlay(me, fr, skyR, landR, nullR, skyt, landt, selfR){
         
         
         if(skyt.find(e => skyTag[e-1].type === skyTag[me-1].type)){
-            console.log("세상의 약자를 지키는 체면과 이상을 버리고, 자신부터 챙깁니다.");
             role_playMsg += "(羊刃格 比劫向) 세상의 약자를 지키는 체면과 이상을 버리고, 자신부터 챙깁니다."+"</br>";
             
             if(skyt.find(e => skyTag[e-1].type === skyTag[a-1].type) || skyt.find(e => skyTag[e-1].type === skyTag[b-1].type)){
-                console.log("능력을 키워 전문가가 됩니다. (푸줏간, 도살장, 애견샵, 변호사, 의료인)");
                 role_playMsg += "(羊刃格 用財) 능력을 키워 전문가가 됩니다. (푸줏간, 도살장, 애견샵, 변호사, 의료인)"+"</br>";
             }
 
             if(landt.find(e => skyTag[e-1].type === skyTag[c-1].type) || skyt.find(e => skyTag[e-1].type === skyTag[d-1].type)){
-                console.log("무늬만 나랏일 하고, 개인이득 취득, 적십자 같이 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다.");
-                role_playMsg += "(羊刃格 比劫向 用殺) 무늬만 나랏일 하고, 개인이득 취득, 적십자 같이 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
+                role_playMsg += "(羊刃格 比劫向 用殺) 적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
             }
         }
         else if(skyt.find(e => skyTag[e-1].type === skyTag[man1-1].type) || skyt.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
-            
-            console.log("이상이 높으며 공무원, 공공기관 나랏일 수행합니다.");
             role_playMsg += "(羊刃格 露殺) 이상이 높으며 공무원, 공공기관 나랏일 수행합니다."+"</br>";
             if(landt.find(e => skyTag[e-1].type === skyTag[c-1].type) || landt.find(e => skyTag[e-1].type === skyTag[d-1].type)){
-                console.log("세상의 약자를 지키는 인물로, 대의를 위해 개인을 버립니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)");
                 role_playMsg += "(羊刃格 露殺 財生殺) 세상의 약자를 지키는 인물로, 대의를 위해 개인을 버립니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
                 if(skyt.find(e => skyTag[e-1].type === skyTag[woman1-1].type) && skyt.find(e => skyTag[e-1].type !== skyTag[man1-1].type)){
-                    console.log("세상 약자를 보호하기 위해 자신을 희생하는 우두머리 급의 인물입니다.");
                     role_playMsg += "(羊刃格 成格) 공공의 이익을 위해 자신을 희생하는 우두머리 급의 인물입니다."+"</br>";
                 }
             }
         }
         else if(skyt.find(e => skyTag[e-1].type === skyTag[woman1-1].type) || skyt.find(e => skyTag[e-1].type === skyTag[woman2-1].type) && (skyt.find(e => skyTag[e-1].type !== skyTag[man1-1].type) || skyt.find(e => skyTag[e-1].type !== skyTag[man2-1].type))){
-            console.log("말과 글로 전하는 교육자, 작가 등으로 살 수 있습니다.");
             role_playMsg += "(羊刃格 破格) 말과 글로 전하는 교육자, 작가 등으로 살 수 있습니다."+"</br>";
         }
         else{
-            console.log("주어진 일만 수행하나, 직업 찾기 어려워합니다.");
             role_playMsg += "(羊刃格 破格) 주어진 일만 수행하나, 직업 찾기 어려워합니다."+"</br>";
         }
 
@@ -1923,38 +1944,30 @@ function RolePlay(me, fr, skyR, landR, nullR, skyt, landt, selfR){
     }
     else if(fr === "建祿格"){
         if(skyt.find(e => skyTag[e-1].type === skyTag[me-1].type)){
-            console.log("세상의 약자를 지키는 체면과 이상을 버리고, 자신부터 챙깁니다.");
             role_playMsg += "(建祿格 比劫向) 세상의 약자를 지키는 체면과 이상을 버리고, 자신부터 챙깁니다."+"</br>";
             
             if(skyt.find(e => skyTag[e-1].type === skyTag[a-1].type) || skyt.find(e => skyTag[e-1].type === skyTag[b-1].type)){
-                console.log("능력을 키워 전문가가 됩니다. (직업훈련, 정신수양, 상담사)");
                 role_playMsg += "(建祿格 用財) 능력을 키워 전문가가 됩니다. (직업훈련, 정신수양, 상담사)"+"</br>";
             }
 
             if(landt.find(e => skyTag[e-1].type === skyTag[c-1].type) || skyt.find(e => skyTag[e-1].type === skyTag[d-1].type)){
-                console.log("무늬만 나랏일 하고, 개인이득 취득, 적십자 같이 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다.");
-                role_playMsg += "(建祿格 比劫向 用殺) 무늬만 나랏일 하고, 개인이득 취득, 적십자 같이 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
+                role_playMsg += "(建祿格 比劫向 用殺) 적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
             }
         }
         else if(skyt.find(e => skyTag[e-1].type === skyTag[man1-1].type) || skyt.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
-            console.log("이상이 높으며 공무원, 공공기관 나랏일 수행합니다.");
             role_playMsg += "(建祿格 用官) 이상이 높으며 공무원, 공공기관 나랏일 수행합니다."+"</br>";
             
             if(landt.find(e => skyTag[e-1].type === skyTag[c-1].type) || landt.find(e => skyTag[e-1].type === skyTag[d-1].type)){
-                console.log("세상의 가치를 지키고 대의를 위해 개인을 버립니다. (교사, 관공서 서비스, 금감원, 헌법 수호, 교육업)");
                 role_playMsg += "(建祿格 用官 財生官) 세상의 가치를 지키고 대의를 위해 개인을 버립니다. (교사, 관공서 서비스, 금감원, 헌법 수호, 교육업)"+"</br>";
                 if(skyt.find(e => skyTag[e-1].type === skyTag[woman2-1].type) && skyt.find(e => skyTag[e-1].type !== skyTag[man2-1].type)){
-                    console.log("공공의 이익을 위해 자신을 희생하는 우두머리 급의 인물입니다.");
                     role_playMsg += "(建祿格 成格) 공공의 이익을 위해 자신을 희생하는 우두머리 급의 인물입니다."+"</br>";
                 }
             }
         }
         else if(landt.find(e => skyTag[e-1].type === skyTag[woman1-1].type) || skyt.find(e => skyTag[e-1].type === skyTag[woman2-1].type)  && (skyt.find(e => skyTag[e-1].type !== skyTag[man1-1].type) || skyt.find(e => skyTag[e-1].type !== skyTag[man2-1].type))){
-            console.log("말과 글로 전하는 교육자, 작가 등으로 살 수 있습니다.");
             role_playMsg += "(建祿格 破格) 말과 글로 전하는 교육자, 작가 등으로 살 수 있습니다."+"</br>";
         }
         else{
-            console.log("주어진 일만 수행하나, 직업 찾기 어려워합니다.");
             role_playMsg += "(建祿格 破格) 주어진 일만 수행하나, 직업 찾기 어려워합니다."+"</br>";
         }
         

@@ -135,7 +135,6 @@ function Fortune_img(){
     var hh = wholeTime.substring(0,2).toString().padStart(2, '0');
     var min = wholeTime.substring(2,4).toString().padStart(2, '0');
 
-    console.log(wholeTime);
 
     var sexVar = document.querySelector('input[name="sex"]').checked;
     var thisSex = "";
@@ -243,7 +242,9 @@ function Fortune_img(){
     for(i=0; i<10; i++){
         var t_name = '#j' + String(i+1).padStart(2, '0');
         $(t_name).click(function(){
+            
             var x = $(this).attr('id').split('j')[1]*1;
+
             var y = nowYear-(starting[2])+1;
             var ySky_tag = 'jsky0'+x.toString().padStart(2, '0');
             var yLand_tag = 'jland0'+x.toString().padStart(2, '0');
@@ -257,6 +258,9 @@ function Fortune_img(){
             for(var i=0; i<10; i++){
                 let rSky = 'jsky0' + (i+1).toString().padStart(2, '0');
                 let rLand = 'jland0' + (i+1).toString().padStart(2, '0');
+
+
+
                 if(i !== x-1){
                     document.getElementById(rSky).style.backgroundColor = `rgba(${0}, ${0}, ${0}, ${0})`;
                     document.getElementById(rLand).style.backgroundColor = `rgba(${0}, ${0}, ${0}, ${0})`;
@@ -281,16 +285,14 @@ function Fortune_img(){
         var greatNum = 0;
         var clickNum = 0;
         $(t_name).click(function(){
-            Use_lucks();
+            //Use_lucks();
             
             var click = $(this).text();
             var blankNum = Array.from(new Array(12), (x, i) => i+1);
-
             greatNum = starting[1];
             var picks = Number(Math.floor((parseInt(click)-1)/10))+1; // 클릭한 대운 순번
             clickNum = picks;
             blankNum.splice(clickNum-1, 1);
-
             document.getElementById('sky' + clickNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${220}, ${220}, ${220}, ${1})`;
             document.getElementById('land' + clickNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${220}, ${220}, ${220}, ${1})`;
 
@@ -308,36 +310,6 @@ function Fortune_img(){
     
 
 
-    // // 대운 클릭이벤트, 회색으로 칠하고 나머지는 rgba 0, 0, 0, 0
-    // for(i=0; i<12; i++){
-    //     var t_name = '#t' + String(i+1).padStart(2, '0');
-
-    //     var greatNum = 0;
-    //     var clickNum = 0;
-    //     $(t_name).click(function(){
-    //         Use_lucks();
-    //         Role_Lucks();
-    //         var click = $(this).text();
-    //         var blankNum = Array.from(new Array(12), (x, i) => i+1);
-
-    //         greatNum = starting[1];
-    //         var picks = Number(Math.floor((parseInt(click)-1)/10))+1; // 클릭한 대운 순번
-    //         clickNum = picks;
-    //         blankNum.splice(clickNum-1, 1);
-
-    //         document.getElementById('sky' + clickNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${220}, ${220}, ${220}, ${1})`;
-    //         document.getElementById('land' + clickNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${220}, ${220}, ${220}, ${1})`;
-
-    //         for(var i = 0; i<11; i++){
-    //             document.getElementById('sky' + blankNum[i].toString().padStart(3, '0')).style.backgroundColor = `rgba(${0}, ${0}, ${0}, ${0})`;
-    //             document.getElementById('land' + blankNum[i].toString().padStart(3, '0')).style.backgroundColor = `rgba(${0}, ${0}, ${0}, ${0})`;
-    //         }
-
-    //         document.getElementById('sky' + greatNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${100}, ${180}, ${230}, ${0.5})`;
-    //         document.getElementById('land' + greatNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${100}, ${180}, ${230}, ${0.5})`;
-    //     });
-        
-    // }
 
 
     /****************************************************debugging***************************************************************/
@@ -694,7 +666,7 @@ function when_num(check_sex, z_year, year, month, day){
     }
     // console.log(debug);
     // console.log(span);
-    result = Number((span/3).toFixed());
+    result = (span <= 1) ? 1 : Number((span/3).toFixed());
     return result;
 }
 
@@ -705,6 +677,7 @@ function Starting(yearCycle_sky, value_num, value_year, value_nowYear){
     var start = (bornYear-1) - param + value_num;
     var age = value_nowYear - value_year + 1;
     var n_great = 1 + Math.floor((age - value_num)/10);
+    console.log("n_great  ", age - value_num)
     var startYear = 10*(n_great-1) + start;
     var result = [start, n_great, startYear, age];
     return result;
@@ -1001,10 +974,19 @@ function Copy(){
     document.getElementById("debug4").innerText+
     document.getElementById("debug5").innerText+"\n\n"+
     document.getElementById("debug6").innerText+
-    document.getElementById("debug7").innerText+"\n\n"+
-    document.getElementById("Year_LucksTitle").innerText+
-    document.getElementById('GLucks').innerText+"\n"+
-    document.getElementById("year_lucks").innerText;
+    document.getElementById("debug7").innerText+"\n\n";
+
+    for(var i=0; i<Doc_Use().length; i++){
+        inter += Doc_Use()[i] +"\n";
+    }
+
+    inter +="\n\n";
+
+    for(var i=0; i<Doc_Role().length; i++){
+        inter += Doc_Role()[i] + "\n"
+    }
+    
+    inter += document.getElementById("year_lucks").innerText;
 
     var str = fullName + "\n\n" +resultCopy + greatLuckCopy + "\n\n" + inter;
     CopyStringToClipboard(str);

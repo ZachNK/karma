@@ -251,14 +251,11 @@ function Divination(){
         let p = [];
         if(ins.length !==0){
             if(pObj[i].id%3===2){
-                if(i !== 2){
+                if(Math.floor((pObj[i].id%12)/3) === Math.floor((pObj[2].id%12)/3)){
                     p.push(pObj[i].duty[2].idN)
-                    sqrSet.push(p)
                 }
-                else{
-                    p.push(pObj[i].duty[0].idN)
-                    sqrSet.push(p)
-                }
+                p.push(pObj[i].duty[0].idN)
+                sqrSet.push(p)
             }
             else if((pObj[i].id%3===1)){
                 p.push(pObj[i].duty[0].idN)
@@ -289,12 +286,12 @@ function Divination(){
         x.splice(i, 1)
         var ins = [...x.filter(e => e.id%4 === pObj[i].id%4)]
         let p = [];
-        if(ins.length !==0){
-            if(pObj[i].id%3===0 && pObj[i].id%4 === pObj[2].id%4){
+        if(ins.length !== 0){
+            if(pObj[i].id%3===0 && (pObj[i].id%4 === pObj[2].id%4 || Math.floor((pObj[i].id%12)/3) === Math.floor((pObj[2].id%12)/3))){
                 p.push(pObj[i].duty[1].idN)
                 triSet.push(p)
             }
-            else if(pObj[i].id%3===2 && pObj[i].id%4 === pObj[2].id%4){
+            else if(pObj[i].id%3===2 && (pObj[i].id%4 === pObj[2].id%4 || Math.floor((pObj[i].id%12)/3) === Math.floor((pObj[2].id%12)/3))){
                 p.push(pObj[i].duty[1].idN)
                 triSet.push(p)
             }
@@ -1550,7 +1547,7 @@ function TextUse(){
         if(_useGod === 7) divin = ["인화", "제련", "심원", "제련", "인화"];
         if(_useGod === 8) divin = ["인화", "인화", "매금", "도세", "도세"];
         if(_useGod === 9) divin = ["인화", "인화", "제방", "도세", "도세"];
-        
+
         result.push(`${newYear}년 (${divin[divN]}): ${str.join('')}`);
     }
 

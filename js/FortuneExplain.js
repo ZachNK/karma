@@ -1457,6 +1457,16 @@ function ClickUse(num){
     if(_useGod === 4 || _useGod === 7) gap = 2;
     if(_useGod === 8 || _useGod === 9) gap = 2;
 
+    let divin = [];
+    if(_useGod === 10) divin =["생화", "수원", "윤택", "수원", "생화"];
+    if(_useGod === 1) divin = ["생화", "수원", "소토", "수원", "생화"];
+    if(_useGod === 2) divin = ["발생", "발생", "소토", "수원", "수원"];
+    if(_useGod === 3) divin = ["발생", "발생", "간새", "수원", "수원"];
+    if(_useGod === 4) divin = ["인화", "제련", "홍로", "제련", "인화"];
+    if(_useGod === 7) divin = ["인화", "제련", "심원", "제련", "인화"];
+    if(_useGod === 8) divin = ["인화", "인화", "매금", "도세", "도세"];
+    if(_useGod === 9) divin = ["인화", "인화", "제방", "도세", "도세"];
+
     let text = call[godSet[t]][_state];
     let str = [...text];
 
@@ -1465,7 +1475,7 @@ function ClickUse(num){
         str.splice(text.indexOf("(확장운)"), 5, `${lastYear}년 ~ ${lastYear+1}년`);
         
     }
-    var result = `${year}년 (${skyTag[skyNum-1].type}運): ${str.join('')}`;
+    var result = `${year}년 (${divin[t]}): ${str.join('')}`;
     document.getElementById('Lucks_main').innerHTML = result;
 }
 
@@ -1502,8 +1512,12 @@ function TextUse(){
         // x는 최종적으로 각 년간이 운세객체에 적용될 다른 천간으로 대체됨.
         let x = Object.keys(callSet).find(e=> skyTag[e-1].type === p)
         // 10년 짜리 운세 객체에 적용할 천간 숫자 리스트 
+        
+
         listKeys.push(x)
     }
+
+    
 
 
     var result = []
@@ -1526,11 +1540,18 @@ function TextUse(){
             str.splice(keyStr.indexOf("(확장운)"), 5, `${lastYear}년 ~ ${lastYear+1}년`)
         }
 
-        var elem = skyNum+i 
-        if(elem>10) elem -=10;
-
-
-        result.push(`${newYear}년 (${skyTag[elem-1].type}運): ${str.join('')}`);
+        let divN = Object.keys(callSet).indexOf(inx);
+        let divin = [];
+        if(_useGod === 10) divin =["생화", "수원", "윤택", "수원", "생화"];
+        if(_useGod === 1) divin = ["생화", "수원", "소토", "수원", "생화"];
+        if(_useGod === 2) divin = ["발생", "발생", "소토", "수원", "수원"];
+        if(_useGod === 3) divin = ["발생", "발생", "간새", "수원", "수원"];
+        if(_useGod === 4) divin = ["인화", "제련", "홍로", "제련", "인화"];
+        if(_useGod === 7) divin = ["인화", "제련", "심원", "제련", "인화"];
+        if(_useGod === 8) divin = ["인화", "인화", "매금", "도세", "도세"];
+        if(_useGod === 9) divin = ["인화", "인화", "제방", "도세", "도세"];
+        
+        result.push(`${newYear}년 (${divin[divN]}): ${str.join('')}`);
     }
 
     return result;
@@ -1595,7 +1616,6 @@ function ClickYears(num){
     let firstNum = (firstYear+57)%10;
     if(firstNum === 0) firstNum = 10;
     var finx = callSet.indexOf(frame.find(e=> e.fr === name).lucks.find(e=> e.tag === (frame.find(e => e.tag === (roles[myIds-1].mr.find(e => e.id === (firstNum-1)).tag)).type)))
-    console.log(finx)
 
     let keyStr = "";
     let divin = "";

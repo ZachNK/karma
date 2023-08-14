@@ -121,7 +121,7 @@ function p_img(x){
 
 
 function Fortune_img(){
-
+    console.log("=======================================Fortune_img=======================================");
     great_luck_refresh(false);
     nameText = document.getElementById("name").value;
     
@@ -322,7 +322,7 @@ function Fortune_img(){
 
     
     
-     
+    console.log("=======================================Fortune_img=======================================");
 }
 
 function ShowRow(){
@@ -677,7 +677,6 @@ function Starting(yearCycle_sky, value_num, value_year, value_nowYear){
     var start = (bornYear-1) - param + value_num;
     var age = value_nowYear - value_year + 1;
     var n_great = 1 + Math.floor((age - value_num)/10);
-    console.log("n_great  ", age - value_num)
     var startYear = 10*(n_great-1) + start;
     var result = [start, n_great, startYear, age];
     return result;
@@ -977,25 +976,23 @@ function Copy(){
     document.getElementById("debug7").innerText+"\n\n";
 
     inter +="※ 대운 (격국의 구응성패) ※\n";
-    for(var i=0; i<Doc_Role().length; i++){
-        inter += Doc_Role()[i] + "\n"
+    for(var i=0; i<TextRole().length; i++){
+        inter += TextRole()[i] + "\n"
     }
 
     inter +="\n\n";
 
     inter +="※ 세운 (용신의 희기신) ※\n";
-    for(var i=0; i<Doc_Use().length; i++){
-        inter += Doc_Use()[i] +"\n";
+    for(var i=0; i<TextUse().length; i++){
+        inter += TextUse()[i] +"\n";
     }
 
     inter +="\n\n";
 
     inter +="※ 세운 (육신의 생화극제) ※\n";
-    for(var i=0; i<Doc_Years().length; i++){
-        inter += Doc_Years()[i] +"\n";
+    for(var i=0; i<TextYears().length; i++){
+        inter += TextYears()[i] +"\n";
     }
-    
-    inter += document.getElementById("year_lucks").innerText;
 
     var str = fullName + "\n\n" +resultCopy + greatLuckCopy + "\n\n" + inter;
     CopyStringToClipboard(str);

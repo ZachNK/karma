@@ -1275,8 +1275,8 @@ function Divination(){
 
 
     
-    document.getElementById('lucks').innerHTML = 
-    `<td><button onClick="ShowLucks();" style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">운세보기</button></td>`
+    // document.getElementById('lucks').innerHTML = 
+    // `<td><button onClick="ShowLucks();" style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">운세보기</button></td>`
     
 
 

@@ -118,7 +118,85 @@ function p_img(x){
     var src = select_char() + "p" + num + ".png";
     return src;
 }
+let yrMsg = $('#year_msg');
+let mdMsg = $('#monthday_msg');
+let tmMSg = $('#time_msg');
+let mainBtn = $('#btn');
+$(mainBtn).on('click', function(){
 
+    let ycheck = false;
+    let mcheck = false;
+    let tcheck = false;
+
+    let yrs = yrMsg.val()*1;
+    let mth = mdMsg.val().substring(0,2)*1;
+    let dys = mdMsg.val().substring(2,4)*1;
+    let hrs = tmMSg.val().substring(0,2)*1;
+    let min = tmMSg.val().substring(2,4)*1;
+
+    if(yrs < 0){
+        console.log("오류");
+        $(yrMsg).parents('tr').addClass('warning');
+        setTimeout(function() {
+            $('tr').removeClass('warning');
+        }, 1500);
+    }
+    else{
+        ycheck = true;
+    }
+
+    if(mdMsg.val().length !==4 || mth >12 || mth <1 || dys <1){
+        
+        console.log("오류");
+        $(mdMsg).parents('tr').addClass('warning');
+        setTimeout(function() {
+            $('tr').removeClass('warning');
+        }, 1500);
+    }
+    else{
+        if(yrs%4 === 0 && mth === 2){
+            if(dys > mensis2[mth-1]){
+                console.log("오류");
+                $(mdMsg).parents('tr').addClass('warning');
+                setTimeout(function() {
+                    $('tr').removeClass('warning');
+                }, 1500);
+            }
+            else{
+                mcheck = true;
+            }
+        }
+        else if(dys > mensis[mth-1]){
+            console.log("오류");
+            $(mdMsg).parents('tr').addClass('warning');
+            setTimeout(function() {
+                $('tr').removeClass('warning');
+            }, 1500);
+        }
+        else{
+            mcheck = true;
+        }
+
+    }
+
+    if(tmMSg.val().length !==4 || hrs >23 || hrs <0 || min >59 || min <0){
+        console.log("오류");
+        $(tmMSg).parents('tr').addClass('warning');
+        setTimeout(function() {
+            $('tr').removeClass('warning');
+        }, 1500);
+    }
+    else{
+        tcheck = true;
+    }
+
+    if(ycheck === true && mcheck === true && tcheck === true){
+        Fortune_img(); 
+        Divination();
+    }
+    
+
+});
 
 function Fortune_img(){
     console.log("=======================================Fortune_img=======================================");

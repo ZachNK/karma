@@ -1272,15 +1272,6 @@ function Divination(){
     document.getElementById("debug7").innerHTML = rp;
 
 
-
-
-    
-    // document.getElementById('lucks').innerHTML = 
-    // `<td><button onClick="ShowLucks();" style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">운세보기</button></td>`
-    
-
-
-
     let roleAwake = ((roleSky[0]===1 || roleLand[0] ===1) ? "1":"0");
     roleAwake += ((roleSky[1]===1 || roleLand[1] ===1) ? "1":"0");
     roleAwake += ((roleSky[2]===1 || roleLand[2] ===1) ? "1":"0");
@@ -1599,8 +1590,7 @@ function ClickYears(num){
 
     // 클릭한(srtype) 육신이 운세 객체 순서에 몇번째 해당하는지 숫자
     var inx = callSet.indexOf(keySet);
-    console.log(inx)
-
+    
     //대운 첫년도 inx
     let firstNum = (firstYear+57)%10;
     if(firstNum === 0) firstNum = 10;

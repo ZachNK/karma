@@ -203,9 +203,19 @@ function Divination(){
         }
     }
 
+    let eidosRole = [...eidos]
+    //생지 여기 무토 제거 (육신용)
+    for(var i=0; i<4; i++){
+        if(eidosRole[(3*i)] === 5){
+            eidosRole[(3*i)] = 0;
+        }
+    }
+
     eidos = [...eidos.filter((i,v)=>eidos.indexOf(i) === v)]
+    eidosRole = [...eidosRole.filter((i,v)=>eidosRole.indexOf(i) === v)]
     //모든 지장간
     eidos = [...eidos.filter(e=> e !== 0)]
+    eidosRole = [...eidosRole.filter(e=> e !== 0)]
 
     //1-2.사용가능 지장간 배열
     // 월지안에 있는 것은 생지 여기, 생지 중기, 고지 중기 빼고 다 사용 가능
@@ -411,7 +421,7 @@ function Divination(){
     //1-3.사용대기 지장간 배열
     //body 사용대기 오행 배열, lands 사용대기 육신 배열 (근 제외)
     let body = eidos.filter(e=>!soul.includes(e))
-    let lands = eidos.filter(e=>!skys.includes(e))
+    let lands = eidosRole.filter(e=>!skys.includes(e))
     body = body.filter(e=>!spirit.includes(e))
     lands = lands.filter(e=>!mens.includes(e))
     lands = lands.filter(e=>skyTag[e-1].type !== skyTag[days-1].type)

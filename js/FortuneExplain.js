@@ -1578,6 +1578,9 @@ function ClickYears(num){
     //=================================================================================================================
     var ids = String(num).padStart(3, '0') + "ji";
     var skyNum= document.getElementById(ids).src.split('img')[1].split("/")[2].split(".")[0].split('i')[1]*1;
+    
+    var clickID = "j"+String(num).padStart(2, '0');
+    var nowYear = document.getElementById(clickID).innerText*1;
 
     let firstYear = document.getElementById("j01").innerText*1;
     
@@ -1612,7 +1615,7 @@ function ClickYears(num){
     //대운 첫년도 inx
     let firstNum = (firstYear+57)%10;
     if(firstNum === 0) firstNum = 10;
-    var finx = callSet.indexOf(frame.find(e=> e.fr === name).lucks.find(e=> e.tag === (frame.find(e => e.tag === (roles[myIds-1].mr.find(e => e.id === (firstNum-1)).tag)).type)))
+
 
     let keyStr = "";
     let divin = "";
@@ -1660,25 +1663,27 @@ function ClickYears(num){
 
     let str = [...keyStr];
 
-    //str.splice(keyStr.indexOf("(3)"), 3, `${firstYear + (2*(3-inx)-(firstYear%2))}년 ~ ${firstYear + (2*(3-inx)-(firstYear%2))+1}년`)
-        
+    console.log(nowYear)
+    
     if(keyStr.indexOf("(0)") >= 0){
-        str.splice(keyStr.indexOf("(0)"), 3, `${firstYear + (2*(0-finx)-(firstYear%2))}년 ~ ${firstYear + (2*(0-finx)-(firstYear%2))+1}년`)
+        let iy = nowYear -(nowYear%2) - 2
+        
+        str.splice(keyStr.indexOf("(0)"), 3, `${iy}년 ~ ${iy+1}년`)
     }
     else if(keyStr.indexOf("(1)") >= 0){
-        str.splice(keyStr.indexOf("(1)"), 3, `${firstYear + (2*(1-finx)-(firstYear%2))}년 ~ ${firstYear + (2*(1-finx)-(firstYear%2))+3}년`)
-    }
-    else if(keyStr.indexOf("(2)") >= 0){
-        str.splice(keyStr.indexOf("(2)"), 3, `${firstYear + (2*(2-finx)-(firstYear%2))}년 ~ ${firstYear + (2*(2-finx)-(firstYear%2))+1}년`)
+        let iy = nowYear -(nowYear%2) - 6
+        
+        str.splice(keyStr.indexOf("(1)"), 3, `${iy}년 ~ ${iy+3}년`)
     }
     else if(keyStr.indexOf("(3)") >= 0){
-        str.splice(keyStr.indexOf("(3)"), 3, `${firstYear + (2*(3-finx)-(firstYear%2))}년 ~ ${firstYear + (2*(3-finx)-(firstYear%2))+1}년`)
-    }
-    else if(keyStr.indexOf("(4)") >= 0){
-        str.splice(keyStr.indexOf("(4)"), 3, `${firstYear + (2*(4-finx)-(firstYear%2))}년 ~ ${firstYear + (2*(4-finx)-(firstYear%2))+1}년`)
+        let iy = nowYear -(nowYear%2) - 4
+        
+        str.splice(keyStr.indexOf("(3)"), 3, `${iy}년 ~ ${iy+1}년`)
     }
     else if(keyStr.indexOf("(5)") >= 0){
-        str.splice(keyStr.indexOf("(5)"), 3, `${firstYear + (2*(5-finx)-(firstYear%2))}년 ~ ${firstYear + (2*(5-finx)-(firstYear%2))+1}년`)
+        let iy = nowYear -(nowYear%2) + 4
+        
+        str.splice(keyStr.indexOf("(5)"), 3, `${iy}년 ~ ${iy+1}년`)
     }
 
     var result = `(${divin}運): ${str.join('')}`;
@@ -1760,6 +1765,7 @@ function TextYears(){
             listKeys.push(add+inx)
         }
     }
+
     
     var result = [];
 
@@ -1812,27 +1818,25 @@ function TextYears(){
         }
 
         let str = [...keyStr];
-        
+        let nowYear = firstYear+i;
         if(keyStr.indexOf("(0)") >= 0){
-            str.splice(keyStr.indexOf("(0)"), 3, `${firstYear + (2*(0-inx)-(firstYear%2))}년 ~ ${firstYear + (2*(0-inx)-(firstYear%2))+1}년`)
+            let iy = nowYear -(nowYear%2) - 2
+            str.splice(keyStr.indexOf("(0)"), 3, `${iy}년 ~ ${iy+1}년`)
         }
         else if(keyStr.indexOf("(1)") >= 0){
-            str.splice(keyStr.indexOf("(1)"), 3, `${firstYear + (2*(1-inx)-(firstYear%2))}년 ~ ${firstYear + (2*(1-inx)-(firstYear%2))+3}년`)
-        }
-        else if(keyStr.indexOf("(2)") >= 0){
-            str.splice(keyStr.indexOf("(2)"), 3, `${firstYear + (2*(2-inx)-(firstYear%2))}년 ~ ${firstYear + (2*(2-inx)-(firstYear%2))+1}년`)
+            let iy = nowYear -(nowYear%2) - 6
+            str.splice(keyStr.indexOf("(1)"), 3, `${iy}년 ~ ${iy+3}년`)
         }
         else if(keyStr.indexOf("(3)") >= 0){
-            str.splice(keyStr.indexOf("(3)"), 3, `${firstYear + (2*(3-inx)-(firstYear%2))}년 ~ ${firstYear + (2*(3-inx)-(firstYear%2))+1}년`)
-        }
-        else if(keyStr.indexOf("(4)") >= 0){
-            str.splice(keyStr.indexOf("(4)"), 3, `${firstYear + (2*(4-inx)-(firstYear%2))}년 ~ ${firstYear + (2*(4-inx)-(firstYear%2))+1}년`)
+            let iy = nowYear -(nowYear%2) - 4
+            str.splice(keyStr.indexOf("(3)"), 3, `${iy}년 ~ ${iy+1}년`)
         }
         else if(keyStr.indexOf("(5)") >= 0){
-            str.splice(keyStr.indexOf("(5)"), 3, `${firstYear + (2*(5-inx)-(firstYear%2))}년 ~ ${firstYear + (2*(5-inx)-(firstYear%2))+1}년`)
+            let iy = nowYear -(nowYear%2) + 4
+            str.splice(keyStr.indexOf("(5)"), 3, `${iy}년 ~ ${iy+1}년`)
         }
 
-        result.push(`${(firstYear+i)}년 (${divin}運): ${str.join('')}`);
+        result.push(`${(nowYear)}년 (${divin}運): ${str.join('')}`);
 
     }
     

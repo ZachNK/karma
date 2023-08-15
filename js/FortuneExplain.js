@@ -188,7 +188,8 @@ function Divination(){
         yObj
     ]
 
-    // 모든 지장간 풀어쓰기 0: 시지 여기 ~ 11: 년지 정기 
+    // 모든 지장간 풀어쓰기 0: 시지 여기 ~ 11: 년지 정기  
+    // (오행용)
     let eidos =[
         pObj[0].duty[0].idN,pObj[0].duty[1].idN,pObj[0].duty[2].idN,
         pObj[1].duty[0].idN,pObj[1].duty[1].idN,pObj[1].duty[2].idN,
@@ -196,14 +197,26 @@ function Divination(){
         pObj[3].duty[0].idN,pObj[3].duty[1].idN,pObj[3].duty[2].idN,
     ]
 
-    //오중기토 제거
+    let eidosRole = [...eidos] // (육신용)
+
+    //오중기토 제거 (오행, 육신 모두 다)
     for(var i=0; i<4; i++){
         if(pObj[i].id === 7){
             eidos[(3*i)+1] = 0;
+            eidosRole[(3*i)+1] = 0;
         }
     }
 
-    let eidosRole = [...eidos]
+    //왕지생 월지의 여기 혹은 정기 둘중 하나만 들어감 (오행용)
+    if(dty === 2){
+        eidos[6] = 0;
+    }
+    else{
+        eidos[8] = 0;
+    }
+
+
+    
     //생지 여기 무토 제거 (육신용)
     for(var i=0; i<4; i++){
         if(eidosRole[(3*i)] === 5){
@@ -222,29 +235,45 @@ function Divination(){
     //월지, 타지 왕지) 삼합 방합 여부 상관없이 다 가능
 
     // subSet 정기 지장간 배열 세트
-    let subSet = [];
+    let subSet = []; // 오행
+    let subSetRole = []; // 육신
     for(var i=0; i<4; i++){
-        let r = [];
+        let f = []; // 오행
+        let r = []; // 육신
         if(pObj[i].id%3 === 0){
+            f.push(pObj[i].duty[2].idN);
             r.push(pObj[i].duty[2].idN);
         }
         else if(pObj[i].id%3 === 1){
+            
+            
+            if(i === 2){
+                f.push(pObj[i].duty[dty].idN);
+            }
+            else{
+                f.push(pObj[i].duty[0].idN);
+                f.push(pObj[i].duty[2].idN);
+            }
             r.push(pObj[i].duty[0].idN);
             r.push(pObj[i].duty[2].idN);
 
         }
         else if(pObj[i].id%3 === 2){
             if(i===2){
+                f.push(pObj[i].duty[2].idN);
                 r.push(pObj[i].duty[2].idN);
             }
             
         }
-        subSet.push(r);
+        subSet.push(f);
+        subSetRole.push(r);
     }
 
     // subs 정기 지장간 배열
     let subs = [...subSet[0], ...subSet[1], ...subSet[2], ...subSet[3]];
+    let subr = [...subSetRole[0], ...subSetRole[1], ...subSetRole[2], ...subSetRole[3]];
     subs = [...subs.filter((i,v)=>subs.indexOf(i) === v)];
+    subr = [...subr.filter((i,v)=>subr.indexOf(i) === v)];
     
     // 타지 중, 고지) 
     //월지 방합 고지): 여기 가능, 중기 대기, 정기 가능
@@ -391,13 +420,13 @@ function Divination(){
     let mens = [];
     for(var i=0; i<4; i++){
         if(i!==2){
-            mens = mens.concat([...subSet[i].filter(e=>skyTag[e-1].type !==skyTag[days-1].type)])
+            mens = mens.concat([...subSetRole[i].filter(e=>skyTag[e-1].type !==skyTag[days-1].type)])
             mens = mens.concat([...sqrSet[i].filter(e=>skyTag[e-1].type !==skyTag[days-1].type)])
             mens = mens.concat([...triSet[i].filter(e=>skyTag[e-1].type !==skyTag[days-1].type)])
             mens = [...mens.filter((i,v) => mens.indexOf(i) === v)]
         }
         else{
-            mens = mens.concat([...subSet[i]])
+            mens = mens.concat([...subSetRole[i]])
             mens = mens.concat([...sqrSet[i]])
             mens = mens.concat([...triSet[i]])
             mens = [...mens.filter((i,v) => mens.indexOf(i) === v)]
@@ -1090,7 +1119,7 @@ function Divination(){
     frontMsg += `${skyTag[nowGod-1].name}${skyTag[nowGod-1].type} 喜神 ${(isTalent === undefined) ? "X" : "O"} `;
     
 
-    document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신 통변) ※" +"<br/>"+ 
+    document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신) ※" +"<br/>"+ 
     " (" + frontMsg + ") <br/>";
     
 
@@ -1163,13 +1192,20 @@ function Divination(){
     if(skys.find(e => e === frameSet[1]) !== undefined && roleLand[0] === 0 && roleSky[0] === 0){
         htmlMsg += `(격투간) 실질적인 역할 수행보다 ${(follower === false) ? `사회적 자격 타이틀에` : `사회적 역할 타이틀에`} 더 존중받으려는 마음이 강합니다.` + "<br/>";
     }
-    if(skys.find(e => e === frameSet[1]) !== undefined && (roleLand[0] === 0 || roleSky[0] === 0)){
-        htmlMsg += `(격투간 상신O) 자신의 ${(follower === false) ? `사회적 자격 타이틀` : `사회적 역할 타이틀`}을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
+
+    if(follower === false){
+        if(skys.find(e => e === frameSet[1]) !== undefined && roleSky[0] === 1){
+            htmlMsg += `(격투간 상신O) 자신의 사회적 자격 타이틀을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
+        }
+    }
+    else{
+        if(skys.find(e => e === frameSet[1]) !== undefined && roleLand[0] === 1){
+            htmlMsg += `(격투간 상신O) 자신의 사회적 역할 타이틀을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
+        }
     }
 
-
     if(roleSky[0] === 1 && roleLand[0] === 1){
-        htmlMsg += `(상신 통근) ${(follower === false) ? `자격에 맞는 역할을` : `주어진 사회적 역할을`} 확실하게 잘하며 살아가는데 문제 없고 매우 바쁜 삶을 살아갑니다. ` + "<br/>";
+        htmlMsg += `(상신 건왕) ${(follower === false) ? `자격에 맞는 역할을` : `주어진 사회적 역할을`} 확실하게 잘하며 살아가는데 문제 없고 매우 바쁜 삶을 살아갑니다. ` + "<br/>";
     }
     else if(roleSky[0] === 1 && roleLand[0] === 0){
         htmlMsg += `(천간 상신) ${(follower === false) ? `사회적 자격을 의식적으로 염두해 능동적으로 살아갑니다. ` : `사회적 역할의 후광과 노력 대비 사명감에 살아갈 수 있습니다. `}` + "<br/>";
@@ -1482,7 +1518,10 @@ function ClickUse(num){
         str.splice(text.indexOf("(확장운)"), 5, `${lastYear}년 ~ ${lastYear+1}년`);
         
     }
-    var result = `${year}년 (${divin[t]}): ${str.join('')}`;
+    let s = year+57
+    let iY = (s%10 === 0) ? 10 : s%10;
+    let pY = (s%12 === 0) ? 12 : s%12;
+    var result = `${year}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin[t]}): ${str.join('')}`;
     document.getElementById('Lucks_main').innerHTML = result;
 }
 
@@ -1524,9 +1563,6 @@ function TextUse(){
         listKeys.push(x)
     }
 
-    
-
-
     var result = []
     // 본격적인 운세 문구들 모음
     for(var i=0; i<10; i++){
@@ -1558,7 +1594,10 @@ function TextUse(){
         if(_useGod === 8) divin = ["인화", "인화", "매금", "도세", "도세"];
         if(_useGod === 9) divin = ["인화", "인화", "제방", "도세", "도세"];
 
-        result.push(`${newYear}년 (${divin[divN]}): ${str.join('')}`);
+        let s = newYear+57
+        let iY = (s%10 === 0) ? 10 : s%10;
+        let pY = (s%12 === 0) ? 12 : s%12;
+        result.push(`${newYear}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin[divN]}): ${str.join('')}`);
     }
 
     return result;
@@ -1672,8 +1711,6 @@ function ClickYears(num){
     }
 
     let str = [...keyStr];
-
-    console.log(nowYear)
     
     if(keyStr.indexOf("(0)") >= 0){
         let iy = nowYear -(nowYear%2) - 2
@@ -1846,7 +1883,10 @@ function TextYears(){
             str.splice(keyStr.indexOf("(5)"), 3, `${iy}년 ~ ${iy+1}년`)
         }
 
-        result.push(`${(nowYear)}년 (${divin}運): ${str.join('')}`);
+        let s = nowYear+57
+        let iY = (s%10 === 0) ? 10 : s%10;
+        let pY = (s%12 === 0) ? 12 : s%12;
+        result.push(`${(nowYear)}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin}運): ${str.join('')}`);
 
     }
     

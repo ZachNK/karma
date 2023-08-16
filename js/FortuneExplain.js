@@ -225,7 +225,7 @@ function Divination(){
     // 월지 지장간 중 비견 겁재는 천간용으로 붙여넣게 따로 빼놓기
     for(var i=0; i<3; i++){
         console.log(eidosRole[(i+6)], skyTag[days-1].type)
-        if(skyTag[eidosRole[(i+6)]-1].type === skyTag[days-1].type){
+        if(eidosRole[(i+6)] !== 0  && skyTag[eidosRole[(i+6)]-1].type === skyTag[days-1].type){
             console.log(eidosRole[(i+6)])
             skys.push(eidosRole[(i+6)]);
         }

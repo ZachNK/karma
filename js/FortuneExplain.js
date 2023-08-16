@@ -188,7 +188,7 @@ function Divination(){
         yObj
     ]
 
-    // 모든 지장간 풀어쓰기 0: 시지 여기 ~ 11: 년지 정기  
+    // 모든 지장간 풀어쓰기 0: 시지 여기 ~ 11: 년지 정기 
     // (오행용)
     let eidos =[
         pObj[0].duty[0].idN,pObj[0].duty[1].idN,pObj[0].duty[2].idN,
@@ -1192,17 +1192,10 @@ function Divination(){
     if(skys.find(e => e === frameSet[1]) !== undefined && roleLand[0] === 0 && roleSky[0] === 0){
         htmlMsg += `(격투간) 실질적인 역할 수행보다 ${(follower === false) ? `사회적 자격 타이틀에` : `사회적 역할 타이틀에`} 더 존중받으려는 마음이 강합니다.` + "<br/>";
     }
+    if(skys.find(e => e === frameSet[1]) !== undefined && (roleLand[0] === 0 || roleSky[0] === 0)){
+        htmlMsg += `(격투간 상신O) 자신의 ${(follower === false) ? `사회적 자격 타이틀` : `사회적 역할 타이틀`}을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
+    }
 
-    if(follower === false){
-        if(skys.find(e => e === frameSet[1]) !== undefined && roleSky[0] === 1){
-            htmlMsg += `(격투간 상신O) 자신의 사회적 자격 타이틀을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
-        }
-    }
-    else{
-        if(skys.find(e => e === frameSet[1]) !== undefined && roleLand[0] === 1){
-            htmlMsg += `(격투간 상신O) 자신의 사회적 역할 타이틀을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
-        }
-    }
 
     if(roleSky[0] === 1 && roleLand[0] === 1){
         htmlMsg += `(상신 건왕) ${(follower === false) ? `자격에 맞는 역할을` : `주어진 사회적 역할을`} 확실하게 잘하며 살아가는데 문제 없고 매우 바쁜 삶을 살아갑니다. ` + "<br/>";
@@ -1501,14 +1494,14 @@ function ClickUse(num){
     if(_useGod === 8 || _useGod === 9) gap = 2;
 
     let divin = [];
-    if(_useGod === 10) divin =["생화", "수원", "윤택", "수원", "생화"];
-    if(_useGod === 1) divin = ["생화", "수원", "소토", "수원", "생화"];
-    if(_useGod === 2) divin = ["발생", "발생", "소토", "수원", "수원"];
-    if(_useGod === 3) divin = ["발생", "발생", "간새", "수원", "수원"];
-    if(_useGod === 4) divin = ["인화", "제련", "홍로", "제련", "인화"];
-    if(_useGod === 7) divin = ["인화", "제련", "심원", "제련", "인화"];
-    if(_useGod === 8) divin = ["인화", "인화", "매금", "도세", "도세"];
-    if(_useGod === 9) divin = ["인화", "인화", "제방", "도세", "도세"];
+    if(_useGod === 10) divin =[["생화", "생화"], ["수원", "수원"], ["돈후", "윤택"], ["수원", "수원"], ["생화", "생화"]];
+    if(_useGod === 1) divin = [["생화", "생화"], ["수원", "수원"], ["소토", "소토"], ["수원", "수원"], ["생화", "생화"]];
+    if(_useGod === 2) divin = [["발생", "발생"], ["발생", "발생"], ["소토", "소토"], ["수원", "수원"], ["수원", "수원"]];
+    if(_useGod === 3) divin = [["발생", "발생"], ["발생", "발생"], ["간새", "차양"], ["수원", "수원"], ["수원", "수원"]];
+    if(_useGod === 4) divin = [["인화", "인화"], ["제련", "제련"], ["매광", "홍로"], ["제련", "제련"], ["인화", "인화"]];
+    if(_useGod === 7) divin = [["인화", "인화"], ["제련", "제련"], ["심원", "심원"], ["제련", "제련"], ["인화", "인화"]];
+    if(_useGod === 8) divin = [["인화", "인화"], ["인화", "인화"], ["매금", "유원"], ["도세", "도세"], ["도세", "도세"]];
+    if(_useGod === 9) divin = [["인화", "인화"], ["인화", "인화"], ["제방", "탁수"], ["도세", "도세"], ["도세", "도세"]];
 
     let text = call[godSet[t]][_state];
     let str = [...text];
@@ -1521,7 +1514,7 @@ function ClickUse(num){
     let s = year+57
     let iY = (s%10 === 0) ? 10 : s%10;
     let pY = (s%12 === 0) ? 12 : s%12;
-    var result = `${year}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin[t]}): ${str.join('')}`;
+    var result = `${year}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin[t][year%2]}): ${str.join('')}`;
     document.getElementById('Lucks_main').innerHTML = result;
 }
 
@@ -1585,19 +1578,19 @@ function TextUse(){
 
         let divN = Object.keys(callSet).indexOf(inx);
         let divin = [];
-        if(_useGod === 10) divin =["생화", "수원", "윤택", "수원", "생화"];
-        if(_useGod === 1) divin = ["생화", "수원", "소토", "수원", "생화"];
-        if(_useGod === 2) divin = ["발생", "발생", "소토", "수원", "수원"];
-        if(_useGod === 3) divin = ["발생", "발생", "간새", "수원", "수원"];
-        if(_useGod === 4) divin = ["인화", "제련", "홍로", "제련", "인화"];
-        if(_useGod === 7) divin = ["인화", "제련", "심원", "제련", "인화"];
-        if(_useGod === 8) divin = ["인화", "인화", "매금", "도세", "도세"];
-        if(_useGod === 9) divin = ["인화", "인화", "제방", "도세", "도세"];
+        if(_useGod === 10) divin =[["생화", "생화"], ["수원", "수원"], ["돈후", "윤택"], ["수원", "수원"], ["생화", "생화"]];
+        if(_useGod === 1) divin = [["생화", "생화"], ["수원", "수원"], ["소토", "소토"], ["수원", "수원"], ["생화", "생화"]];
+        if(_useGod === 2) divin = [["발생", "발생"], ["발생", "발생"], ["소토", "소토"], ["수원", "수원"], ["수원", "수원"]];
+        if(_useGod === 3) divin = [["발생", "발생"], ["발생", "발생"], ["간새", "차양"], ["수원", "수원"], ["수원", "수원"]];
+        if(_useGod === 4) divin = [["인화", "인화"], ["제련", "제련"], ["매광", "홍로"], ["제련", "제련"], ["인화", "인화"]];
+        if(_useGod === 7) divin = [["인화", "인화"], ["제련", "제련"], ["심원", "심원"], ["제련", "제련"], ["인화", "인화"]];
+        if(_useGod === 8) divin = [["인화", "인화"], ["인화", "인화"], ["매금", "유원"], ["도세", "도세"], ["도세", "도세"]];
+        if(_useGod === 9) divin = [["인화", "인화"], ["인화", "인화"], ["제방", "탁수"], ["도세", "도세"], ["도세", "도세"]];
 
         let s = newYear+57
         let iY = (s%10 === 0) ? 10 : s%10;
         let pY = (s%12 === 0) ? 12 : s%12;
-        result.push(`${newYear}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin[divN]}): ${str.join('')}`);
+        result.push(`${newYear}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin[divN][newYear%2]}): ${str.join('')}`);
     }
 
     return result;
@@ -1627,9 +1620,6 @@ function ClickYears(num){
     //=================================================================================================================
     var ids = String(num).padStart(3, '0') + "ji";
     var skyNum= document.getElementById(ids).src.split('img')[1].split("/")[2].split(".")[0].split('i')[1]*1;
-    
-    var clickID = "j"+String(num).padStart(2, '0');
-    var nowYear = document.getElementById(clickID).innerText*1;
 
     let firstYear = document.getElementById("j01").innerText*1;
     
@@ -1711,7 +1701,9 @@ function ClickYears(num){
     }
 
     let str = [...keyStr];
-    
+
+    console.log(nowYear)
+        
     if(keyStr.indexOf("(0)") >= 0){
         let iy = nowYear -(nowYear%2) - 2
         

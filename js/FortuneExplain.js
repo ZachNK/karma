@@ -1621,8 +1621,9 @@ function ClickYears(num){
     var ids = String(num).padStart(3, '0') + "ji";
     var skyNum= document.getElementById(ids).src.split('img')[1].split("/")[2].split(".")[0].split('i')[1]*1;
 
-    let firstYear = document.getElementById("j01").innerText*1;
-    
+    var firstYear = document.getElementById("j01").innerText*1;
+    var clickID = "j"+ String(num).padStart(2, '0');
+    var nowYear = document.getElementById(clickID).innerText*1;
 
     var code = document.getElementById('god_state').innerText.split('');
     code.shift()

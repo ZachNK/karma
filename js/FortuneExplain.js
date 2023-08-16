@@ -1439,7 +1439,7 @@ function TextRole(){
         
             var ikey = fTypes.indexOf(fTypes.find(e=> e === srtype));
             var title = skyTag[skyNum-1].name + landTag[landNum-1].name;
-            var key = `${title} (${luck2[ikey].name}) ${luck2[ikey].key[roleAwake[ikey]]}`
+            var key = `${title} (${luck2[ikey].name}): ${luck2[ikey].key[roleAwake[ikey]]}`
 
             result.push(key);
             
@@ -1462,7 +1462,7 @@ function TextRole(){
         
             var ikey = fTypes.indexOf(fTypes.find(e=> e === srtype));
             var title = skyTag[skyNum-1].name + landTag[landNum-1].name;
-            var key = `${title} (${luck2[ikey].name}) ${luck2[ikey].key[roleAwake[ikey]]}`
+            var key = `${title} (${luck2[ikey].name}): ${luck2[ikey].key[roleAwake[ikey]]}`
 
             result.push(key);
         }

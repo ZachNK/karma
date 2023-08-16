@@ -215,14 +215,23 @@ function Divination(){
         eidos[8] = 0;
     }
 
-
-    
     //생지 여기 무토 제거 (육신용)
     for(var i=0; i<4; i++){
         if(eidosRole[(3*i)] === 5){
             eidosRole[(3*i)] = 0;
         }
     }
+    
+    // 월지 지장간 중 비견 겁재는 천간용으로 붙여넣게 따로 빼놓기
+    for(var i=0; i<3; i++){
+        console.log(eidosRole[(i+6)], skyTag[days-1].type)
+        if(skyTag[eidosRole[(i+6)]-1].type === skyTag[days-1].type){
+            console.log(eidosRole[(i+6)])
+            skys.push(eidosRole[(i+6)]);
+        }
+    }
+
+    
 
     eidos = [...eidos.filter((i,v)=>eidos.indexOf(i) === v)]
     eidosRole = [...eidosRole.filter((i,v)=>eidosRole.indexOf(i) === v)]
@@ -415,30 +424,24 @@ function Divination(){
     let pair = [...pairSet[0], ...pairSet[1], ...pairSet[2], ...pairSet[3]]
     pair = [...pair.filter((i,v)=>pair.indexOf(i) === v)];
 
-    // spirit 사용 가능 지장간 오행 배열, mens 사용 가능 지장간 육신 배열 (근 제외)
+    // spirit 사용 가능 지장간 오행 배열, mens 사용 가능 지장간 육신 배열
     let spirit = [];
     let mens = [];
     for(var i=0; i<4; i++){
-        if(i!==2){
-            mens = mens.concat([...subSetRole[i].filter(e=>skyTag[e-1].type !==skyTag[days-1].type)])
-            mens = mens.concat([...sqrSet[i].filter(e=>skyTag[e-1].type !==skyTag[days-1].type)])
-            mens = mens.concat([...triSet[i].filter(e=>skyTag[e-1].type !==skyTag[days-1].type)])
-            mens = [...mens.filter((i,v) => mens.indexOf(i) === v)]
-        }
-        else{
-            mens = mens.concat([...subSetRole[i]])
-            mens = mens.concat([...sqrSet[i]])
-            mens = mens.concat([...triSet[i]])
-            mens = [...mens.filter((i,v) => mens.indexOf(i) === v)]
-        }
-        spirit = spirit.concat([...subSet[i]])
-        spirit = spirit.concat([...sqrSet[i]])
-        spirit = spirit.concat([...triSet[i]])
-        spirit = [...spirit.filter((i,v) => spirit.indexOf(i) === v)]
+        mens = mens.concat([...subSetRole[i]]);
+        mens = mens.concat([...sqrSet[i]]);
+        mens = mens.concat([...triSet[i]]);
+        mens = [...mens.filter((i,v) => mens.indexOf(i) === v)];
+
+        spirit = spirit.concat([...subSet[i]]);
+        spirit = spirit.concat([...sqrSet[i]]);
+        spirit = spirit.concat([...triSet[i]]);
+        spirit = [...spirit.filter((i,v) => spirit.indexOf(i) === v)];
         
     }
     spirit = spirit.filter(e=>!soul.includes(e));
-    //mens = mens.filter(e=>!skys.includes(e))
+    //  mens 사용 가능 지장간 육신 배열 (근 제외)
+    mens = mens.filter(e=>skyTag[e-1].type !==skyTag[days-1].type);
     
 
 
@@ -453,6 +456,7 @@ function Divination(){
     let lands = eidosRole.filter(e=>!skys.includes(e))
     body = body.filter(e=>!spirit.includes(e))
     lands = lands.filter(e=>!mens.includes(e))
+    //  mens 사용 대기 지장간 육신 배열 (근 제외)
     lands = lands.filter(e=>skyTag[e-1].type !== skyTag[days-1].type)
 
 

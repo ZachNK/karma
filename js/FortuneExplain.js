@@ -222,20 +222,6 @@ function Divination(){
         }
     }
     
-    // 월지 지장간 중 비견 겁재는 천간용으로 붙여넣게 따로 빼놓기
-    for(var i=0; i<3; i++){
-        if(eidosRole[(i+6)] !== 0  && skyTag[eidosRole[(i+6)]-1].type === skyTag[days-1].type){
-            skys.push(eidosRole[(i+6)]);
-        }
-    }
-
-    
-
-    eidos = [...eidos.filter((i,v)=>eidos.indexOf(i) === v)]
-    eidosRole = [...eidosRole.filter((i,v)=>eidosRole.indexOf(i) === v)]
-    //모든 지장간
-    eidos = [...eidos.filter(e=> e !== 0)]
-    eidosRole = [...eidosRole.filter(e=> e !== 0)]
 
     //1-2.사용가능 지장간 배열
     // 월지안에 있는 것은 생지 여기, 생지 중기, 고지 중기 빼고 다 사용 가능
@@ -454,9 +440,22 @@ function Divination(){
     let lands = eidosRole.filter(e=>!skys.includes(e))
     body = body.filter(e=>!spirit.includes(e))
     lands = lands.filter(e=>!mens.includes(e))
-    //  mens 사용 대기 지장간 육신 배열 (근 제외)
+    //  lands 사용 대기 지장간 육신 배열 (근 제외)
+    body = [...body.filter(e=> e !== 0)]
+    lands = [...lands.filter(e=> e !== 0)]
     lands = lands.filter(e=>skyTag[e-1].type !== skyTag[days-1].type)
 
+
+    body = [...body.filter((i,v)=>body.indexOf(i) === v)]
+    lands = [...lands.filter((i,v)=>lands.indexOf(i) === v)]
+    
+
+    // 월지 지장간 중 비견 겁재는 mens으로 붙여넣게 따로 빼놓기
+    for(var i=0; i<3; i++){
+        if(eidosRole[(i+6)] !== 0  && skyTag[eidosRole[(i+6)]-1].type === skyTag[days-1].type){
+            mens.push(eidosRole[(i+6)]);
+        }
+    }
 
 
     //1-1.천간 배열

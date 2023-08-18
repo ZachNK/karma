@@ -491,10 +491,10 @@ function Divination(){
     //console.log("================orderID 등등", orderID, nowGod, isTalent, myID) === [9, 8, undefined, 10]
     let orderID = mObj.use[ordId].id
     let nowGod = mObj.use[ordId].pw
-    let isTalent = [...soul, ...spirit].find(e => e === nowGod)
+    let isTalent = [...soul, ...spirit].find(e => e === nowGod);
     let myID = days
-    console.log(`----변수 확인 orderID (용신번호): ${orderID} nowGod (희신번호): ${nowGod} isTalent (용신유무): ${isTalent} myID (일간번호): ${myID}`)
-    console.log(`${skyTag[orderID-1].name}${skyTag[orderID-1].type} 用神, ${skyTag[nowGod-1].name}${skyTag[nowGod-1].type} 喜神 갖고 있음? : ${(isTalent === undefined) ? "아니오" : "네"}`); 
+    console.log(`----변수 확인 orderID (용신번호): ${orderID} nowGod (희신번호): ${nowGod} isTalent (희신유무): ${isTalent} myID (일간번호): ${myID}`)
+    console.log(`${skyTag[orderID-1].name}${skyTag[orderID-1].type} 用神, ${skyTag[nowGod-1].name}${skyTag[nowGod-1].type} 喜神 갖고 있음? : ${(isTalent > 0) ? "네" : "아니오"}`); 
     console.log(`${skyTag[myID-1].name}${skyTag[myID-1].type} 일간`); 
 
     
@@ -922,6 +922,7 @@ function Divination(){
         let y = roles[myID-1].mr.find(e => e.id === x-1);
         if(y.tag === frameSet[6]){
             typeRole.push('D');
+            console.log("천간")
         }
         
     }
@@ -930,6 +931,7 @@ function Divination(){
         let y = roles[myID-1].mr.find(e => e.id === x-1);
         if(y.tag === frameSet[6]){
             wtypeRole.push('D');
+            console.log("가능 지장간")
         }
         
     }
@@ -938,6 +940,7 @@ function Divination(){
         let y = roles[myID-1].mr.find(e => e.id === x-1);
         if(y.tag === frameSet[6]){
             untypeRole.push('D');
+            console.log("대기 지장간")
         }
         
     }
@@ -1120,7 +1123,16 @@ function Divination(){
     }
     
     let frontMsg = `${skyTag[orderID-1].name}${skyTag[orderID-1].type} 用神 출생, `
-    frontMsg += `${skyTag[nowGod-1].name}${skyTag[nowGod-1].type} 喜神 ${(isTalent === undefined) ? "X" : "O"} `;
+    frontMsg += `${skyTag[nowGod-1].name}${skyTag[nowGod-1].type}`;
+    if(godAwake == 2){
+        frontMsg += ` 喜神 O `;
+    }
+    else if(godAwake == 1){
+        frontMsg += ` 喜神 △ `;
+    }
+    else{
+        frontMsg += ` 喜神 X `;
+    }
     
 
     document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신) ※" +"<br/>"+ 
@@ -1192,12 +1204,32 @@ function Divination(){
 
 
     
-    // 구응성패 천간과 지지 위치별 특성 통변
-    if(skys.find(e => e === frameSet[1]) !== undefined && roleLand[0] === 0 && roleSky[0] === 0){
-        htmlMsg += `(격투간) 실질적인 역할 수행보다 ${(follower === false) ? `사회적 자격 타이틀에` : `사회적 역할 타이틀에`} 더 존중받으려는 마음이 강합니다.` + "<br/>";
-    }
-    if(skys.find(e => e === frameSet[1]) !== undefined && (roleLand[0] === 0 || roleSky[0] === 0)){
-        htmlMsg += `(격투간 상신O) 자신의 ${(follower === false) ? `사회적 자격 타이틀` : `사회적 역할 타이틀`}을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
+    // 구응성패 천간과 지지 위치별 특성
+    if(ideaRole.find(e => e === frameSet[1]) !== undefined){
+        if(follower === false && roleSky[0] === 1){
+            htmlMsg += `(격투간 상신O) 자신의 사회적 자격 타이틀을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
+        }
+        else if(follower === true && roleLand[0] === 1){
+            htmlMsg += `(격투간 상신O) 자신의 사회적 역할 타이틀을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
+        }
+        else{
+            if(roleSky[0] === 0 && roleLand[0] === 0 ){
+
+                if(godAwake === 2){
+                    htmlMsg += `(격투간 상신X) ${ (follower === false) ? `사회적 자격 보다` : `사회적 역할 수행 보다` } 오로지 자신의 적성과 능력으로 직업으로 정하여 살아갑니다. 직업적 사명감 보다, 재능에 대한 사명감이 강합니다. ` + "<br/>";
+                }
+                else if(godAwake === 1){
+                    htmlMsg += `(격투간 상신X) ${ (follower === false) ? `사회적 자격 보다` : `사회적 역할 수행 보다` } 점점 재능에 대한 사명감을 찾아가며 살아 갑니다. ` + "<br/>";
+                }
+                else if(godAwake === 0){
+                    
+                    htmlMsg += `(격투간 상신X) ${ (follower === false) ? `사회적 자격 보다` : `사회적 역할 수행 보다` } 오로지 자신이 하고 싶어 하는 것을 직업으로 삼아 더 존중받으려는 마음이 강합니다. ` + "<br/>";
+                }
+            }
+            
+        }
+
+        
     }
 
 
@@ -1208,9 +1240,16 @@ function Divination(){
         htmlMsg += `(천간 상신) ${(follower === false) ? `사회적 자격을 의식적으로 염두해 능동적으로 살아갑니다. ` : `사회적 역할의 후광과 노력 대비 사명감에 살아갈 수 있습니다. `}` + "<br/>";
     }
     else if(roleSky[0] === 0 && roleLand[0] === 1){
-        htmlMsg += `(지지 상신) ${(follower === false) ? `자신의 사회적 자격과 사명감을 주변에서 요구받아 수동적으로 살아갑니다. ` : `자신에게 주어진 사회적 역할을 묵묵히 수행하며 살아갑니다. `}` + "<br/>";
+        htmlMsg += `(지지 상신) ${(follower === false) ? `자신의 사회적 자격과 사명감을 실무를 통해 쌓아갑니다. ` : `자신에게 주어진 사회적 역할을 묵묵히 수행하며 살아갑니다. `}` + "<br/>";
     }
     
+    if(isTalent !== undefined && (roleSky[0] === 1 ||  roleLand[0] === 1)){
+        htmlMsg += `(희신O 상신O) 자신의 재능을 살린 일에 직업적 사명감으로 일치되어 살아갑니다.` + "<br/>";
+    }
+    else if(isTalent === undefined && (roleSky[0] === 1 ||  roleLand[0] === 1)){
+        htmlMsg += `(희신X 상신O) 자신이 하고 싶은 일을 삼아 직업적 사명감을 갖습니다.` + "<br/>";
+    }
+
     // 상신 vs. 상신기신
     //상신O 상신기신O
     if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[2] === 1 || roleLand[2] === 1)){
@@ -1258,8 +1297,14 @@ function Divination(){
         htmlMsg += `(상신O 구신X) ${(follower === false) ? `자신의 사회적 자격 능력으로 세력을 얻는데 부족합니다. ` : `자신의 역할 수행 노력에 대한 댓가와 성과는 부족합니다. `}` + "<br/>";
     } //상신X 구신X
     else if(roleSky[0] === 0 && roleLand[0] === 0 && roleSky[3] === 0 && roleLand[3] === 0){
-        htmlMsg += `(상신X 구신X) ${ (follower === false) ? `사회적 자격과 지위에 대한 사명감 보다` : `사회적 역할 수행과 성과에 대한 사명감 보다` } 오로지 자신의 적성과 능력에만 집중해 직업으로 정하여 살아갑니다. 이번 생은 휴가오셨습니다. ` + "<br/>";
-    }
+        if(isTalent === undefined){
+            htmlMsg += `(상신X 구신X) 누구도 자신의 ${(follower === false) ? `사회적 자격과 그에 맞는 세력을 ` : `주어진 역할과 그에 따른 성과를 `} 기대하는 사람 없습니다. 하고 싶은 일을 하며 살아 갑니다. 이번 생은 휴가 오셨습니다. ` + "<br/>";
+        }
+        else{
+            htmlMsg += `(상신X 구신X) 누구도 자신의 ${(follower === false) ? `사회적 자격과 그에 맞는 세력을 ` : `주어진 역할과 그에 따른 성과를 `} 기대하는 사람 없습니다. 자신의 재능과 적성을 삼아 능력 위주로 살아 갑니다. 이번 생은 휴가 오셨습니다. ` + "<br/>";
+        }
+        
+    } 
     
 
     // 구신 vs. 격기신, 구신기신

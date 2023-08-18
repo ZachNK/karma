@@ -453,7 +453,7 @@ function Divination(){
     // 월지 지장간 중 비견 겁재는 mens으로 붙여넣게 따로 빼놓기
     for(var i=0; i<3; i++){
         if(eidosRole[(i+6)] !== 0  && skyTag[eidosRole[(i+6)]-1].type === skyTag[days-1].type){
-            mens.push(eidosRole[(i+6)]);
+            lands.push(eidosRole[(i+6)]);
         }
     }
 

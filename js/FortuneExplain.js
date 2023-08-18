@@ -1199,7 +1199,7 @@ function Divination(){
     }
 
     document.getElementById("debug4").innerHTML = "※ 직업적 의지 (격국 구응성패) ※"+"<br/>"+  
-    "( " + frameSet[2] + roleMsg + uroleMsg  + ")" +"<br/>";
+    "( " + frameSet[2] + roleMsg + uroleMsg  + " )" +"<br/>";
 
 
 
@@ -1401,13 +1401,11 @@ function ClickRole(num){
     document.getElementById('GLucks').innerHTML = ""
     var test = document.getElementById("debug4")
     var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
+    var name = text[1];
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
 
     var code = document.getElementById('god_state').innerText.split('');
     code.shift()
-    text.shift()
-    text.pop()
-    var name = text.splice(0,1).toString()
 
     let roleAwake = [];
     roleAwake.push((code[3] ==="1") ? 1:0) //격 (구신유무)
@@ -1438,6 +1436,7 @@ function TextRole(){
     
     var test = document.getElementById("debug4")
     var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
+    var name = text[1];
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
 
     let mon_img = document.getElementById("SKY2").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
@@ -1452,9 +1451,6 @@ function TextRole(){
 
     var code = document.getElementById('god_state').innerText.split('');
     code.shift()
-    text.shift()
-    text.pop()
-    var name = text.splice(0,1).toString()
 
     let roleAwake = [];
     roleAwake.push((code[3] ==="1") ? 1:0) //격 (구신유무)

@@ -2121,7 +2121,8 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
 
             if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
                 role = true;
-                role_playMsg += "(羊刃格 比劫向 用殺) 적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
+                role_playMsg += (_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id)) ? "(羊刃格 比劫向 用殺) " : "(羊刃格 比劫向 用官) ";
+                role_playMsg += "적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
             }
 
             
@@ -2144,7 +2145,8 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
 
         if(role === true){
             if(_mens.find(e => skyTag[e-1].type === skyTag[c-1].type)){
-                role_playMsg += "(羊刃格 財生殺) 세상의 약자 보호를 수행하는 조직과 소속을 갖춥니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
+                role_playMsg += (_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id)) ? "(羊刃格 財生殺) 국가적 조직과 소속으로 " : "(羊刃格 財生官) 공익성 있는 조직과 소속으로 ";
+                role_playMsg += "세상의 약자 보호를 수행합니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman1-1].id) && _skys.find(e => skyTag[e-1].id !== skyTag[man1-1].id)){
                     role_playMsg += "(羊刃格 成格) 공공의 이익을 위해 자신을 희생하는 우두머리 급의 인물입니다."+"</br>";
                 }
@@ -2195,7 +2197,8 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
 
             if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
                 role = true;
-                role_playMsg += "(建祿格 比劫向 用殺) 적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
+                role_playMsg += (_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id)) ? "(建祿格 比劫向 用官) " : "(建祿格 比劫向 用殺) ";
+                role_playMsg += "적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
             }
 
             
@@ -2220,7 +2223,8 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
 
         if(role===true){
             if(_mens.find(e => skyTag[e-1].type === skyTag[d-1].type)){
-                role_playMsg += "(建祿格 財生官) 세상의 가치를 보호하는 조직과 소속을 갖춥니다. (교사, 관공서 서비스, 금감원, 헌법 수호, 교육업)"+"</br>";
+                role_playMsg += (_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id)) ? "(建祿格 財生官) 국가적 조직과 소속으로 " : "(建祿格 財生殺) 공익성 있는 조직과 소속으로 ";
+                role_playMsg += "세상의 약자 보호를 수행합니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman2-1].id) && _skys.find(e => skyTag[e-1].id !== skyTag[man2-1].id)){
                     role_playMsg += "(建祿格 成格) 공공의 이익을 위해 자신을 희생하는 우두머리 급의 인물입니다."+"</br>";
                 }

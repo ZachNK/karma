@@ -794,7 +794,7 @@ function Divination(){
         
         let v = landTag[mObj.id-1].duty[dty].idN;
         console.log("旺支月 ", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령 `);
-        if(dty===0 && ideaRole.find(e => e === v) !== undefined){
+        if(dty===0 && ideaRole.find(e => e === v) !== undefined && skyTag[myID-1].type !== skyTag[v-1].type){
             console.log(`旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `);
             frameSet.push(v);
             frameMsg = `旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `;

@@ -794,10 +794,16 @@ function Divination(){
         
         let v = landTag[mObj.id-1].duty[dty].idN;
         console.log("旺支月 ", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령 `);
-        if(dty===0 && ideaRole.find(e => e === v) !== undefined && skyTag[myID-1].type !== skyTag[v-1].type){
+        if(dty===0 && ideaRole.find(e => e === v) !== undefined){
             console.log(`旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `);
             frameSet.push(v);
             frameMsg = `旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `;
+        }
+        else if(dty===2 && ideaRole.find(e => e === (v-1)) !== undefined && ideaRole.find(e => e === v) === undefined){
+            let ov = v-1;
+            console.log(`旺支月 ${skyTag[ov-1].name}${skyTag[ov-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === ov))]} `);
+            frameSet.push(ov);
+            frameMsg = `旺支月 ${skyTag[ov-1].name}${skyTag[ov-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === ov))]} `;
         }
         else{
             let k = landTag[mObj.id-1].duty[2].idN;
@@ -1998,11 +2004,11 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         if(_self === true){
             if(_typeRole.find(e => e === 'A')){
                 role_playMsg += "(根旺 偏官格 食神制殺) 모두가 인정하는 자격증/학위/공식적 경력이 필수 입니다. 실적으로 남들이 못하는 특별한 일을 수행합니다."+"</br>"
-                if(_typeRole.find(e => e === 'D')){
+                if(_typeRole.find(e => e === 'B')){
                     role_playMsg += "(根旺 偏官格 財生殺) 조직에서 리더로 성장합니다. 아마추어를 이끄는 리더로 활동합니다."+"</br>";
                 }
                  
-                if(_typeRole.find(e => e === 'B')){
+                if(_typeRole.find(e => e === 'D')){
                     role_playMsg += "(根旺 偏官格 比食) 비상한 두뇌와 독창적인 전략으로 자신이 속한 조직을 더 큰 세상으로 진출합니다."+"</br>";
                 }
             }
@@ -2121,8 +2127,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
 
             if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
                 role = true;
-                role_playMsg += (_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id)) ? "(羊刃格 比劫向 用殺) " : "(羊刃格 比劫向 用官) ";
-                role_playMsg += "적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
+                role_playMsg += "(羊刃格 比劫向 用殺) 적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
             }
 
             
@@ -2133,7 +2138,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                 role_playMsg += "(羊刃格 露殺) 이상이 높으며 국가직 신분으로 공무원, 공공기관 나랏일 수행합니다."+"</br>";
             }
             else if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id)){
-                role_playMsg += "(羊刃格 用官) 국가직 신분이 아니더라도, 이상이 높으며 공익성 있는 일을 수행합니다."+"</br>";
+                role_playMsg += "(羊刃格 用官) 국가직 신분이 아니더라도, 학위를 갖췄거나 이상이 높으며 공익성 있는 일을 수행합니다."+"</br>";
             }
         }
         else if(_skys.find(e => skyTag[e-1].type === skyTag[woman1-1].type)){
@@ -2144,9 +2149,15 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         }
 
         if(role === true){
+            if(_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e === 'D') !== undefined){
+                role_playMsg += "(羊刃格 殺印相生) 직업 활동에 대한 준비력을 갖춰서, 중앙에서 일하거나, 조직 생활을 오래 유지 할 수 있습니다."+"</br>";
+            }
+            else{
+                role_playMsg += "(羊刃格 制殺) 직업 활동에 대한 준비력이 소흘하여 조직 생활을 오래 유지 하기 어렵거나 직영이 아닌 대행업무로 일합니다."+"</br>";
+            }
+            
             if(_mens.find(e => skyTag[e-1].type === skyTag[c-1].type)){
-                role_playMsg += (_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id)) ? "(羊刃格 財生殺) 국가적 조직과 소속으로 " : "(羊刃格 財生官) 공익성 있는 조직과 소속으로 ";
-                role_playMsg += "세상의 약자 보호를 수행합니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
+                role_playMsg += "(羊刃格 財生殺) 세상의 약자 보호를 수행하는 조직과 소속을 갖춥니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman1-1].id) && _skys.find(e => skyTag[e-1].id !== skyTag[man1-1].id)){
                     role_playMsg += "(羊刃格 成格) 공공의 이익을 위해 자신을 희생하는 우두머리 급의 인물입니다."+"</br>";
                 }
@@ -2197,8 +2208,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
 
             if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
                 role = true;
-                role_playMsg += (_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id)) ? "(建祿格 比劫向 用官) " : "(建祿格 比劫向 用殺) ";
-                role_playMsg += "적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
+                role_playMsg += "(建祿格 比劫向 用殺) 적십자와 같이 자신의 전문 능력으로 공익성 있는 일을 합니다. 개인이득과 자신을 먼저 챙긴 후, 대의를 그 다음에 지킵니다."+"</br>";
             }
 
             
@@ -2206,7 +2216,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         else if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
             role = true;
             if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id) || (_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id) && _skys.find(e => skyTag[e-1].type === skyTag[a-1].type))){
-                role_playMsg += "(建祿格 用官) 이상이 높으며 국가직 신분으로 공무원, 공공기관 나랏일 수행합니다."+"</br>";
+                role_playMsg += "(建祿格 用官) 이상이 높으며 국가직 신분이나 학위를 갖췄고, 공무원, 공공기관 나랏일 수행합니다."+"</br>";
             }
             else{
                 role_playMsg += "(建祿格 用殺) 국가직 신분이 아니더라도, 이상이 높으며 공익성 있는 일을 수행합니다."+"</br>";
@@ -2215,16 +2225,22 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             
         }
         else if(_skys.find(e => skyTag[e-1].type === skyTag[woman2-1].type)){
-            role_playMsg += "(建祿格 破格) 세상의 정보들이나 말과 글로 전하는 교육자, 작가, 기자, 인플루언서 등으로 살 수 있습니다."+"</br>";
+            role_playMsg += "(建祿格 破格) 세상의 정보들이나 말과 글을 전하는 교육자, 작가, 기자 등으로 살아갑니다."+"</br>";
         }
         else{
-            role_playMsg += "(建祿格 破格) 주어진 일만 수행하나, 직업 찾기 어려워합니다."+"</br>";
+            role_playMsg += "(建祿格 破格) 주어진 일을 수행하나, 직업을 찾기 어려워합니다."+"</br>";
         }
 
         if(role===true){
+            if(_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e === 'D') !== undefined){
+                role_playMsg += "(建祿格 官印相生) 직업 활동에 대한 준비력을 갖춰서, 중앙에서 일하거나, 조직 생활을 오래 유지 할 수 있습니다."+"</br>";
+            }
+            else{
+                role_playMsg += "(建祿格 見官) 직업 활동에 대한 준비력이 소흘하여 조직 생활을 오래 유지 하기 어렵거나 직영이 아닌 대행업무로 일합니다."+"</br>";
+            }
+
             if(_mens.find(e => skyTag[e-1].type === skyTag[d-1].type)){
-                role_playMsg += (_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id)) ? "(建祿格 財生官) 국가적 조직과 소속으로 " : "(建祿格 財生殺) 공익성 있는 조직과 소속으로 ";
-                role_playMsg += "세상의 약자 보호를 수행합니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
+                role_playMsg += "(建祿格 財生官) 세상의 가치를 보호하는 조직과 소속에서 지배력과 권한을 갖춥니다. (교사, 관공서 서비스, 금감원, 헌법 수호, 교육업)"+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman2-1].id) && _skys.find(e => skyTag[e-1].id !== skyTag[man2-1].id)){
                     role_playMsg += "(建祿格 成格) 공공의 이익을 위해 자신을 희생하는 우두머리 급의 인물입니다."+"</br>";
                 }
@@ -2233,7 +2249,6 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                 role_playMsg += "(建祿格 財官俱沒) 한순간으로 직장을 잃거나 가정 식구가 흩어지며, 경력 단절 등 사회로부터 자신의 신분이 잊혀지게 됩니다."+"</br>";
                 
             }
-
 
             if(_skys.find(e=> Math.abs(skyTag[_myID-1].id - skyTag[e-1].id) === 5)){
                 role_playMsg += "(建祿格 日干有情) 조직에서 개인 행동이나 동정심 및 사적 친분으로 인해 공정성 잃어 지탄 받을 수 있습니다."+"</br>";
@@ -2262,7 +2277,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             role_playMsg += "(根弱 正官格) 조직에서 자신의 입지를 조금씩 다져나갑니다."+"</br>";
             if(_mens.find(e => skyTag[e-1].type === skyTag[d-1].type)){
                 role = true;
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 正官格 財生官) 조직내 사람 관계에 적응해야 하며 " : "(根弱 正官格 化財生官) 조직, 진로, 부서 이동, 순환 및 교대 근무 형태로 ";
+                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 正官格 財生官) 조직내 사람 관계에 적응해야 하며 " : "(根弱 正官格 化財生官) 조직, 소속, 직무는 유지하며 직종 및 적성을 바꾸거나 다른 방식의 활동실적으로 수익을 높여 ";
                 role_playMsg += "조직의 생리에 대한 이해도가 높습니다."+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[two-1].id)){
                     role_playMsg += "(根弱 正官格 制劫) 경쟁력 있는 자신의 영역으로 지점, 본부장의 직위 혹은, 독립하여 자신의 사업을 할 수 있습니다."+"</br>";
@@ -2279,7 +2294,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             role_playMsg += "(根旺 正官格) 보통의 삶입니다."+"</br>";
             if(_mens.find(e => skyTag[e-1].type === skyTag[woman2-1].type) || _skys.find(e => skyTag[e-1].type === skyTag[woman2-1].type)){
                 role = true;
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正官格 官印相生) 자신의 전문성을 공식적으로 허가받아 " : "(根旺 正官格 化官印相生) 자신의 전문성이 스카우팅 되어 ";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正官格 官印相生) 자신의 전문성을 공식적으로 허가받아 " : "(根旺 正官格 化官印相生) 타영역에서 쌓은 자신의 전문성을 도입하거나 직종 및 적성을 바꿔서 ";
                 role_playMsg += "안정적인 생활을 선호하며, 공공기관이나 평생직장에서 근무하려 합니다."+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[b-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[b-1].id)){
                     role_playMsg += "(根旺 正官格 傷官佩印) 경쟁력 있는 전문 능력을 가졌지만, 시설관리 및 유지보수 등 전문능력으로 쉽게 처리 할 수 있는 안정적인 업무를 선호합니다."+"</br>";
@@ -2289,7 +2304,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                 }
             }
             else if(_skys.find(e => skyTag[e-1].id === skyTag[c-1].id) || _skys.find(e => skyTag[e-1].id === skyTag[d-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[c-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[d-1].id)){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正官格 財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 正官格 化財生殺) 독립하고 자영업에 뛰어 들지만 점점 치열한 환경으로 바꿔가게 됩니다.";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正官格 財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 正官格 化財生官) 혼자서도 할수 있을 것 같아 독립합니다. 직종 및 적성을 바꾸거나 다른 방식의 활동실적으로 수익을 높여 자영업에 뛰어 듭니다.";
                 role_playMsg += "</br>";
             }
 
@@ -2325,7 +2340,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         if(_self !== true){
             role_playMsg += "(根弱 偏財格) 조직에서 자신의 입지를 조금씩 다져나갑니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type))){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根弱 偏財格 財生殺) 조직에 들어가 배움을 가지고 " : "(根弱 偏財格 化財生官) 조직, 소속, 담당 부서 이동, 순환 및 교대 근무형태로 ";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根弱 偏財格 財生殺) 조직에 들어가 매뉴얼대로 행하며 배움을 가지고 " : "(根弱 偏財格 化財生官) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 신분을 높여가며 ";
                 role_playMsg += "자신의 꿈을 위한 과정을 거칩니다."+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[one-1].id)){
                     role_playMsg += "(根弱 偏財格 制比) 경쟁을 통해 영역을 확보해 함께할 뜻이 맞는 사람을 모아 더 큰 세상으로 뻗고자 합니다."+"</br>";
@@ -2334,8 +2349,14 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                     role_playMsg += "(根弱 偏財格 劫財合殺) 연대를 통해 영역확보입니다. 공동 설립, 기존의 업체 또는 유통망에 관여합니다."+"</br>";
                 }
             }
-            else if((_skys.find(e => skyTag[e-1].id === skyTag[a-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[a-1].id))){
-                role_playMsg += "(根弱 偏財格 食神生財) 조직에서 자신의 꿈을 키워야 하지만, 자신의 재능에 밑천을 보여서 영역 확보와 성과에 어려움을 겪습니다."+"</br>";
+            else{
+                if((_skys.find(e => skyTag[e-1].id === skyTag[a-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[a-1].id))){
+                    role_playMsg += "(根弱 偏財格 食神生財) 조직에서 자신의 꿈을 키워야 하지만, 자신의 재능에 밑천을 보여서 영역 확보와 성과에 어려움을 겪습니다."+"</br>";
+                }
+            }
+
+            if(_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id) === undefined && _skys.find(e => skyTag[e-1].type === skyTag[c-1].type) !== undefined && _skys.find(e => skyTag[e-1].type === skyTag[woman1-1].type) !== undefined){
+                role_playMsg += "(偏財格 貪財壞印) 실력대비 욕심이 지나칩니다. 규칙을 어긴 행위나 무리하게 영역확장하기를 원해서 주변 사람 및 가족의 재산을 악용하고 부도날 수 있음에 유의해야 합니다."
             }
         }
         else{
@@ -2350,19 +2371,25 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                     role_playMsg += "(根旺 偏財格 財印交雜) 연대를 통한 지분, 혹은 자금을 통한 투자 합니다."+"</br>";
                 }
             }
-            else if(_skys.find(e => skyTag[e-1].id === skyTag[man1-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[man1-1].id)){
-                role_playMsg += "(根旺 偏財格 財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다."+"</br>";
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 偏財格 財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 偏財格 化財生官) 독립하고 자영업에 뛰어 들지만 업종 및 고객 변화가 잦습니다.";
-                role_playMsg += "</br>";
+            else{
+                if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
+                    role_playMsg += "(根旺 偏財格 財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다."+"</br>";
+                    role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 偏財格 財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 偏財格 化財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 조직, 부서, 직급을 바꿔가며 수익을 높여갑니다.";
+                    role_playMsg += "</br>";
+                }
+            }
+
+            if(_skys.find(e => skyTag[e-1].id === skyTag[a-1].id) === undefined && _skys.find(e => skyTag[e-1].type === skyTag[c-1].type) !== undefined && _skys.find(e => skyTag[e-1].type === skyTag[woman1-1].type) !== undefined){
+                role_playMsg += "(偏財格 貪財壞印) 실력대비 욕심이 지나칩니다. 규칙을 어긴 행위나 무리하게 영역확장하기를 원해서 주변 사람 및 가족의 재산을 악용하고 부도날 수 있음에 유의해야 합니다."
             }
         }
     }
     else if(_frameSet2 === "正財格"){
         role_playMsg += "(正財格) 안정적 삶과 경제성과 실용성을 추구하고 안정을 깨는 낭비를 경계합니다."+"</br>";
         if(_self !== true){
-            role_playMsg += "(根弱 正財格) 조직에서 안정적인 것을 중시합니다."+"</br>";
+            role_playMsg += "(根弱 正財格) 조직에서 안정적인 활동을 중시합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根弱 正財格 財生官) 조직에 들어가 배움을 가지고 " : "(根弱 正財格 化財生殺) 점점 치열한 환경으로 바꿔가면서 ";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根弱 正財格 財生官) 조직에 들어가 매뉴얼대로 행하며 배움을 가지고 " : "(根弱 正財格 化財生殺) 조직생활에서 점점 경쟁이 치열한 환경에 진입함으로써 수익과 신분을 높여서 ";
                 role_playMsg += "자신의 꿈을 위한 과정을 거칩니다."+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[two-1].id)){
                     role_playMsg += "(根弱 正財格 制劫) 경쟁을 통해 영역을 확보해 함께할 뜻이 맞는 사람을 모아 더 큰 세상으로 뻗고자 합니다."+"</br>";
@@ -2371,14 +2398,20 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                     role_playMsg += "(根弱 正財格 正官比肩合) 연대를 통해 영역확보입니다. 공동 설립, 기존의 업체 또는 유통망에 관여합니다."+"</br>";
                 }
             }
-            else if(_skys.find(e => skyTag[e-1].id === skyTag[b-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[b-1].id)){
-                role_playMsg += "(根弱 正財格 傷官生財) 조직에서 안정적으로 있길 원하지만, 시대 변화에 맞춰 자신의 재능 개발을 키워가는데 부진하고 어려움을 겪습니다."+"</br>";
+            else{
+                if(_skys.find(e => skyTag[e-1].id === skyTag[b-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[b-1].id)){
+                    role_playMsg += "(根弱 正財格 傷官生財) 조직에서 안정적으로 있길 원하지만, 시대 변화에 맞춰 자신의 재능 개발을 키워가는데 부진하고 어려움을 겪습니다."+"</br>";
+                }
+            }
+
+            if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id) === undefined && _skys.find(e => skyTag[e-1].type === skyTag[d-1].type) !== undefined && _skys.find(e => skyTag[e-1].type === skyTag[woman2-1].type) !== undefined){
+                role_playMsg += "(正財格 貪財壞印) 실력대비 욕심이 지나칩니다. 규칙을 어긴 행위나 무리하게 영역확장하기를 원해서 주변 사람 및 가족의 재산을 악용하고 부도날 수 있음에 유의해야 합니다."
             }
         }
         else{
             role_playMsg += "(根旺 正財格) 자신의 실력으로 변화하는 시대를 리드 합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[b-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[b-1].type)){
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 正財格 傷官生財) 시대 변화에 맞춰 자신의 재능으로 미래를 위해 나아가 새로운 것을 개발 합니다." : "(根旺 正財格 化食神生財) 자신의 고유 실력을 키워 점점 치열한 환경으로 사업가적 재능을 발휘합니다.";
+                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 正財格 傷官生財) 시대 변화에 맞춰 자신의 재능으로 미래를 위해 나아가 새로운 것을 개발 합니다." : "(根旺 正財格 化食神生財) 자신의 전문성과 적성 및 직종을 바꿔가며 사업가적 재능을 발휘합니다.";
                 role_playMsg += "</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman2-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[woman2-1].id)){
                     role_playMsg += "(根旺 正財格 傷官佩印) 경쟁력 있는 안전 자산 확보해 회사 지분 및 신제품 이익을 통한 안정적 수입 구축합니다."+"</br>";
@@ -2387,21 +2420,27 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                     role_playMsg += "(根旺 正財格 傷官合去) 연대를 통한 지분, 혹은 자금을 통한 투자 합니다."+"</br>";
                 }
             }
-            else if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[man2-1].id)){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正財格 財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 正財格 化財生殺) 독립하고 자영업에 뛰어 들지만 점점 치열한 환경으로 바꿔가게 됩니다.";
-                role_playMsg += "</br>";
+            else{
+                if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
+                    role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正財格 財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 正財格 化財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 점점 경쟁이 치열한 환경에 진입함으로써 수익을 높여갑니다.";
+                    role_playMsg += "</br>";
+                }
+            }
+
+            if(_skys.find(e => skyTag[e-1].id === skyTag[b-1].id) === undefined && _skys.find(e => skyTag[e-1].type === skyTag[d-1].type) !== undefined && _skys.find(e => skyTag[e-1].type === skyTag[woman2-1].type) !== undefined){
+                role_playMsg += "(正財格 貪財壞印) 실력대비 욕심이 지나칩니다. 규칙을 어긴 행위나 무리하게 소유하기만을 원해서 주변 사람 및 가족의 재산을 악용하고 부도날 수 있음에 유의해야 합니다."
             }
         }
     }
     else if(_frameSet2 === "偏印格"){
         let role = false;
-        role_playMsg += "(偏印格) 아이디어 구체화 능력과 모든 일에 공감하고 지나치게 신념, 사상에 빠져들기 쉽습니다."+"</br>";
+        role_playMsg += "(偏印格) 전략 전술 기획 능력이 있으며, 모든 일에 공감하고 지나치게 신념, 사상에 빠져들기 쉽습니다."+"</br>";
         if(_self !== true){
-            role_playMsg += "(根弱 偏印格) 생각에 휩쓸리며 자신을 감추고 조직생활을 합니다."+"</br>";
+            role_playMsg += "(根弱 偏印格) 세상 논리에 동조하며 자신을 감추고 조직생활을 합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
                 role = true;
                 role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 偏印格 殺印相生) 남들이 못하는 특수 임무를 수행하며 소수만이 할 수 있는 특수직입니다."+"</br>" : "";
-                role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)) ? "(根弱 偏印格 化官印相生) 조직, 소속, 담당 부서 이동, 순환 및 교대 근무형태로 수행하며 소수만이 할 수 있는 특수직입니다."+"</br>" : "";
+                role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)) ? "(根弱 偏印格 化官印相生) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 수행하며 소수만이 할 수 있는 특수직입니다."+"</br>" : "";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[a-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[a-1].id)){
                     role_playMsg += "(根弱 偏印格 奪食) 직업재교육, 재수학원 등 실력부족으로 낙오된 사람을 이끌어 줘야합니다."+"</br>";
                 }
@@ -2409,12 +2448,18 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                     role_playMsg += "(根弱 偏印格 傷官合去) 실력있는 사람을 섭외하고, 자신은 전문가 용역 관리에만 집중합니다."+"</br>";
                 }
             }
-            else if(_skys.find(e => skyTag[e-1].id === skyTag[one-1].id)){
-                role_playMsg += "(根弱 偏印格 印比) 자신의 마음에 사로 잡혀 자기가 하고싶은 것만 하는 매니아가 됩니다."+"</br>";
+            else{
+                if(_skys.find(e => skyTag[e-1].id === skyTag[one-1].id)){
+                    role_playMsg += "(根弱 偏印格 印比) 자신의 마음에 사로 잡혀 자기가 하고싶은 것만 하는 매니아가 됩니다."+"</br>";
+                }
+            }
+
+            if(_skys.find(e => skyTag[e-1].id === skyTag[one-1].id) === undefined && _skys.find(e => skyTag[e-1].type === skyTag[c-1].type) !== undefined){
+                role_playMsg += "(偏印格 貪財壞印) 준비대비 욕심이 지나칩니다. 허술하게 세상의 변화를 읽고 틈새시장을 공략하는 각종 투자 및 재테크로 인해 주변 사람 및 가족의 재산을 악용하고 부도날 수 있음에 유의해야 합니다."
             }
         }
         else{
-            role_playMsg += "(根旺 偏印格) 정신이 무너지지 않으며 자신이 하고 싶은 것에 집중합니다."+"</br>";
+            role_playMsg += "(根旺 偏印格) 매니아적인 성향으로 자신이 하고 싶은 것에 집중합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].id === skyTag[one-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[one-1].id)){
                 role_playMsg += "(根旺 偏印格 印比) 자신이 좋아하는 일을 직업으로 만들 수 있습니다. "+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[c-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[c-1].id)){
@@ -2424,24 +2469,26 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                     role_playMsg += "(根旺 偏印格 財印交雜) 주변에 전문가가 많아 연대 참여로 타인의 타이틀이나 일궈 놓은 결과에 편승합니다."+"</br>";
                 }
             }
-            else if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
-                role = true;
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 偏印格 殺印相生) 부여받은 특수 임무 수행에 불만이 있습니다."+"</br>" : "";
-                role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)) ? "(根旺 偏印格 化官印相生) 조직, 소속, 담당 부서 이동, 순환 및 교대 근무형태로 임무 수행에 불만이 있습니다."+"</br>" : "";
+            else{
+                if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
+                    role = true;
+                    role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 偏印格 殺印相生) 부여받은 특수 임무 수행에 불만이 있습니다."+"</br>" : "";
+                    role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)) ? "(根旺 偏印格 化官印相生) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 임무 수행에 불만이 있습니다."+"</br>" : "";
+                }
+            }
+
+            if(_skys.find(e => skyTag[e-1].id === skyTag[one-1].id) === undefined && _skys.find(e => skyTag[e-1].type === skyTag[c-1].type) !== undefined){
+                role_playMsg += "(偏印格 貪財壞印) 준비대비 욕심이 지나칩니다. 허술하게 세상의 변화를 읽고 틈새시장을 공략하는 각종 투자 및 재테크로 인해 주변 사람 및 가족의 재산을 악용하고 부도날 수 있음에 유의해야 합니다."
             }
         }
 
         if(role===true){
-            if(_skys.find(e => skyTag[e-1].type === skyTag[d-1].type) && _skys.find(e => skyTag[e-1].type === skyTag[_myID-1].type)){
-                role_playMsg += "(偏印格 財官俱沒) 한순간으로 직장을 잃거나 가정 식구가 떠나갑니다."+"</br>";
-            }
-
-
+            
             if(_skys.find(e=> Math.abs(skyTag[_myID-1].id - skyTag[e-1].id) === 5)){
                 role_playMsg += "(偏印格 日干有情) 조직에서 개인 행동이나 동정심 및 사적 친분으로 인해 공정성과 거리가 멀 수 있습니다."+"</br>";
             }
 
-            if(_skys.find(e=> Math.abs(skyTag[man2-1].id - skyTag[e-1].id) === 5) || _skys.find(e=> Math.abs(skyTag[man1-1].id - skyTag[e-1].id) === 5)){
+            if((_skys.find(e=> Math.abs(skyTag[man2-1].id - skyTag[e-1].id) === 5) && _skys.find(e=> skyTag[e-1].id === skyTag[man2-1].id)) || (_skys.find(e=> Math.abs(skyTag[man1-1].id - skyTag[e-1].id) === 5) && _skys.find(e=> skyTag[e-1].id === skyTag[man1-1].id))){
                 role_playMsg += "(偏印格 官殺有情) 지위를 이용해 권력남용 및 갑질로 지탄 받을 수 있습니다."+"</br>";
             }
         }
@@ -2450,13 +2497,13 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
     }
     else if(_frameSet2 === "正印格"){
         let role = true;
-        role_playMsg += "(正印格) 객관적 지식습득을 좋아하며 주변환경을 잘 적응하고 정해진 임무를 잘 완수합니다."+"</br>";
+        role_playMsg += "(正印格) 객관적 지식습득을 좋아하며 주변환경에 잘 적응하고 정해진 임무를 잘 완수합니다."+"</br>";
         if(_self !== true){
             role_playMsg += "(根弱 正印格) 조직에 잘 적응합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
                 role = true;
                 role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 正印格 官印相生) 자신에게 주어진 일을 수행하고 안정적인 생활을 중시합니다."+"</br>" : "";
-                role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)) ? "(根弱 正印格 化殺印相生) 조직, 소속, 담당 부서 이동, 순환 및 교대 근무형태로 자신에게 주어진 일을 수행합니다."+"</br>" : "";
+                role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)) ? "(根弱 正印格 化殺印相生) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 자신에게 주어진 일을 수행합니다."+"</br>" : "";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[b-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[b-1].id)){
                     role_playMsg += "(根弱 正印格 傷官佩印) 오랜시간 경력자로서 전문가가 됩니다. 자격증 등으로 자신을 입증하는 것이 좋습니다."+"</br>";
                 }
@@ -2464,8 +2511,14 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                     role_playMsg += "(根弱 正印格 食正印合) 실력있는 사람을 섭외하고, 자신은 전문가 용역 관리에만 집중합니다."+"</br>";
                 }
             }
-            else if(_skys.find(e => skyTag[e-1].id === skyTag[two-1].id)){
-                role_playMsg += "(根弱 正印格 印劫) 자기 재능으로 안정적 수입을 구축하는 것에 압박감을 느낍니다."+"</br>";
+            else{
+                if(_skys.find(e => skyTag[e-1].type === skyTag[two-1].type)){
+                    role_playMsg += "(根弱 正印格 印劫) 자기 재능으로 안정적 수입을 구축하는 것에 압박감을 느낍니다."+"</br>";
+                }
+            }
+
+            if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id) === undefined && _skys.find(e => skyTag[e-1].type === skyTag[d-1].type) !== undefined){
+                role_playMsg += "(正印格 貪財壞印) 준비대비 욕심이 지나칩니다. 허술하게 세상의 변화를 읽고 틈새시장을 공략하는 각종 투자 및 재테크로 인해 주변 사람 및 가족의 재산을 악용하고 부도날 수 있음에 유의해야 합니다."
             }
         }
         else{
@@ -2479,13 +2532,29 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                     role_playMsg += "(根旺 正印格 財印交雜) 주변에 전문가가 많아 연대 참여로 타인의 타이틀이나 일궈 놓은 결과에 편승합니다."+"</br>";
                 }
             }
-            else if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[man2-1].id)){
-                role = true;
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 正印格 官印相生) 불로소득을 원하는데 규칙적인 업무와 경력 스트레스가 있습니다."+"</br>" : "";
-                role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)) ? "(根旺 正印格 化殺印相生) 불로소득을 원하는데 조직, 소속, 담당 부서 이동, 순환 및 교대 근무형태로 업무와 경력 스트레스가 있습니다."+"</br>" : "";
+            else{
+                if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].id === skyTag[man2-1].type)){
+                    role = true;
+                    role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 正印格 官印相生) 불로소득을 원하는데 규칙적인 업무와 경력 스트레스가 있습니다."+"</br>" : "";
+                    role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)) ? "(根旺 正印格 化殺印相生) 불로소득을 원하는데 잦은 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 업무와 경력 스트레스가 있습니다."+"</br>" : "";
+                }
+            }
+
+            if(_skys.find(e => skyTag[e-1].id === skyTag[two-1].id) === undefined && _skys.find(e => skyTag[e-1].type === skyTag[d-1].type) !== undefined){
+                role_playMsg += "(正印格 貪財壞印) 준비대비 욕심이 지나칩니다. 허술하게 세상의 변화를 읽고 틈새시장을 공략하는 각종 투자 및 재테크로 인해 주변 사람 및 가족의 재산을 악용하고 부도날 수 있음에 유의해야 합니다."
             }
         }
 
+        if(role===true){
+            
+            if(_skys.find(e=> Math.abs(skyTag[_myID-1].id - skyTag[e-1].id) === 5)){
+                role_playMsg += "(正印格 日干有情) 조직에서 개인 행동이나 동정심 및 사적 친분으로 인해 공정성과 거리가 멀 수 있습니다."+"</br>";
+            }
+
+            if((_skys.find(e=> Math.abs(skyTag[man2-1].id - skyTag[e-1].id) === 5) && _skys.find(e=> skyTag[e-1].id === skyTag[man2-1].id)) || (_skys.find(e=> Math.abs(skyTag[man1-1].id - skyTag[e-1].id) === 5) && _skys.find(e=> skyTag[e-1].id === skyTag[man1-1].id))){
+                role_playMsg += "(正印格 官殺有情) 지위를 이용해 권력남용 및 갑질로 지탄 받을 수 있습니다."+"</br>";
+            }
+        }
         
     }
     else if(_frameSet2 === "食神格"){
@@ -2514,7 +2583,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         else{
             role_playMsg += "(根旺 食神格) 자신을 믿고, 생존력이 있는 실력을 꾸준히 쌓아 재능을 직접 판매할 수 있습니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[c-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[c-1].type)){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 食神格 食神生財) 활용도 많은 인재로, 사업과 직장생활 가리지 않고 요구 사항 해결해줍니다." : "(根旺 食神格 化食神生財) 정해진 규정이 많은 소유환경 및 한정적인 영역에서만 자신의 재능을 발휘합니다.";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 食神格 食神生財) 활용도 많은 인재로, 사업과 직장생활 가리지 않고 요구 사항 해결해줍니다." : "(根旺 食神格 化食神生財) 정해진 규정이 많거나 한정적인 영역에서 자신의 재능을 발휘합니다.";
                 role_playMsg += "</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman1-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[woman1-1].id)){
                     role_playMsg += "(根旺 食神格 偏印到食) 편의성을 수익으로 만들어, 지적재산권을 확보하고, 건물주, 플랫폼 개발자 등 됩니다."+"</br>";

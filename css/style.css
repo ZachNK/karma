@@ -10,29 +10,209 @@ body {
     align-items: center;
 
 }
-ul{
-    list-style: none;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    margin: 0 auto;
+
+.title-area{
+    width: 100%;
+    height: 80px;
+}
+
+#bar{
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    box-sizing: border-box;
+    background: rgba(119, 136, 153, 0.549);
+    transition: .5s;
     
 }
-li{
-    display: inline-block;  
+
+#bar nav .home-title h1{display: flex; justify-content: center; align-items: center; }
+
+.container{
+    width: 100%;
+    height: 700px;
+    
+}
+
+#header{
+    position: fixed;
+    padding-top: 0px;
+    width: 100%;
+    height: 700px;
+    box-sizing: border-box;
+    background: rgba(119, 136, 153, 0.549);
+    transition: .5s;
+}
+
+#header nav{
+    top: 0; left: 0;
+    width: 100%; max-width: 100%;
+    margin: 0 auto;
+}
+
+
+#header nav .option{display: flex; justify-content: center; align-items: center; padding: 0 0px; margin: 20px 0px;}
+/* */
+#header nav .init-area{text-align: center; width: 50%; margin-left: auto; margin-right: auto; padding: 0 15px;} 
+
+
+#header nav ul{text-align: center; padding: 50px;}
+#header nav ul li{list-style: none; }
+#header nav li a{display: flex; justify-content: center; padding: 0 15px; line-height: 50%; text-decoration: none; color: #262626;}
+
+#header nav .input-area{
+    display: flex; justify-content: center; width: 750px; height: 80px; margin: 20px; 
+}
+
+#header nav .init-area li.warning {
+    color: red !important;
+    animation: warning .3s ease;
+    animation-iteration-count: 3;
+}
+@keyframes warning {
+    0% {transform: translatex(-25px);}
+    25% {transform: translatex(25px);}
+    50% {transform: translatex(-25px);}
+    75% {transform: translatex(25px);}
+}
+
+.fix-menu{
+    top: 0; left: 0;
+    width: 100%; max-width: 100%;
+    margin: 0 auto;
+}
+
+.fix-menu ul{display: flex; justify-content: center; padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px;}
+.fix-menu ul li{display: inline-block; font-size: 30x; line-height: 30px; padding: 0px 50px; margin: 50px 0px 0px 0px;}
+.navbar_logo{display: flex; justify-content: center; align-items: center; }
+
+
+#block1{
+    position: fixed;
+    width: 10%;
+    height: 3px;
+    box-sizing: border-box;
+    background: rgb(227, 239, 255);
+    margin: 0px 0px 6px 0px;
+}
+#block2{
+    position: fixed;
+    width: 10%;
+    height: 3px;
+    box-sizing: border-box;
+    background: rgb(227, 239, 255);
+    margin: 6px 0px 0px 0px;
+}
+
+#nav{
+    position: fixed;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    background: lightslategray;    
+}
+
+
+
+#select1, #select2{
+
+    text-align: center;
+    vertical-align: middle;
+    width:13px; height:13px; margin: 10px 20px; padding: 30px; border: 1px solid #FFF; 
+}
+
+#Choice1, #Choice2{
+
+    text-align: center;
+    vertical-align: middle;
+    width:13px; height:13px; margin:10px 20px; padding: 30px; border: 1px solid #FFF; 
+}
+
+#name{
+    font-size: 30px;
+}
+
+#year_msg, #monthday_msg, #time_msg{
+    width: 750px;
+    font-size: 40px;
+}
+
+input{
+    width: 500px;
+    border-radius: 20px;
+    border: none;
     text-align: center;
 }
+
+button{
+    font-size: 30px;
+    padding: 0px 0px;
+    border-radius: 25px;
+    width: 350px;
+    height: 50px;
+    background-color: lightslategray;
+    border: none;
+}
+
+/* -------------------------- */
+
+input[type=checkbox]{
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    
+}
+  
+label{
+    cursor: pointer;
+    text-indent: -120px;
+    width: 60px;
+    height: 30px;
+    background: #da55c6;
+    display: block;
+    border-radius: 30px;
+    position: relative;
+}
+  
+label:after{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    border-radius: 26px;
+    transition: 0.15s;
+}
+  
+input:checked + label {
+    background: #558ada;
+}
+  
+input:checked + label:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+}
+  
+label:active:after {
+    width: 40px;
+}
+
+/* -------------------------- */
 
 h1 {
     text-align: center;
     font-size: 35px;
-    
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 h2{
     text-align: center;
     font-size: 15px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 h3{
@@ -50,19 +230,6 @@ table.input_date{
     margin-right: auto;
     table-layout: fixed;
 }
-
-.init-area tr.warning {
-    color: red !important;
-    animation: warning .3s ease;
-    animation-iteration-count: 3;
-}
-@keyframes warning {
-    0% {transform: translatex(-8px);}
-    25% {transform: translatex(8px);}
-    50% {transform: translatex(-8px);}
-    75% {transform: translatex(8px);}
-}
-
 
 table.source{
     align-content: center;

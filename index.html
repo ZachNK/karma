@@ -15,62 +15,98 @@
     <title>Know Your Karma</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/icon.svg">
     <link rel="stylesheet" href="css/style.css">
+    <link href="toggle-switchy.css" rel="stylesheet" />
 </head>
 <body>
-    <h1>Know Your Karma</h1>
-    <h2>
-        <input type="radio" id="select1" name="char" value="modern" checked>
-        <label for="select1">한문</label>
-        <input type="radio" id="select2" name="char" value="oracle">
-        <label for="select2">갑골문</label>
-    </h2>
-    <h2>Today Check &nbsp;&nbsp;<input type="checkbox" id="today_check" onclick="is_checked()"/></h2>
-    <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
-        <thead>
-            <th style="margin: 0 auto; text-align: center; font-size: 12px;">
-                <input type="radio" id="Choice1" name="sex" value="male" checked>
-                <label for="Choice1">남성</label>
-                <input type="radio" id="Choice2" name="sex" value="female">
-                <label for="Choice2">여성</label>
-            </th>
-        </thead>
-        <tbody class="init-area">
-            <tr>
-                <td><div><input type="text" id="name" style="font-size: 16px; text-align:center; width:300px; height:25px;" placeholder="이름 (생략 가능)"/></div></td>
-            </tr>
-            <tr class="">
-                <td><div><input type="number" min="1" max="9999" id="year_msg" style="font-size: 16px; text-align:center; width:300px; height:25px;" placeholder="출생년도 (YYYY)" autofocus/></div></td>
-            </tr>
-            <tr class="">
-                <td><div><input type="number" min="01" max="1231" id="monthday_msg" style="font-size: 16px; text-align:center; width:300px; height:25px;" placeholder="출생월일 (MMDD)"/></div></td>
-            </tr>
-            <tr class="">
-                <td><div><input type="number" min="0" max="2359" id="time_msg" style="font-size: 16px; text-align:center; width:300px; height:25px;" placeholder="출생시 출생분 (HHMM)"/></div></td>
-            </tr>
-        </tbody>
-        <tbody>
-            <tr>
-                <td><div><button tabindex="0" id="btn" onclick=""  style="font-size: 16px; font-weight: 750; text-align:center; width:300px; height: 28px;">입력</button></div></td>
-            </tr>
-        </tbody>
-    </table>
-    <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
-        <thead>
-            <th></th>
-            <th></th>
-        </thead>
-        <tbody>
-            <tr>
-                <td><button onClick="Copy()" style="font-size: 16px; font-weight: 750; text-align:center; width:150px; height: 28px;">텍스트 복사</button></td>
-                <td><button onclick="savePDF()" style="font-size: 16px; font-weight: 750; text-align:center;width:150px;  height: 28px;">PDF 다운로드</button></td>
-            </tr>
-            <tr>
-                <td><button onClick="Fortune_img_Today()" style="font-size: 16px; font-weight: 750; text-align:center; width:150px;  height: 28px;">일진보기</button></td>
-                <td><button onclick="ShowRow()" style="font-size: 16px; font-weight: 750; text-align:center; width:150px; height: 28px;">지장간</button></td>
-            </tr>
-        </tbody>
+    <div class="title-area">
+        <div id="bar">
+            <nav>
+                <div class="home-title">
+                    <h1>Know Your Karma</h1>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div id="header">
+            <nav>
+                <ul class="option">
+                    <li>
+                        <a>
+                            <input type="checkbox" name="char" id="switch1" checked/><label for="switch1"  style="color: white;"><h2>한문</h2></label>
+                        </a>
+                    </li> 
+                </ul>
+                <ul class="option">
+                    <li>
+                        <a>
+                            <input type="checkbox" name="sex" id="switch2" checked/><label for="switch2"  style="color: white;"><h2>남성</h2></label>
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a>
+                            <input type="radio" id="Choice1" name="sex" value="male" checked><label for="Choice1" style="font-size: 30px;">남성</label>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <input type="radio" id="Choice2" name="sex" value="female"><label for="Choice2" style="font-size: 30px;">여성</label>
+                        </a>
+                    </li> -->
+                </ul>
+                <ul class="init-area">
+                    <li>
+                        <a>
+                            <input class="input-area" type="text" id="name" placeholder="이름 (생략 가능)"/>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a>
+                            <input class="input-area" type="number" min="1" max="9999" id="year_msg" placeholder="출생년도 (YYYY)" autofocus/>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a>
+                            <input class="input-area" type="number" min="01" max="1231" id="monthday_msg" placeholder="양력 출생월일 (MMDD)"/>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a>
+                            <input class="input-area" type="number" min="0" max="2359" id="time_msg" placeholder="출생시 출생분 (HHMM)"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <button class="btn" tabindex="0" id="btn" onclick="" style="color: white;"><h1>입력</h1></button>
+                        </a>
+                    </li>
+                </ul>
+                
+                
+            </nav>
+        </div>
+    </div>
+    <div class="fix-menu">
+        <div class="navbar_logo" id="nav">
+            <div id="block1"></div>
+            <div id="block2"></div>
+        </div>
+        <ul>
+            <li>
+                <button onClick="Copy()" style="font-size: 20px; padding: 0px 0px; border-radius: 25px; width: 150px; height: 50px; color: white;">텍스트 복사</button>
+            </li>
+            <li>
+                <button onclick="savePDF()" style="font-size: 20px; padding: 0px 0px; border-radius: 25px; width: 150px; height: 50px; color: white;">PDF 다운로드</button>
+            </li>
+            <li>
+                <button onclick="ShowRow()" style="font-size: 20px; padding: 0px 0px; border-radius: 25px; width: 150px; height: 50px; color: white;">지장간</button>
+            </li>
+        </ul>
         
-    </table>
+    </div>
+
+    
+    
     <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
         <thead><th></th></thead>
         <tbody>
@@ -87,7 +123,6 @@
     </table>
 
     <div id="pdfArea">
-        <ul><li><h6></h6></li></ul>
         <h2><div id="debug1" style="margin-top: 5px;"></div></h2>
         <table class="source" >
             <thead>
@@ -202,11 +237,6 @@
                 </tr>
             </tbody>
         </table>
-        <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
     </div>
 </body>
 

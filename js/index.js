@@ -98,7 +98,7 @@ function is_checked(){
 function select_char(){
     var char_result = ""
     var char = document.querySelector('input[name="char"]').checked;
-    if(char == true){
+    if(char === true){
         char_result = "img/modern/";
     }
     else{
@@ -122,6 +122,7 @@ let yrMsg = $('#year_msg');
 let mdMsg = $('#monthday_msg');
 let tmMSg = $('#time_msg');
 let mainBtn = $('#btn');
+let navBtn = $('#nav');
 $(mainBtn).on('click', function(){
 
     let ycheck = false;
@@ -134,11 +135,13 @@ $(mainBtn).on('click', function(){
     let hrs = tmMSg.val().substring(0,2)*1;
     let min = tmMSg.val().substring(2,4)*1;
 
-    if(yrs < 0){
+    let zro = 0;
+    
+    if(yrs < 0 || (yrMsg.val() !== zro.toString() && yrs===0)){
         console.log("오류");
-        $(yrMsg).parents('tr').addClass('warning');
+        $(yrMsg).parents('li').addClass('warning');
         setTimeout(function() {
-            $('tr').removeClass('warning');
+            $('li').removeClass('warning');
         }, 1500);
     }
     else{
@@ -148,18 +151,18 @@ $(mainBtn).on('click', function(){
     if(mdMsg.val().length !==4 || mth >12 || mth <1 || dys <1){
         
         console.log("오류");
-        $(mdMsg).parents('tr').addClass('warning');
+        $(mdMsg).parents('li').addClass('warning');
         setTimeout(function() {
-            $('tr').removeClass('warning');
+            $('li').removeClass('warning');
         }, 1500);
     }
     else{
         if(yrs%4 === 0 && mth === 2){
             if(dys > mensis2[mth-1]){
                 console.log("오류");
-                $(mdMsg).parents('tr').addClass('warning');
+                $(mdMsg).parents('li').addClass('warning');
                 setTimeout(function() {
-                    $('tr').removeClass('warning');
+                    $('li').removeClass('warning');
                 }, 1500);
             }
             else{
@@ -168,9 +171,9 @@ $(mainBtn).on('click', function(){
         }
         else if(dys > mensis[mth-1]){
             console.log("오류");
-            $(mdMsg).parents('tr').addClass('warning');
+            $(mdMsg).parents('li').addClass('warning');
             setTimeout(function() {
-                $('tr').removeClass('warning');
+                $('li').removeClass('warning');
             }, 1500);
         }
         else{
@@ -181,9 +184,9 @@ $(mainBtn).on('click', function(){
 
     if(tmMSg.val().length !==4 || hrs >23 || hrs <0 || min >59 || min <0){
         console.log("오류");
-        $(tmMSg).parents('tr').addClass('warning');
+        $(tmMSg).parents('li').addClass('warning');
         setTimeout(function() {
-            $('tr').removeClass('warning');
+            $('li').removeClass('warning');
         }, 1500);
     }
     else{
@@ -198,8 +201,43 @@ $(mainBtn).on('click', function(){
 
 });
 
+$(navBtn).on('click', function(){
+
+    $('.container').slideToggle(35);
+
+});
+
+$('#switch1').on('click', function(){
+    var chk = document.querySelector('input[name="char"]');
+    var labl = document.querySelector('label[for="switch1"]');
+    if(chk.checked === true){
+        labl.innerHTML = "<h2>한문</h2>";
+        char_result = "img/modern/";
+    }
+    else{
+        labl.innerHTML = "<h2>갑골문</h2>";
+        char_result = "img/oracle/";
+    }
+
+});
+
+$('#switch2').on('click', function(){
+    var chk = document.querySelector('input[name="sex"]');
+    var labl = document.querySelector('label[for="switch2"]');
+    if(chk.checked === true){
+        labl.innerHTML = "<h2>남성</h2>";
+    }
+    else{
+        labl.innerHTML = "<h2>여성</h2>";
+    }
+});
+
+
+
+
 function Fortune_img(){
     console.log("=======================================Fortune_img=======================================");
+    $('.container').slideToggle(35);
     great_luck_refresh(false);
     nameText = document.getElementById("name").value;
     
@@ -363,7 +401,6 @@ function Fortune_img(){
         var greatNum = 0;
         var clickNum = 0;
         $(t_name).click(function(){
-            //Use_lucks();
             
             var click = $(this).text();
             var blankNum = Array.from(new Array(12), (x, i) => i+1);

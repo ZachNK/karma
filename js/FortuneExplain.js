@@ -2151,7 +2151,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             }
             
             if(_mens.find(e => skyTag[e-1].type === skyTag[c-1].type)){
-                role_playMsg += "(羊刃格 財生殺) 세상의 약자 보호를 수행하는 조직과 소속을 갖춥니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
+                role_playMsg += "(羊刃格 財生殺) 세상의 약자 보호를 수행하는 조직과 소속에서 지배력과 권한을 갖춥니다. (군인, 경찰, 사법부, 정보원, 국토  수호, 시민 보호)"+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman1-1].id) && _skys.find(e => skyTag[e-1].id !== skyTag[man1-1].id)){
                     role_playMsg += "(羊刃格 成格) 공공의 이익을 위해 자신을 희생하는 우두머리 급의 인물입니다."+"</br>";
                 }

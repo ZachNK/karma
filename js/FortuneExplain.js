@@ -2136,7 +2136,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             }
         }
         else if(_skys.find(e => skyTag[e-1].type === skyTag[woman1-1].type)){
-            role_playMsg += "(羊刃格 破格) 세상의 정보들이나 말과 글로 전하는 교육자, 작가, 기자, 인플루언서 등으로 살 수 있습니다."+"</br>";
+            role_playMsg += "(羊刃格 破格) 세상의 정보들이나 말과 글로 전하는 교육자, 작가, 기자 등으로 살 수 있습니다."+"</br>";
         }
         else{
             role_playMsg += "(羊刃格 破格) 주어진 일만 수행하나, 직업 찾기 어려워합니다."+"</br>";

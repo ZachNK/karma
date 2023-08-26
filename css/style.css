@@ -13,13 +13,13 @@ body {
 
 .title-area{
     width: 100%;
-    height: 80px;
+    height: 50px;
 }
 
 #bar{
     position: fixed;
     width: 100%;
-    height: 80px;
+    height: 50px;
     box-sizing: border-box;
     background: rgba(119, 136, 153, 0.549);
     transition: .5s;
@@ -30,7 +30,7 @@ body {
 
 .container{
     width: 100%;
-    height: 700px;
+    height: 500px;
     
 }
 
@@ -38,7 +38,7 @@ body {
     position: fixed;
     padding-top: 0px;
     width: 100%;
-    height: 700px;
+    height: 500px;
     box-sizing: border-box;
     background: rgba(119, 136, 153, 0.549);
     transition: .5s;
@@ -51,9 +51,10 @@ body {
 }
 
 
-#header nav .option{display: flex; justify-content: center; align-items: center; padding: 0 0px; margin: 20px 0px;}
+#header nav .option{display: flex; justify-content: center; align-items: center; padding: 0 0px; margin: 0px 0px;}
+#header nav .option li{display: inline-block; line-height: 30px; padding: 0px 50px; margin: 20px 0px 20px 0px;}
 /* */
-#header nav .init-area{text-align: center; width: 50%; margin-left: auto; margin-right: auto; padding: 0 15px;} 
+#header nav .init-area{text-align: center; width: 70%; margin-left: auto; margin-right: auto; padding: 0 0px;} 
 
 
 #header nav ul{text-align: center; padding: 50px;}
@@ -61,7 +62,7 @@ body {
 #header nav li a{display: flex; justify-content: center; padding: 0 15px; line-height: 50%; text-decoration: none; color: #262626;}
 
 #header nav .input-area{
-    display: flex; justify-content: center; width: 750px; height: 80px; margin: 20px; 
+    display: flex; justify-content: center; width: 500px; height: 50px; margin: 15px; 
 }
 
 #header nav .init-area li.warning {
@@ -113,32 +114,17 @@ body {
 }
 
 
-
-#select1, #select2{
-
-    text-align: center;
-    vertical-align: middle;
-    width:13px; height:13px; margin: 10px 20px; padding: 30px; border: 1px solid #FFF; 
-}
-
-#Choice1, #Choice2{
-
-    text-align: center;
-    vertical-align: middle;
-    width:13px; height:13px; margin:10px 20px; padding: 30px; border: 1px solid #FFF; 
-}
-
 #name{
-    font-size: 30px;
+    font-size: 32px;
 }
 
 #year_msg, #monthday_msg, #time_msg{
-    width: 750px;
-    font-size: 40px;
+    width: 75%;
+    font-size: 32px;
 }
 
 input{
-    width: 500px;
+    width: 10%;
     border-radius: 20px;
     border: none;
     text-align: center;
@@ -165,24 +151,24 @@ input[type=checkbox]{
   
 label{
     cursor: pointer;
-    text-indent: -120px;
-    width: 60px;
-    height: 30px;
+    text-indent: -200px;
+    width: 100px;
+    height: 50px;
     background: #da55c6;
     display: block;
-    border-radius: 30px;
+    border-radius: 50px;
     position: relative;
 }
   
 label:after{
     content: '';
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 26px;
-    height: 26px;
+    top: 4px;
+    left: 4px;
+    width: 42px;
+    height: 42px;
     background: #fff;
-    border-radius: 26px;
+    border-radius: 42px;
     transition: 0.15s;
 }
   
@@ -191,12 +177,12 @@ input:checked + label {
 }
   
 input:checked + label:after {
-    left: calc(100% - 2px);
+    left: calc(100% - 4px);
     transform: translateX(-100%);
 }
   
 label:active:after {
-    width: 40px;
+    width: 80px;
 }
 
 /* -------------------------- */

@@ -211,11 +211,11 @@ $('#switch1').on('click', function(){
     var chk = document.querySelector('input[name="char"]');
     var labl = document.querySelector('label[for="switch1"]');
     if(chk.checked === true){
-        labl.innerHTML = "<h2>한문</h2>";
+        labl.innerHTML = "<h1>한문</h1>";
         char_result = "img/modern/";
     }
     else{
-        labl.innerHTML = "<h2>갑골문</h2>";
+        labl.innerHTML = "<h1>갑골문</h1>";
         char_result = "img/oracle/";
     }
 
@@ -225,10 +225,10 @@ $('#switch2').on('click', function(){
     var chk = document.querySelector('input[name="sex"]');
     var labl = document.querySelector('label[for="switch2"]');
     if(chk.checked === true){
-        labl.innerHTML = "<h2>남성</h2>";
+        labl.innerHTML = "<h1>남성</h1>";
     }
     else{
-        labl.innerHTML = "<h2>여성</h2>";
+        labl.innerHTML = "<h1>여성</h1>";
     }
 });
 

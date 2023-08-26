@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<script defer src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script defer src="js/index.js"></script>
+<script defer src="js/FortuneExplain.js"></script>
+<script defer src="js/sky.json"></script>
+<script defer src="js/land.json"></script>
+<script defer src="js/initialdate.json"></script>
+<script type="text/javascript"></script>
+<script src="js/html2canvas.js"></script>
+<script src="js/jspdf.min.js"></script>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Know Your Karma</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/icon.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="toggle-switchy.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="title-area">
+        <div id="bar">
+            <nav>
+                <div class="home-title">
+                    <h1>Know Your Karma</h1>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div id="header">
+            <nav>
+                <ul class="option">
+                    <li>
+                        <a>
+                            <input type="checkbox" name="char" id="switch1" checked/><label for="switch1"  style="color: white;"><h1>한문</h1></label>
+                        </a>
+                    </li> 
+                    <li>
+                        <a>
+                            <input type="checkbox" name="sex" id="switch2" checked/><label for="switch2"  style="color: white;"><h1>남성</h1></label>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="init-area">
+                    <li>
+                        <a>
+                            <input class="input-area" type="text" id="name" placeholder="이름 (생략 가능)"/>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a>
+                            <input class="input-area" type="number" min="1" max="9999" id="year_msg" placeholder="출생년도 (YYYY)" autofocus/>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a>
+                            <input class="input-area" type="number" min="01" max="1231" id="monthday_msg" placeholder="양력 출생월일 (MMDD)"/>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a>
+                            <input class="input-area" type="number" min="0" max="2359" id="time_msg" placeholder="출생시 출생분 (HHMM)"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <button class="btn" tabindex="0" id="btn" onclick="" style="color: white;"><h1>입력</h1></button>
+                        </a>
+                    </li>
+                </ul>
+                
+                
+            </nav>
+        </div>
+    </div>
+    <div class="fix-menu">
+        <div class="navbar_logo" id="nav">
+            <div id="block1"></div>
+            <div id="block2"></div>
+        </div>
+        <ul>
+            <li>
+                <button onClick="Copy()" style="font-size: 20px; padding: 0px 0px; border-radius: 25px; width: 150px; height: 50px; color: white;">텍스트 복사</button>
+            </li>
+            <li>
+                <button onclick="savePDF()" style="font-size: 20px; padding: 0px 0px; border-radius: 25px; width: 150px; height: 50px; color: white;">PDF 다운로드</button>
+            </li>
+            <li>
+                <button onclick="ShowRow()" style="font-size: 20px; padding: 0px 0px; border-radius: 25px; width: 150px; height: 50px; color: white;">지장간</button>
+            </li>
+        </ul>
+        
+    </div>
+
+    
+    
+    <table style="text-align: center; margin-left: auto; margin-right: auto; table-layout: fixed;">
+        <thead><th></th></thead>
+        <tbody>
+            <tr>
+                <td id="lucks"></td></td>
+            </tr>
+            <tr>
+                <td><div id="useGod" style="font-size: 1px; height: 1px;"></div></td>
+            </tr>
+            <tr>
+                <td><div id="god_state" style="font-size: 1px; height: 1px;"></div></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="pdfArea">
+        <h2><div id="debug1" style="margin-top: 5px;"></div></h2>
+        <table class="source" >
+            <thead>
+                <tr><th id="LIST0"></th><th id="LIST1"></th><th id="LIST2"></th><th id="LIST3"></th></tr>
+            </thead>
+            <tbody>
+                <tr><td id="time_sky"><img id="SKY0" src=""/></td><td id="day_sky"><img id="SKY1" src=""/></td><td id="month_sky"><img id="SKY2" src=""/></td><td id="year_sky"><img id="SKY3" src=""/></td></tr>
+                <tr><td id="time_land"><img id="LAND0" src=""/></td><td id="day_land"><img id="LAND1" src=""/></td><td id="month_land"><img id="LAND2" src=""/></td><td id="year_land"><img id="LAND3" src=""/></td></tr>
+            </tbody>
+        </table>
+            
+        <table class="mens" id="source_men" style="display: none">
+            <tbody>
+                <tr><td id="ms"><img id="time0" src=""/></td><td id="ms"><img id="day0" src=""/></td><td id="ms0"><img id="month0" src=""/></td><td id="ms"><img id="year0" src=""/></td></tr>
+                <tr><td id="ms"><img id="time1" src=""/></td><td id="ms"><img id="day1" src=""/></td><td id="ms1"><img id="month1" src=""/></td><td id="ms"><img id="year1" src=""/></td></tr>
+                <tr><td id="ms"><img id="time2" src=""/></td><td id="ms"><img id="day2" src=""/></td><td id="ms2"><img id="month2" src=""/></td><td id="ms"><img id="year2" src=""/></td></tr>
+            </tbody>
+        </table>
+
+        <table class="variety" id='testTable'>
+            <thead>
+                <tr>
+                    <th id="t12" onclick="ClickRole(12)" style="vertical-align: center; height:5px;"></th><th id="t11" onclick="ClickRole(11)" style="vertical-align: center; height:5px;"></th>
+                    <th id="t10" onclick="ClickRole(10)" style="vertical-align: center; height:5px;"></th><th id="t09" onclick="ClickRole(9)" style="vertical-align: center; height:5px;"></th>
+                    <th id="t08" onclick="ClickRole(8)" style="vertical-align: center; height:5px;"></th><th id="t07" onclick="ClickRole(7)" style="vertical-align: center; height:5px;"></th>
+                    <th id="t06" onclick="ClickRole(6)" style="vertical-align: center; height:5px;"></th><th id="t05" onclick="ClickRole(5)" style="vertical-align: center; height:5px;"></th>
+                    <th id="t04" onclick="ClickRole(4)" style="vertical-align: center; height:5px;"></th><th id="t03" onclick="ClickRole(3)" style="vertical-align: center; height:5px;"></th>
+                    <th id="t02" onclick="ClickRole(2)" style="vertical-align: center; height:5px;"></th><th id="t01" onclick="ClickRole(1)" style="vertical-align: center; height:5px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="sky012"><img id="012i" src=""/></td><td id="sky011"><img id="011i" src=""/></td>
+                    <td id="sky010"><img id="010i" src=""/></td><td id="sky009"><img id="009i" src=""/></td>
+                    <td id="sky008"><img id="008i" src=""/></td><td id="sky007"><img id="007i" src=""/></td>
+                    <td id="sky006"><img id="006i" src=""/></td><td id="sky005"><img id="005i" src=""/></td>
+                    <td id="sky004"><img id="004i" src=""/></td><td id="sky003"><img id="003i" src=""/></td>
+                    <td id="sky002"><img id="002i" src=""/></td><td id="sky001"><img id="001i" src=""/></td>
+                </tr>
+                <tr>
+                    <td id="land012"><img id="012p" src=""/></td><td id="land011"><img id="011p" src=""/></td>
+                    <td id="land010"><img id="010p" src=""/></td><td id="land009"><img id="009p" src=""/></td>
+                    <td id="land008"><img id="008p" src=""/></td><td id="land007"><img id="007p" src=""/></td>
+                    <td id="land006"><img id="006p" src=""/></td><td id="land005"><img id="005p" src=""/></td>
+                    <td id="land004"><img id="004p" src=""/></td><td id="land003"><img id="003p" src=""/></td>
+                    <td id="land002"><img id="002p" src=""/></td><td id="land001"><img id="001p" src=""/></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="tenyears">
+            <thead>
+                <tr>
+                    <th id="j10" onclick="ClickYears(10); ClickUse(10);"></th><th id="j09" onclick="ClickYears(9); ClickUse(9);"></th>
+                    <th id="j08" onclick="ClickYears(8); ClickUse(8);"></th><th id="j07" onclick="ClickYears(7); ClickUse(7);"></th>
+                    <th id="j06" onclick="ClickYears(6); ClickUse(6);"></th><th id="j05" onclick="ClickYears(5); ClickUse(5);"></th>
+                    <th id="j04" onclick="ClickYears(4); ClickUse(4);"></th><th id="j03" onclick="ClickYears(3); ClickUse(3);"></th>
+                    <th id="j02" onclick="ClickYears(2); ClickUse(2);"></th><th id="j01" onclick="ClickYears(1); ClickUse(1);"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="jsky010" style="mix-blend-mode: difference;"><img id="010ji" src=""/></td><td id="jsky009"><img id="009ji" src=""/></td><td id="jsky008"><img id="008ji" src=""/></td><td id="jsky007"><img id="007ji" src=""/></td><td id="jsky006"><img id="006ji" src=""/></td>
+                    <td id="jsky005" style="mix-blend-mode: difference;"><img id="005ji" src=""/></td><td id="jsky004"><img id="004ji" src=""/></td><td id="jsky003"><img id="003ji" src=""/></td><td id="jsky002"><img id="002ji" src=""/></td><td id="jsky001"><img id="001ji" src=""/></td>
+                </tr>
+                <tr>
+                    <td id="jland010"><img id="010jp" src=""/></td><td id="jland009"><img id="009jp" src=""/></td><td id="jland008"><img id="008jp" src=""/></td><td id="jland007"><img id="007jp" src=""/></td><td id="jland006"><img id="006jp" src=""/></td>
+                    <td id="jland005"><img id="005jp" src=""/></td><td id="jland004"><img id="004jp" src=""/></td><td id="jland003"><img id="003jp" src=""/></td><td id="jland002"><img id="002jp" src=""/></td><td id="jland001"><img id="001jp" src=""/></td> 
+                </tr>
+            </tbody>
+        </table>
+        <table class="Telling" >
+            <thead>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><div class="Title1" id="GLucks" style="font-size: 14px; font-weight: 700; width: 100%;"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Content1" id="Lucks_main" style="font-size: 12px; font-weight: 700; width: 100%;"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Content1" id="year_lucks" style="font-size: 12px; font-weight: 700; width: 100%;"></div></td>
+                </tr>
+                <tr>
+                    <td style="height:15px;"></td>
+                </tr>
+                <tr>
+                    <td><div class="Title1" id="debug2" style="font-size: 14px; font-weight: 700; width: 80%; margin-left: 10%; margin-right: 10%;"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Content1" id="debug3" style="font-size: 14px; text-align: left; width: 80%; margin-left: 10%; margin-right: 10%;"></div></td>
+                </tr>
+                <tr>
+                    <td style="height:15px;"></td>
+                </tr>
+                <tr>
+                    <td><div class="Title1" id="debug4" style="font-size: 14px; font-weight: 700; width: 80%; margin-left: 10%; margin-right: 10%;"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Content1" id="debug5" style="font-size: 14px; text-align: left; width: 80%; margin-left: 10%; margin-right: 10%;"></div></td>
+                </tr>
+                <tr>
+                    <td style="height:15px;"></td>
+                </tr>
+                <tr>
+                    <td><div class="Title1" id="debug6" style="font-size: 14px; font-weight: 700; width: 80%; margin-left: 10%; margin-right: 10%;"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="Content1" id="debug7" style="font-size: 14px; text-align: left; width: 80%; margin-left: 10%; margin-right: 10%;"></div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

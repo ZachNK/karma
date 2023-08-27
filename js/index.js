@@ -1,4 +1,5 @@
-const point = [];
+var point = [];
+const fixpoint = [];
 const sky_tag = [];
 const land_tag = [];
 const sky = [];
@@ -34,7 +35,7 @@ fetch('./js/initialdate.json')
     .then(results => results.json())
     .then(data => {
         data.forEach(post => {
-            point.push(post.start);
+            fixpoint.push(post.start);
         });
     });
 
@@ -69,6 +70,10 @@ let today_date = (today.getMonth()+1).toString().padStart(2, '0') + today.getDat
 var c = null;
 var image = null;
 var order = 0;
+var cpnt = document.getElementById("change_point");
+cpnt.innerText = "";
+let xBirth = false;
+let pBirth = false;
 
 
 function is_checked(){
@@ -125,6 +130,7 @@ let mainBtn = $('#btn');
 let navBtn = $('#nav');
 $(mainBtn).on('click', function(){
 
+    cpnt.innerText = "";
     let ycheck = false;
     let mcheck = false;
     let tcheck = false;
@@ -135,9 +141,8 @@ $(mainBtn).on('click', function(){
     let hrs = tmMSg.val().substring(0,2)*1;
     let min = tmMSg.val().substring(2,4)*1;
 
-    let zro = 0;
-    
-    if(yrs < 0 || (yrMsg.val() !== zro.toString() && yrs===0)){
+
+    if(yrs <= 0){
         console.log("오류");
         $(yrMsg).parents('li').addClass('warning');
         setTimeout(function() {
@@ -147,6 +152,101 @@ $(mainBtn).on('click', function(){
     else{
         ycheck = true;
     }
+
+    // =====================절입일 근처 출생자 확인=====================
+    //          1       2       3       4       5       6       7       8       9      10      11      12
+    //          0       1       2       3       4       5       6       7       8       9      10      11     
+    let pnt = ["소한", "입춘", "경칩" ,"청명", "입하", "망종" ,"소서", "입추", "백로" ,"한로", "입동", "대설"];
+    //          0       1       2       3
+    let pcd = ["춘분", "하지", "추분", "동지"];
+
+    point = [...fixpoint];
+
+    let cord = [20, 21, 22, 21];
+    let pn = point[mth-1];
+    let pc = (mth%3 === 0) ? cord[Math.floor(mth/3)-1] : 0;
+    
+    if(dys >= pn-3 && dys <= pn+3){
+        xBirth = true;
+    }
+    else{
+        xBirth = false;
+        
+    }
+
+    if((pc !== 0 && dys >= pc-3) && (pc !== 0 && dys <= pc+3)){
+        pBirth = true;
+    }
+    else{
+        pBirth = false;
+        
+    }
+    
+    let x = mth-1;
+    let x_msg = pnt[x];
+    let rlist = [...point];
+    let xday = parseInt(rlist[x]);
+
+    let p = Math.floor(mth/3)-1;
+    let p_msg = pcd[p];
+    let plist = [...cord];
+    let pday = parseInt(plist[p]);
+
+    if(xBirth === true){
+        
+        
+        var aNum = xday;
+        var dayReflect = false;
+        let originDay = aNum;
+
+        var justGo = confirm(` 해당 명조는 24절기 ${x_msg} 기간 출생자입니다.\n 본 프로그램은 ${x_msg}: ${mth}월 ${xday}일로 설정 했습니다.\n [확인]: 변경하지 않음 / [취소]: 변경`);
+        if(justGo === false){
+            while(dayReflect === false){
+                aNum = window.prompt(`${x_msg} 절입일 (${mth}월 ${xday}일) → ${x_msg} (${mth}월 ${xday-3}일 ~ ${mth}월 ${xday+3} 기간 중 절입 날짜 입력)`, ``);
+                if(typeof aNum !== `number` && parseInt(aNum) >= originDay-3 && parseInt(aNum) <= originDay+3){
+                    aNum = parseInt(aNum);
+                    dayReflect = true 
+                    break;
+                }
+            }
+            
+        }
+        point.splice(x, 1, aNum);
+        //console.log(xday, aNum, point, fixpoint);
+        cpnt.innerText = `${x_msg} (${mth}월 ${aNum}일) 기준`;
+        
+        
+        
+
+    }
+    else if(pBirth === true){
+        
+        
+        var aNum = pday;
+        var dayReflect = false;
+        let originDay = aNum;
+
+        var justGo = confirm(` 해당 명조는 24절기 ${p_msg} 기간 출생자입니다.\n 본 프로그램은 ${p_msg}: ${mth}월 ${pday}일로 설정 했습니다.\n [확인]: 변경하지 않음 / [취소]: 변경`);
+        if(justGo === false){
+            while(dayReflect === false){
+                aNum = window.prompt(`${p_msg} 절입일 (${mth}월 ${pday}일) → ${p_msg} (${mth}월 ${pday-3}일 ~ ${mth}월 ${pday+3} 기간 중 절입 날짜 입력)`, ``);
+                if(typeof aNum !== `number` && parseInt(aNum) >= originDay-3 && parseInt(aNum) <= originDay+3){
+                    aNum = parseInt(aNum);
+                    dayReflect = true 
+                    break;
+                }
+            }
+            
+        }
+        point.splice(x, 1, parseInt(xday+(aNum-pday)));
+        //console.log(xday, xday+(aNum-pday), point, fixpoint);
+        cpnt.innerText = `${p_msg} (${mth}월 ${aNum}일) 기준`;
+    }
+
+    
+
+
+    // =====================절입일 근처 출생자 확인=====================
 
     if(mdMsg.val().length !==4 || mth >12 || mth <1 || dys <1){
         
@@ -237,6 +337,7 @@ $('#switch2').on('click', function(){
 
 function Fortune_img(){
     console.log("=======================================Fortune_img=======================================");
+    console.log("절입일 (변경된 것 포함): ", point);
     $('.container').slideToggle(35);
     great_luck_refresh(false);
     nameText = document.getElementById("name").value;
@@ -261,6 +362,8 @@ function Fortune_img(){
         thisSex = "여성";
     }
     
+    
+
     var a = zy(yyyy, mm, dd)[0];//년간 
     
     var b = zy(yyyy, mm, dd)[1];//년지
@@ -479,7 +582,7 @@ function zy(year, month, day){
     var d = parseInt(day);
     var zodiac= (y-3)%60;
     var pointYear = 21 * parseInt(y/4)  + 55;
-    
+
     if (check_leap(y)==false){
         pointYear =+ 5 * (y%4) + 1;
     }
@@ -490,7 +593,7 @@ function zy(year, month, day){
     if (deltaMonth == 1 || (deltaMonth == 2 &   d < point[1])){
         zodiac -=1;
     }
-    
+
     var temp = zodiac;
     
     if(temp <= 0){
@@ -503,9 +606,9 @@ function zy(year, month, day){
 
 function zm(year, month, day){ 
 
-    var y = year;
-    var m = month;
-    var d = day;
+    var y = parseInt(year);
+    var m = parseInt(month);
+    var d = parseInt(day);
     var deltaDate = 0; // dletaDate = 절입일~생일 변수
     var deltaMonth = parseInt(m); // deltaMonth = 십이지 순서로 보는 월령변수
     var duty = 0; // 사령 0, 1, 2

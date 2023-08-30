@@ -333,8 +333,14 @@ $('#switch2').on('click', function(){
     }
 });
 
-
-
+$(document).ready(function() {
+    $("#time_msg").keyup(function(event) {
+        if (event.which === 13) {
+            $("#btn").click();
+        }
+    });
+ 
+});
 
 function Fortune_img(){
     console.log("=======================================Fortune_img=======================================");

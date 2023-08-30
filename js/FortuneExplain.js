@@ -77,6 +77,7 @@ fetch('./js/framelucks.json')
 
 
 function Divination(){
+    FindElements();
     console.log("=======================================Divination=======================================");
     document.getElementById("debug2").innerHTML = "";
     document.getElementById("debug3").innerHTML = "";
@@ -134,7 +135,7 @@ function Divination(){
     var dty = zm(yyyy, mm, dd)[3]// 사령용신 번호 찾기 
     var use = landTag[monthb-1]['use'][ordId]; // 당령용신 string ex) 癸, 丙 ...
 
-    for(var i=0; i<10; i++){ //용신과 희기신의 key들 불러오기 == 甲~癸까지 천간 순서로 useSet에 배열
+    for(var i=0; i<10; i++){ //용신과 희기신의 key들 불러오기 == 甲~癸까지 천간 순서로 useSet에 Array
         var obj = skyTag[i].use;
         useSet.push(obj.find(e => e.tag === use.tag));
     }
@@ -227,6 +228,9 @@ function Divination(){
     // 월지안에 있는 것은 생지 여기, 생지 중기, 고지 중기 빼고 다 사용 가능
     //월지, 타지 왕지) 삼합 방합 여부 상관없이 다 가능
 
+    // 월지 지장간 
+    let stage = [];
+
     // subSet 정기 지장간 배열 세트
     let subSet = []; // 오행
     let subSetRole = []; // 육신
@@ -236,30 +240,44 @@ function Divination(){
         if(pObj[i].id%3 === 0){
             f.push(pObj[i].duty[2].idN);
             r.push(pObj[i].duty[2].idN);
+            if(i===2){
+                stage.push(pObj[i].duty[2].idN);
+            }
+            
         }
         else if(pObj[i].id%3 === 1){
             
             if(i === 2){
                 f.push(pObj[i].duty[dty].idN);
+                r.push(pObj[i].duty[dty].idN);
+                stage.push(pObj[i].duty[dty].idN);
             }
             else{
                 f.push(pObj[i].duty[0].idN);
                 f.push(pObj[i].duty[2].idN);
+                r.push(pObj[i].duty[0].idN);
+                r.push(pObj[i].duty[2].idN);
             }
-            r.push(pObj[i].duty[0].idN);
-            r.push(pObj[i].duty[2].idN);
+            
 
         }
         else if(pObj[i].id%3 === 2){
             if(i===2){
+                f.push(pObj[i].duty[0].idN);
+                r.push(pObj[i].duty[0].idN);
                 f.push(pObj[i].duty[2].idN);
                 r.push(pObj[i].duty[2].idN);
+                stage.push(pObj[i].duty[0].idN);
+                stage.push(pObj[i].duty[2].idN);
             }
             
         }
         subSet.push(f);
         subSetRole.push(r);
+        
     }
+
+
 
     // subs 정기 지장간 배열
     let subs = [...subSet[0], ...subSet[1], ...subSet[2], ...subSet[3]];
@@ -318,19 +336,32 @@ function Divination(){
         let p = [];
         let u = [];
 
-        if(i !== 2 && pObj[i].id !== pObj[2].id && pObj[i].id%4 === pObj[2].id%4){
-            if(pObj[i].id%3 === 1){
-                u.push(pObj[2].duty[1].idN);
+        if(i !== 2){
+            if(pObj[i].id !== pObj[2].id && pObj[i].id%4 === pObj[2].id%4){
+                if(pObj[i].id%3 === 1){
+                    u.push(pObj[2].duty[1].idN);
+                    
+                }
+                else{
+                    u.push(pObj[i].duty[1].idN);
+    
+                }
+                
+                
             }
-            else{
+            triUse.push(u);
+            
+        }
+        else{
+            if(pObj[i].id%3 !== 1 && (pObj[i].id%4 === pObj[0].id%4 || pObj[i].id%4 === pObj[1].id%4 || pObj[i].id%4 === pObj[3].id%4) && skyTag[pObj[i].id-1].type !== skyTag[days-1].type){
+                console.log("월지 중기", i, skyTag[pObj[i].id-1].type, skyTag[days-1].type)
+                stage.push(pObj[i].duty[1].idN);
                 u.push(pObj[i].duty[1].idN);
             }
             
             triUse.push(u);
         }
-        else{
-            triUse.push(u);
-        }
+       
 
 
         var x = [pObj[0], pObj[1], pObj[2], pObj[3]];
@@ -450,20 +481,16 @@ function Divination(){
 
     /****************************************************debugging***************************************************************/
 
-
-
-
-    //1-3.사용대기 지장간 배열
-    //body 사용대기 오행 배열, lands 사용대기 육신 배열 (근 제외)
+    //1-3.사용대기 지장간 Array
+    //body 사용대기 오행 Array, lands 사용대기 육신 Array (근 제외)
     let body = eidos.filter(e=>!soul.includes(e))
     let lands = eidosRole.filter(e=>!skys.includes(e))
     body = body.filter(e=>!spirit.includes(e))
     lands = lands.filter(e=>!mens.includes(e))
-    //  lands 사용 대기 지장간 육신 배열 (근 제외)
+    //  lands 사용 대기 지장간 육신 Array (근 제외)
     body = [...body.filter(e=> e !== 0)]
     lands = [...lands.filter(e=> e !== 0)]
     lands = lands.filter(e=>skyTag[e-1].type !== skyTag[days-1].type)
-
 
     body = [...body.filter((i,v)=>body.indexOf(i) === v)]
     lands = [...lands.filter((i,v)=>lands.indexOf(i) === v)]
@@ -477,23 +504,24 @@ function Divination(){
     }
 
 
-    //1-1.천간 배열
+    //1-1.천간 Array
     console.log("----천간 (오행용)", soul)
-    //1-2.사용가능 지장간 배열
+    //1-2.사용가능 지장간 Array
     console.log("----지장간 (오행용) ", spirit)
-    //1-3.사용대기 지장간 배열
+    //1-3.사용대기 지장간 Array
     console.log("----사용대기 지장간 (오행용) ", body)
 
     //2. 육신용 세트
-    //2-1. 일간 제외 천간 배열
+    //2-1. 일간 제외 천간 Array
     console.log("----일간 제외 천간 (육신용)", skys)
-    //2-2. 근 제외 사용가능 지장간 배열
+    //2-2. 근 제외 사용가능 지장간 Array
     console.log("----근 제외 지장간 (육신용) ", mens)
-    //2-3. 근 제외 사용대기 지장간 배열
+    //2-3. 근 제외 사용대기 지장간 Array
     console.log("----근 제외 사용대기 지장간 (육신용) ", lands)
+    console.log("----월지 지장간 (육신용) ", stage);
 
     
-    console.log("----(확인용) 지지 방합", sqrs)
+    console.log("----(확인용) 지지 방합",sqrSet, sqrs)
     console.log("----(확인용) 지지 삼합", triSet, tris, triu)
     console.log("----(확인용) 지지 충", opps)
     console.log("----(확인용) 지지 육합", jups)
@@ -537,8 +565,6 @@ function Divination(){
     else{
         console.log("ERROR");
     }
-
-
 
     let msg1 = "";
     
@@ -891,6 +917,7 @@ function Divination(){
     console.log("----일간 제외 천간 (육신용)", skys)
     console.log("----근 제외 지장간 (육신용) ", mens)
     console.log("----근 제외 사용대기 지장간 (육신용) ", lands)
+    console.log("----근 제외 월지 지장간 (육신용) ", stage)
 
 
 
@@ -900,6 +927,7 @@ function Divination(){
     let typeRole = [];
     let wtypeRole = [];
     let untypeRole = [];
+    let stypeRole = [];
     
     // 상신
     for(var i=0; i<skys.length; i++){
@@ -926,13 +954,20 @@ function Divination(){
         }
         
     }
+    for(var i=0; i<stage.length; i++){
+        let x = skyTag[stage[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[3]){
+            stypeRole.push('A');
+        }
+        
+    }
     //구신
     for(var i=0; i<skys.length; i++){
         let x = skyTag[skys[i]-1].id;
         let y = roles[myID-1].mr.find(e => e.id === x-1);
         if(y.tag === frameSet[6]){
             typeRole.push('D');
-            console.log("천간")
         }
         
     }
@@ -941,7 +976,6 @@ function Divination(){
         let y = roles[myID-1].mr.find(e => e.id === x-1);
         if(y.tag === frameSet[6]){
             wtypeRole.push('D');
-            console.log("가능 지장간")
         }
         
     }
@@ -950,7 +984,14 @@ function Divination(){
         let y = roles[myID-1].mr.find(e => e.id === x-1);
         if(y.tag === frameSet[6]){
             untypeRole.push('D');
-            console.log("대기 지장간")
+        }
+        
+    }
+    for(var i=0; i<stage.length; i++){
+        let x = skyTag[stage[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[6]){
+            stypeRole.push('D');
         }
         
     }
@@ -979,6 +1020,14 @@ function Divination(){
         }
         
     }
+    for(var i=0; i<stage.length; i++){
+        let x = skyTag[stage[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[5]){
+            stypeRole.push('C');
+        }
+        
+    }
     //구신기신
     for(var i=0; i<skys.length; i++){
         let x = skyTag[skys[i]-1].id;
@@ -1004,6 +1053,14 @@ function Divination(){
         }
         
     }
+    for(var i=0; i<stage.length; i++){
+        let x = skyTag[stage[i]-1].id;
+        let y = roles[myID-1].mr.find(e => e.id === x-1);
+        if(y.tag === frameSet[4]){
+            stypeRole.push('B');
+        }
+        
+    }
     
     // 활용가능 천간의 구응성패
     console.log("----활용가능 천간의 구응성패", typeRole);
@@ -1011,6 +1068,8 @@ function Divination(){
     console.log("----활용가능 지지의 구응성패", wtypeRole);
     // 상태 대기 천간의 구응성패
     console.log("----상태 대기 천간의 구응성패", untypeRole);
+    // 상태 대기 천간의 구응성패
+    console.log("----활용가능 월지의 구응성패", stypeRole);
 
     let roleMsg = "";
     let uroleMsg ="";
@@ -1019,6 +1078,7 @@ function Divination(){
     // 상신과 구신 유무에 대한 통변 방법
     let roleSky = [];
     let roleLand = [];
+    let roleStage = [];
 
     // 길신격, 흉신격
     let follower = (frameSet[2] === "偏官格" || frameSet[2] === "傷官格" || frameSet[2] === "羊刃格" || frameSet[2] === "建祿格") ? false : true;
@@ -1053,30 +1113,59 @@ function Divination(){
     }
 
     if(frameSet[2] === "偏官格" || frameSet[2] === "傷官格" || frameSet[2] === "羊刃格" || frameSet[2] === "建祿格"){
-        roleMsg += (wtypeRole.find(e => e === 'A') ? ` 상신(지지) ${frameSet[3]} ` : ``)
-        + (wtypeRole.find(e => e === 'D') ? ` 구신(지지) ${frameSet[6]} ` : ``)
-        + (wtypeRole.find(e => e === 'C') ? ` 상신기신(지지) ${frameSet[5]} ` : ``)
-        + (wtypeRole.find(e => e === 'B') ? ` 구신기신(지지) ${frameSet[4]} ` : ``)
+        roleMsg += ((wtypeRole.find(e => e === 'A') !== undefined && stypeRole.find(e => e === 'A') === undefined) ? ` 상신(지지) ${frameSet[3]} ` : ``)
+        + ((wtypeRole.find(e => e === 'D') !== undefined && stypeRole.find(e => e === 'D') === undefined) ? ` 구신(지지) ${frameSet[6]} ` : ``)
+        + ((wtypeRole.find(e => e === 'C') !== undefined && stypeRole.find(e => e === 'C') === undefined) ? ` 상신기신(지지) ${frameSet[5]} ` : ``)
+        + ((wtypeRole.find(e => e === 'B') !== undefined && stypeRole.find(e => e === 'B') === undefined) ? ` 구신기신(지지) ${frameSet[4]} ` : ``)
 
-        let a = (wtypeRole.find(e => e === 'A') !== undefined) ? 1: 0; 
-        let b = (wtypeRole.find(e => e === 'B') !== undefined) ? 1: 0; 
-        let c = (wtypeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
-        let d = (wtypeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
+        let a = (wtypeRole.find(e => e === 'A') !== undefined && stypeRole.find(e => e === 'A') === undefined) ? 1: 0; 
+        let b = (wtypeRole.find(e => e === 'B') !== undefined && stypeRole.find(e => e === 'B') === undefined) ? 1: 0; 
+        let c = (wtypeRole.find(e => e === 'C') !== undefined && stypeRole.find(e => e === 'C') === undefined) ? 1: 0; 
+        let d = (wtypeRole.find(e => e === 'D') !== undefined && stypeRole.find(e => e === 'D') === undefined) ? 1: 0; 
         roleLand = [a, b, c, d];
 
         
     }
     else{
-        roleMsg += (wtypeRole.find(e => e === 'A') ? ` 상신(지지) ${frameSet[3]} ` : ``)
-        + (wtypeRole.find(e => e === 'D') ? ` 구신(지지) ${frameSet[6]} ` : ``)
-        + (wtypeRole.find(e => e === 'C') ? ` 상신기신(지지) ${frameSet[5]} ` : ``)
-        + (wtypeRole.find(e => e === 'B') ? ` 격기신(지지) ${frameSet[4]} ` : ``)
+        roleMsg += ((wtypeRole.find(e => e === 'A') && stypeRole.find(e => e === 'A') === undefined) ? ` 상신(지지) ${frameSet[3]} ` : ``)
+        + ((wtypeRole.find(e => e === 'D') !== undefined && stypeRole.find(e => e === 'D') === undefined) ? ` 구신(지지) ${frameSet[6]} ` : ``)
+        + ((wtypeRole.find(e => e === 'C') !== undefined && stypeRole.find(e => e === 'C') === undefined) ? ` 상신기신(지지) ${frameSet[5]} ` : ``)
+        + ((wtypeRole.find(e => e === 'B') !== undefined && stypeRole.find(e => e === 'B') === undefined) ? ` 격기신(지지) ${frameSet[4]} ` : ``)
 
-        let a = (wtypeRole.find(e => e === 'A') !== undefined) ? 1: 0; 
-        let b = (wtypeRole.find(e => e === 'B') !== undefined) ? 1: 0; 
-        let c = (wtypeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
-        let d = (wtypeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
+        let a = (wtypeRole.find(e => e === 'A') !== undefined && stypeRole.find(e => e === 'A') === undefined) ? 1: 0; 
+        let b = (wtypeRole.find(e => e === 'B') !== undefined && stypeRole.find(e => e === 'B') === undefined) ? 1: 0; 
+        let c = (wtypeRole.find(e => e === 'C') !== undefined && stypeRole.find(e => e === 'C') === undefined) ? 1: 0; 
+        let d = (wtypeRole.find(e => e === 'D') !== undefined && stypeRole.find(e => e === 'D') === undefined) ? 1: 0; 
         roleLand = [a, b, c, d];
+
+
+    }
+
+    if(frameSet[2] === "偏官格" || frameSet[2] === "傷官格" || frameSet[2] === "羊刃格" || frameSet[2] === "建祿格"){
+        roleMsg += (stypeRole.find(e => e === 'A') ? ` 상신(월지) ${frameSet[3]} ` : ``)
+        + (stypeRole.find(e => e === 'D') ? ` 구신(월지) ${frameSet[6]} ` : ``)
+        + (stypeRole.find(e => e === 'C') ? ` 상신기신(월지) ${frameSet[5]} ` : ``)
+        + (stypeRole.find(e => e === 'B') ? ` 구신기신(월지) ${frameSet[4]} ` : ``)
+        
+        let a = (stypeRole.find(e => e === 'A') !== undefined) ? 1: 0; 
+        let b = (stypeRole.find(e => e === 'B') !== undefined) ? 1: 0; 
+        let c = (stypeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
+        let d = (stypeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
+        roleStage = [a, b, c, d];
+
+
+    }
+    else{
+        roleMsg += (stypeRole.find(e => e === 'A') ? ` 상신 ${frameSet[3]} ` : ``)
+        + (stypeRole.find(e => e === 'D') ? ` 구신(월지) ${frameSet[6]} ` : ``)
+        + (stypeRole.find(e => e === 'C') ? ` 상신기신(월지) ${frameSet[5]} ` : ``)
+        + (stypeRole.find(e => e === 'B') ? ` 격기신(월지) ${frameSet[4]} ` : ``)
+
+        let a = (stypeRole.find(e => e === 'A') !== undefined) ? 1: 0; 
+        let b = (stypeRole.find(e => e === 'B') !== undefined) ? 1: 0; 
+        let c = (stypeRole.find(e => e === 'C') !== undefined) ? 1: 0; 
+        let d = (stypeRole.find(e => e === 'D') !== undefined) ? 1: 0; 
+        roleStage = [a, b, c, d];
 
 
     }
@@ -1103,6 +1192,7 @@ function Divination(){
 
     console.log("----천간 구응성패", roleSky)
     console.log("----지장간 구응성패", roleLand);
+    console.log("----월지 구응성패", roleLand);
     console.log("----구응성패 종합메세지: ", roleMsg);
 
 
@@ -1113,7 +1203,7 @@ function Divination(){
     console.log("근왕 판단", self);
 
 
-    rp = RolePlay(myID, frameSet[2], typeRole, wtypeRole, untypeRole, skys, mens, self, isTalent);
+    rp = RolePlay(myID, frameSet[2], typeRole, wtypeRole, untypeRole, stypeRole, skys, mens, self, isTalent);
 
     
 
@@ -1216,14 +1306,14 @@ function Divination(){
     
     // 구응성패 천간과 지지 위치별 특성
     if(ideaRole.find(e => e === frameSet[1]) !== undefined){
-        if(follower === false && roleSky[0] === 1){
+        if(follower === false && (roleSky[0] === 1 || roleStage[0] === 1)){
             htmlMsg += `(격투간 상신O) 자신의 사회적 자격 타이틀을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
         }
-        else if(follower === true && roleLand[0] === 1){
+        else if(follower === true && (roleLand[0] === 1 || roleStage[0] === 1)){
             htmlMsg += `(격투간 상신O) 자신의 사회적 역할 타이틀을 의식하는 직업적 사명감과 그에 맞는 실질적인 역할 수행도 잘 하려고 합니다.` + "<br/>";
         }
         else{
-            if(roleSky[0] === 0 && roleLand[0] === 0 ){
+            if(roleSky[0] === 0 && roleLand[0] === 0 && roleStage[0] === 0){
 
                 if(godAwake === 2){
                     htmlMsg += `(격투간 상신X) ${ (follower === false) ? `사회적 자격 보다` : `사회적 역할 수행 보다` } 오로지 자신의 적성과 능력으로 직업으로 정하여 살아갑니다. 직업적 사명감 보다, 재능에 대한 사명감이 강합니다. ` + "<br/>";
@@ -1243,7 +1333,7 @@ function Divination(){
     }
 
 
-    if(roleSky[0] === 1 && roleLand[0] === 1){
+    if((roleSky[0] === 1 && roleLand[0] === 1) || roleStage[0] === 1){
         htmlMsg += `(상신 건왕) ${(follower === false) ? `자격에 맞는 역할을` : `주어진 사회적 역할을`} 확실하게 잘하며 살아가는데 문제 없고 매우 바쁜 삶을 살아갑니다. ` + "<br/>";
     }
     else if(roleSky[0] === 1 && roleLand[0] === 0){
@@ -1253,36 +1343,36 @@ function Divination(){
         htmlMsg += `(지지 상신) ${(follower === false) ? `자신의 사회적 자격과 사명감을 실무를 통해 쌓아갑니다. ` : `자신에게 주어진 사회적 역할을 묵묵히 수행하며 살아갑니다. `}` + "<br/>";
     }
     
-    if(isTalent !== undefined && (roleSky[0] === 1 ||  roleLand[0] === 1)){
+    if(isTalent !== undefined && (roleSky[0] === 1 ||  roleLand[0] === 1 || roleStage[0] === 1)){
         htmlMsg += `(희신O 상신O) 자신의 재능을 살린 일에 직업적 사명감으로 일치되어 살아갑니다.` + "<br/>";
     }
-    else if(isTalent === undefined && (roleSky[0] === 1 ||  roleLand[0] === 1)){
+    else if(isTalent === undefined && (roleSky[0] === 1 ||  roleLand[0] === 1 || roleStage[0] === 1)){
         htmlMsg += `(희신X 상신O) 자신이 하고 싶은 일을 삼아 직업적 사명감을 갖습니다.` + "<br/>";
     }
 
     // 상신 vs. 상신기신
     //상신O 상신기신O
-    if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[2] === 1 || roleLand[2] === 1)){
+    if((roleSky[0] === 1 || roleLand[0] === 1 || roleStage[0] === 1) && (roleSky[2] === 1 || roleLand[2] === 1  || roleStage[2] === 1)){
         htmlMsg += `(상신O 상신기신O) ${(follower === false) ? `사회적 자격을 갖췄을 뿐만 아니라, 자격 능력 검증받아 지위를 갖추려고 합니다. ` : `사회적 역할 충실히 하면서, 역할에 대한 실력이 있어 유리한 환경 혜택으로 이득을 취하려고 합니다. `}` + "<br/>";
     }// 상신O 상신기신X
-    else if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[2] === 0 && roleLand[2] === 0)){
+    else if((roleSky[0] === 1 || roleLand[0] === 1 || roleStage[0] === 1) && (roleSky[2] === 0 && roleLand[2] === 0 || roleStage[2] === 0)){
         htmlMsg += `(상신O 상신기신X) ${(follower === false) ? `자격 능력에 경쟁과 검증 지속적이지 않으므로, 보수적이고 안일함에 빠질 수 있습니다. ` : `역할 능력에 경쟁과 검증이 지속적이지 않으므로, 보수적이고 안일함에 빠질 수 있습니다. `}` + "<br/>";
     } //상신X 상신기신O
-    else if((roleSky[0] === 0 && roleLand[0] === 0) && (roleSky[2] === 1 || roleLand[2] === 1)){
+    else if((roleSky[0] === 0 && roleLand[0] === 0 && roleStage[0] === 0) && (roleSky[2] === 1 || roleLand[2] === 1 || roleStage[2] === 1)){
         htmlMsg += `(상신X 상신기신O) ${(follower === false) ? `사회적 자격 능력 대비 부족한 평가를 받아 지위를 갖추기 어렵습니다. ` : `사회적 역할 대비 검증이 많아 지속적인 경쟁력을 갖추기 어려워 합니다. `}` + "<br/>";
-    }else if((roleSky[0] === 0 && roleLand[0] === 0) && (roleSky[2] === 0 && roleLand[2] === 0)){
+    }else if((roleSky[0] === 0 && roleLand[0] === 0 && roleStage[0] === 0) && (roleSky[2] === 0 && roleLand[2] === 0 || roleStage[2] === 0)){
         htmlMsg += `(상신X 상신기신X) ${(follower === false) ? `사회가 기대할 만한 자격이 주어지지 않았고 능력에 대한 경쟁력을 갖추지 않아도 됩니다. ` : `자신의 사회적 역할에 누가 기대하지 않았고 역할 능력에 경쟁력이 일정 부분 이상 의미 없습니다. `}` + "<br/>";
     }
 
     
     // 상신, 상신기신
-    if(roleSky[0] === 1 && roleSky[2] === 1){
+    if((roleSky[0] === 1 || roleStage[0] === 1) && (roleSky[2] === 1 || roleStage[2] === 1)){
         htmlMsg += `(천간 상신 + 천간 상신기신) ${(follower === false) ? `사회적 자격에 경쟁력있는 능력을 갖추는데` : `실력있는 사회적 역할 수행에 환경적`} 혜택이 타고났지만 오만에 빠지지 않도록 주의해야 합니다. ` + "<br/>";
     }// 상신, 지장간 상신기신
-    else if(roleSky[0] === 1 && roleLand[2] === 1){
+    else if((roleSky[0] === 1 || roleStage[0] === 1) && roleLand[2] === 1){
         htmlMsg += `(천간 상신 + 지장간 상신기신) ${(follower === false) ? `자격에 맞는 역할 대비 검증된 능력이 부족하여` : `역할에 대한 의욕 대비 성과가 부족하여`} 하극상이나 아랫사람의 무시가 있을 수 있습니다. ` + "<br/>";
     } //상신 지장간, 상신기신
-    else if(roleSky[2] === 1 && roleLand[0] === 1){
+    else if((roleSky[2] === 1 || roleStage[2] === 1) && roleLand[0] === 1){
         htmlMsg += `(지장간 상신 + 천간 상신기신) ${(follower === false) ? `자격 능력에 대한 지속적인 검증으로 경쟁력을 갖추게 됩니다.` : `주어진 역할에 대한 실력을 쌓아 좋은 성과를 만들어 냅니다.`} ` + "<br/>";
     } //지장간 상신O 지장간 상신기신O
     else if(roleLand[0] === 1 && roleLand[2] === 1){
@@ -1291,7 +1381,7 @@ function Divination(){
 
 
     
-    if(roleSky[3] === 1 && roleLand[3] === 1){
+    if(roleSky[3] === 1 && roleLand[3] === 1 || roleStage[3] === 1){
         htmlMsg += `(구신 통근) ${(follower === false) ? `자격 능력으로 부터 얻은 지위에` : `주어진 역할 수행에`} 쉽게 지쳐 사람과 경쟁을 기피할 수 있습니다. ` + "<br/>";
     }
     else if(roleSky[3] === 1 && roleLand[3] === 0){
@@ -1300,13 +1390,13 @@ function Divination(){
     
     // 상신 vs. 구신
     //상신O 구신O
-    if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[3] === 1 || roleLand[3] === 1)){
+    if((roleSky[0] === 1 || roleLand[0] === 1  || roleStage[0] === 1) && (roleSky[3] === 1 || roleLand[3] === 1 || roleStage[3] === 1)){
         htmlMsg += `(상신O 구신O) ${(follower === false) ? `능동적으로 자신의 사회적 자격과 세력를 얻고자 합니다. ` : `능동적으로 자신의 주어진 역할 수행과 그에 맞는 성과를 냅니다. `}` + "<br/>";
     }// 상신O 구신X
-    else if((roleSky[0] === 1 || roleLand[0] === 1) && (roleSky[3] === 0 && roleLand[3] === 0)){
+    else if((roleSky[0] === 1 || roleLand[0] === 1  || roleStage[0] === 1) && (roleSky[3] === 0 && roleLand[3] === 0 && roleStage[3] === 0)){
         htmlMsg += `(상신O 구신X) ${(follower === false) ? `자신의 사회적 자격 능력으로 세력을 얻는데 부족합니다. ` : `자신의 역할 수행 노력에 대한 댓가와 성과는 부족합니다. `}` + "<br/>";
     } //상신X 구신X
-    else if(roleSky[0] === 0 && roleLand[0] === 0 && roleSky[3] === 0 && roleLand[3] === 0){
+    else if(roleSky[0] === 0 && roleLand[0] === 0 && roleStage[0] === 0 && roleSky[3] === 0 && roleLand[3] === 0 && roleStage[3] === 0){
         if(isTalent === undefined){
             htmlMsg += `(상신X 구신X) 누구도 자신의 ${(follower === false) ? `사회적 자격과 그에 맞는 세력을 ` : `주어진 역할과 그에 따른 성과를 `} 기대하는 사람 없습니다. 하고 싶은 일을 하며 살아 갑니다. 이번 생은 휴가 오셨습니다. ` + "<br/>";
         }
@@ -1319,28 +1409,28 @@ function Divination(){
 
     // 구신 vs. 격기신, 구신기신
     //구신O 구신기신O
-    if((roleSky[3] === 1 || roleLand[3] === 1) && (roleSky[1] === 1 || roleLand[1] === 1)){
+    if((roleSky[3] === 1 || roleLand[3] === 1 || roleStage[3] === 1) && (roleSky[1] === 1 || roleLand[1] === 1 || roleStage[1] === 1)){
         htmlMsg += `(구신O ${(follower === false) ? `구신기신O) 사회적 지위 능력으로 경쟁자를 누르는 정복자 및 최종 승리자입니다. ` : `격기신O) 객관적 검증을 잘 받아서 자신의 역할 수행에 따른 성과를 유지합니다. `}` + "<br/>";
     }// 구신O 구신기신X
-    else if((roleSky[3] === 1 || roleLand[3] === 1) && (roleSky[1] === 0 && roleLand[1] === 0)){
+    else if((roleSky[3] === 1 || roleLand[3] === 1) && (roleSky[1] === 0 && roleLand[1] === 0 && roleStage[1] === 1)){
         htmlMsg += `(구신O ${(follower === false) ? `구신기신X) 사회적 지위로 세력을 모으는데 방어적이고 소극적으로 움직입니다. ` : `격기신X) 역할수행에 대한 성과를 검증받는데 방어적이고 소극적으로 움직입니다. `}`  + "<br/>";
     } //구신X 구신기신O 
-    else if((roleSky[3] === 0 && roleLand[3] === 0) && (roleSky[1] === 1 || roleLand[1] === 1)){
+    else if((roleSky[3] === 0 && roleLand[3] === 0 && roleStage[3] === 0) && (roleSky[1] === 1 || roleLand[1] === 1 || roleStage[1] === 1)){
         htmlMsg += `(구신X ${(follower === false) ? `구신기신O) 지위 능력을 갖추기 보다 섣불리 경쟁자를 점유하려는 마음이 더 큽니다. ` : `격기신O) 역할수행에 대한 성과에 대해 주변에서 시기 질투가 나타납니다. `}` + "<br/>";
-    }else if((roleSky[3] === 0 && roleLand[3] === 0) && (roleSky[1] === 0 && roleLand[1] === 0)){
+    }else if((roleSky[3] === 0 && roleLand[3] === 0 && roleStage[3] === 0) && (roleSky[1] === 0 && roleLand[1] === 0 && roleStage[1] === 0)){
         htmlMsg += `(구신X ${(follower === false) ? `구신기신X) 세력과 지위를 갖출 일이 없고, 경쟁자를 점유하고 정복할 일이 없습니다. ` : `격기신X) 자신의 성과에 기대하는 사람 별로 없고, 지속적인 성과 검증을 해야 하는 일은 아닙니다. `}` + "<br/>";
     }
     
     
 
     // 구신, 구신기신
-    if(roleSky[3] === 1 && roleSky[1] === 1){
+    if((roleSky[3] === 1 && roleSky[1] === 1) || (roleStage[3] === 1 && roleStage[1] === 1)){
         htmlMsg += `(천간 구신 + 천간 ${(follower === false) ? `격기신) 폼생폼사형으로, 지위 능력으로 얻은 점유율에 과시하는 면이 있습니다. ` : `격기신) 폼생폼사형으로, 자신의 성과를 과시하는 면이 있습니다. `}` + "<br/>";
     }// 구신, 지장간 구신기신
-    else if(roleSky[3] === 1 && roleLand[1] === 1){
+    else if((roleSky[3] === 1 || roleStage[3] === 1) && roleLand[1] === 1){
         htmlMsg += `(천간 구신 + 지장간 ${(follower === false) ? `구신기신) 지위 능력을 발휘해 더 큰 점유을 높여 경쟁자를 압도할 수 있습니다. `: `격기신) 자신의 성과를 인정 받아 더 큰 지위로 나아갈 수 있습니다. `}` + "<br/>";
     } //구신 지장간, 구신기신
-    else if(roleSky[1] === 1 && roleLand[3] === 1){
+    else if((roleSky[1] === 1 || roleStage[1] === 1) && roleLand[3] === 1){
         htmlMsg += `(지장간 구신 + 천간 ${(follower === false) ? `구신기신) 일하면서 생기는 지위 능력 문제와 잘못이 자꾸 드러납니다. ` : `격기신) 일하면서 생기는 성과 문제와 잘못이 자꾸 드러납니다. `}` + "<br/>";
     } //지장간 구신O 지장간 구신기신O
     else if(roleLand[3] === 1 && roleLand[1] === 1){
@@ -1367,10 +1457,10 @@ function Divination(){
     document.getElementById("debug7").innerHTML = rp;
 
 
-    let roleAwake = ((roleSky[0]===1 || roleLand[0] ===1) ? "1":"0");
-    roleAwake += ((roleSky[1]===1 || roleLand[1] ===1) ? "1":"0");
-    roleAwake += ((roleSky[2]===1 || roleLand[2] ===1) ? "1":"0");
-    roleAwake += ((roleSky[3]===1 || roleLand[3] ===1) ? "1":"0");
+    let roleAwake = ((roleSky[0]===1 || roleLand[0] ===1 || roleStage[0] ===1) ? "1":"0");
+    roleAwake += ((roleSky[1]===1 || roleLand[1] ===1 || roleStage[1] ===1) ? "1":"0");
+    roleAwake += ((roleSky[2]===1 || roleLand[2] ===1 || roleStage[2] ===1) ? "1":"0");
+    roleAwake += ((roleSky[3]===1 || roleLand[3] ===1 || roleStage[3] ===1) ? "1":"0");
     
     document.getElementById('god_state').innerText += roleAwake;
 
@@ -1977,7 +2067,7 @@ function RoleType(frame_set){
 }
 
 
-function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, _mens, _self, _isTalent){
+function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _stypeRole, _skys, _mens, _self, _isTalent){
     // myID, frameSet[2], typeRole, wtypeRole, untypeRole, skys, mens, self
     let role_playMsg = "";
     let a = roles[_myID-1].mr.find(e => (e.tag === "食神")).id +1
@@ -1996,13 +2086,13 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         let role = true;
         let another = false;
         if(_self === true){
-            if(_typeRole.find(e => e === 'A')){
+            if(_typeRole.find(e => e === 'A') || _stypeRole.find(e => e === 'A')){
                 role_playMsg += "(根旺 偏官格 食神制殺) 모두가 인정하는 자격증/학위/공식적 경력이 필수 입니다. 실적으로 남들이 못하는 특별한 일을 수행합니다."+"</br>"
-                if(_typeRole.find(e => e === 'B')){
+                if(_typeRole.find(e => e === 'B') || _stypeRole.find(e => e === 'B')){
                     role_playMsg += "(根旺 偏官格 財生殺) 조직에서 리더로 성장합니다. 아마추어를 이끄는 리더로 활동합니다."+"</br>";
                 }
                  
-                if(_typeRole.find(e => e === 'D')){
+                if(_typeRole.find(e => e === 'D') || _stypeRole.find(e => e === 'D')){
                     role_playMsg += "(根旺 偏官格 比食) 비상한 두뇌와 독창적인 전략으로 자신이 속한 조직을 더 큰 세상으로 진출합니다."+"</br>";
                 }
             }
@@ -2012,12 +2102,12 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             
         }
         else{
-            if(_typeRole.find(e => e === 'C')){
+            if(_typeRole.find(e => e === 'C') || _stypeRole.find(e => e === 'C')){
                 another = true;
                 role_playMsg += "(根弱 偏官格 殺印相生) 조직을 리드하기 보다 뒤에서 보좌하며 기발한 아이디어로 자신의 업적을 만듦니다."+"</br>"; 
 
             }
-            else if(_typeRole.find(e => e === 'A')){
+            else if(_typeRole.find(e => e === 'A') || _stypeRole.find(e => e === 'A')){
                 role_playMsg += "(根弱 偏官格 食神) 불안 대비책으로 많은 시간 낭비해 스스로 극복이 아니라 조직의 보호를 받아야 합니다."+"</br>";
             }
         }
@@ -2045,14 +2135,14 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                 role = true;
                 if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) !== undefined || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type) !== undefined){
                     if(_skys.find(e => skyTag[e-1].id === skyTag[woman1-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[woman1-1].id)){
-                        role_playMsg += (_typeRole.find(e => e === 'B') !== undefined || _wtypeRole.find(e => e === 'B') !== undefined) ? `(根弱 傷官格 傷官合去) 조직에서 ` : `(根弱 傷官格 傷官合殺) 조직에서 `;
-                        role_playMsg += (_wtypeRole.find(e => e === 'A') !== undefined) ? `실무적으로 인정받은 자신의 특기가 스카우트 되어 `: `자신의 특기가 스카우트 되어 `;
-                        role_playMsg += (_typeRole.find(e => e === 'B') !== undefined || _wtypeRole.find(e => e === 'B') !== undefined) ? `새로운 프로그램 및 법을 혁신하며 안정적인 생활을 유지하기 위해 살아갑니다.` : `납품, 대행, 공임, 생산권하라고 계약 성사되어 임무 수행합니다.`;
+                        role_playMsg += (_typeRole.find(e => e === 'B') !== undefined || _stypeRole.find(e => e === 'B') !== undefined || _wtypeRole.find(e => e === 'B') !== undefined) ? `(根弱 傷官格 傷官合去) 조직에서 ` : `(根弱 傷官格 傷官合殺) 조직에서 `;
+                        role_playMsg += (_wtypeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined) ? `실무적으로 인정받은 자신의 특기가 스카우트 되어 `: `자신의 특기가 스카우트 되어 `;
+                        role_playMsg += (_typeRole.find(e => e === 'B') !== undefined || _stypeRole.find(e => e === 'B') !== undefined || _wtypeRole.find(e => e === 'B') !== undefined) ? `새로운 프로그램 및 법을 혁신하며 안정적인 생활을 유지하기 위해 살아갑니다.` : `납품, 대행, 공임, 생산권하라고 계약 성사되어 임무 수행합니다.`;
                     }
                     else if(_skys.find(e => skyTag[e-1].id === skyTag[woman2-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[woman2-1].id)){
-                        role_playMsg += (_typeRole.find(e => e === 'B') !== undefined || _wtypeRole.find(e => e === 'B') !== undefined) ? `(根弱 傷官格 傷官佩印) 조직에 맞추고 주변인에게 맞추는 헌신적인 인물로 ` : `(根弱 傷官格 傷官合殺) 조직에 맞추고 주변인에게 맞추는 헌신적인 인물로 `;
-                        role_playMsg += (_wtypeRole.find(e => e === 'A') !== undefined) ? `사회적 자격조건 실무적으로 허가 받아 `: `사회적 자격조건으로 허가 받아 `;
-                        role_playMsg += (_typeRole.find(e => e === 'B') !== undefined || _wtypeRole.find(e => e === 'B') !== undefined) ? `새로운 프로그램 및 법을 혁신하며 안정적인 생활을 유지하기 위해 살아갑니다.` : `납품, 대행, 공임, 생산권하라고 계약 성사되어 임무 수행합니다.`;
+                        role_playMsg += (_typeRole.find(e => e === 'B') !== undefined || _stypeRole.find(e => e === 'B') !== undefined || _wtypeRole.find(e => e === 'B') !== undefined) ? `(根弱 傷官格 傷官佩印) 조직에 맞추고 주변인에게 맞추는 헌신적인 인물로 ` : `(根弱 傷官格 傷官合殺) 조직에 맞추고 주변인에게 맞추는 헌신적인 인물로 `;
+                        role_playMsg += (_wtypeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined) ? `사회적 자격조건 실무적으로 허가 받아 `: `사회적 자격조건으로 허가 받아 `;
+                        role_playMsg += (_typeRole.find(e => e === 'B') !== undefined || _stypeRole.find(e => e === 'B') !== undefined || _wtypeRole.find(e => e === 'B') !== undefined) ? `새로운 프로그램 및 법을 혁신하며 안정적인 생활을 유지하기 위해 살아갑니다.` : `납품, 대행, 공임, 생산권하라고 계약 성사되어 임무 수행합니다.`;
                     }
                     role_playMsg += "</br>";
                 }
@@ -2065,7 +2155,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                 }
                 
 
-                if(_typeRole.find(e => e === 'D')){
+                if(_typeRole.find(e => e === 'D') || _stypeRole.find(e => e === 'D')){
                     role_playMsg += "(根弱 傷官格 劫傷) 조직의 안좋은 관행이나 유통구조를 개선해 혁신을 이끌지만 기득권의 마찰을 피할 수 없습니다."+"</br>";
                     if(_typeRole.find(e => e === 'C') && (_isTalent !== undefined)){
                         role_playMsg += "(根弱 傷官格 財剋印) 역사의 이름 남길 혁신의 주체가 되어 새로운 기득권으로 성장합니다. 만명 중 한명 인물 입니다."+"</br>";
@@ -2073,7 +2163,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                 }  
             }
             else{
-                if(_typeRole.find(e => e === 'B') || _wtypeRole.find(e => e === 'B')){
+                if(_typeRole.find(e => e === 'B') || _wtypeRole.find(e => e === 'B')  || _stypeRole.find(e => e === 'B')){
                     role_playMsg += "(根弱 傷官格 傷官見官) 관행과 법규를 준하지 않고 허가 받지 않은 채, 하고 싶은 것을 하며 살아갑니다."+"</br>";
                 }
                 else if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[man2-1].id)){
@@ -2083,10 +2173,10 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         }
         else{
             role_playMsg += "(根旺 傷官格 異道) 조직의 규칙보다 개인 욕심 및 능력으로 독립하여 살아갑니다. 시장에 대한 이해력 높고, 자영업/유통업에 적합니다."+"</br>";
-            if((_typeRole.find(e => e === 'A') || _wtypeRole.find(e => e === 'A')) && (_typeRole.find(e => e !== 'C') || _wtypeRole.find(e => e !== 'C'))){
+            if(((_typeRole.find(e => e === 'A') || _stypeRole.find(e => e === 'A')) || _wtypeRole.find(e => e === 'A')) && (_typeRole.find(e => e !== 'C') || _stypeRole.find(e => e === 'C'))  || _wtypeRole.find(e => e !== 'C')){
                 role_playMsg += "(根旺 傷官格 佩印) 개업이 가능한 특기 가졌습니다."+"</br>";
             }
-            if((_typeRole.find(e => e === 'A') || _wtypeRole.find(e => e === 'A')) && (_typeRole.find(e => e === 'C') || _wtypeRole.find(e => e === 'C'))){
+            if(((_typeRole.find(e => e === 'A') || _stypeRole.find(e => e === 'A')) || _wtypeRole.find(e => e === 'A')) && (_typeRole.find(e => e === 'C') || _stypeRole.find(e => e === 'C'))  || _wtypeRole.find(e => e === 'C')){
                 role_playMsg += "(根旺 傷官格 財剋印) 개업에서 기업화까지 가능한 특기 가졌습니다."+"</br>";
             }
         }
@@ -2143,7 +2233,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         }
 
         if(role === true){
-            if(_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e === 'D') !== undefined){
+            if(_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e === 'D') !== undefined){
                 role_playMsg += "(羊刃格 殺印相生) 직업 활동에 대한 준비력을 갖춰서, 중앙에서 일하거나, 조직 생활을 오래 유지 할 수 있습니다."+"</br>";
             }
             else{
@@ -2226,7 +2316,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         }
 
         if(role===true){
-            if(_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e === 'D') !== undefined){
+            if(_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e === 'D') !== undefined){
                 role_playMsg += "(建祿格 官印相生) 직업 활동에 대한 준비력을 갖춰서, 중앙에서 일하거나, 조직 생활을 오래 유지 할 수 있습니다."+"</br>";
             }
             else{
@@ -2271,7 +2361,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             role_playMsg += "(根弱 正官格) 조직에서 자신의 입지를 조금씩 다져나갑니다."+"</br>";
             if(_mens.find(e => skyTag[e-1].type === skyTag[d-1].type)){
                 role = true;
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 正官格 財生官) 조직내 사람 관계에 적응해야 하며 " : "(根弱 正官格 化財生官) 조직, 소속, 직무는 유지하며 직종 및 적성을 바꾸거나 다른 방식의 활동실적으로 수익을 높여 ";
+                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 正官格 財生官) 조직내 사람 관계에 적응해야 하며 " : "(根弱 正官格 化財生官) 조직, 소속, 직무는 유지하며 직종 및 적성을 바꾸거나 다른 방식의 활동실적으로 수익을 높여 ";
                 role_playMsg += "조직의 생리에 대한 이해도가 높습니다."+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[two-1].id)){
                     role_playMsg += "(根弱 正官格 制劫) 경쟁력 있는 자신의 영역으로 지점, 본부장의 직위 혹은, 독립하여 자신의 사업을 할 수 있습니다."+"</br>";
@@ -2288,7 +2378,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             role_playMsg += "(根旺 正官格) 보통의 삶입니다."+"</br>";
             if(_mens.find(e => skyTag[e-1].type === skyTag[woman2-1].type) || _skys.find(e => skyTag[e-1].type === skyTag[woman2-1].type)){
                 role = true;
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正官格 官印相生) 자신의 전문성을 공식적으로 허가받아 " : "(根旺 正官格 化官印相生) 타영역에서 쌓은 자신의 전문성을 도입하거나 직종 및 적성을 바꿔서 ";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正官格 官印相生) 자신의 전문성을 공식적으로 허가받아 " : "(根旺 正官格 化官印相生) 타영역에서 쌓은 자신의 전문성을 도입하거나 직종 및 적성을 바꿔서 ";
                 role_playMsg += "안정적인 생활을 선호하며, 공공기관이나 평생직장에서 근무하려 합니다."+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[b-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[b-1].id)){
                     role_playMsg += "(根旺 正官格 傷官佩印) 경쟁력 있는 전문 능력을 가졌지만, 시설관리 및 유지보수 등 전문능력으로 쉽게 처리 할 수 있는 안정적인 업무를 선호합니다."+"</br>";
@@ -2298,7 +2388,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
                 }
             }
             else if(_skys.find(e => skyTag[e-1].id === skyTag[c-1].id) || _skys.find(e => skyTag[e-1].id === skyTag[d-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[c-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[d-1].id)){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正官格 財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 正官格 化財生官) 혼자서도 할수 있을 것 같아 독립합니다. 직종 및 적성을 바꾸거나 다른 방식의 활동실적으로 수익을 높여 자영업에 뛰어 듭니다.";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正官格 財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 正官格 化財生官) 혼자서도 할수 있을 것 같아 독립합니다. 직종 및 적성을 바꾸거나 다른 방식의 활동실적으로 수익을 높여 자영업에 뛰어 듭니다.";
                 role_playMsg += "</br>";
             }
 
@@ -2334,7 +2424,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         if(_self !== true){
             role_playMsg += "(根弱 偏財格) 조직에서 자신의 입지를 조금씩 다져나갑니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type))){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根弱 偏財格 財生殺) 조직에 들어가 매뉴얼대로 행하며 배움을 가지고 " : "(根弱 偏財格 化財生官) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 신분을 높여가며 ";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根弱 偏財格 財生殺) 조직에 들어가 매뉴얼대로 행하며 배움을 가지고 " : "(根弱 偏財格 化財生官) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 신분을 높여가며 ";
                 role_playMsg += "자신의 꿈을 위한 과정을 거칩니다."+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[one-1].id)){
                     role_playMsg += "(根弱 偏財格 制比) 경쟁을 통해 영역을 확보해 함께할 뜻이 맞는 사람을 모아 더 큰 세상으로 뻗고자 합니다."+"</br>";
@@ -2356,7 +2446,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         else{
             role_playMsg += "(根旺 偏財格) 자신의 실력으로 자유로운 활동합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[a-1].type || _mens.find(e => skyTag[e-1].type === skyTag[a-1].type))){
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 偏財格 食神生財) 자신의 고유 실력을 키워 타고난 사업가적 재능을 발휘합니다." : "(根旺 偏財格 化傷官生財) 시대 변화에 맞춘 자신의 개인기를 바꿔가며 사업가적 재능을 발휘합니다.";
+                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 偏財格 食神生財) 자신의 고유 실력을 키워 타고난 사업가적 재능을 발휘합니다." : "(根旺 偏財格 化傷官生財) 시대 변화에 맞춘 자신의 개인기를 바꿔가며 사업가적 재능을 발휘합니다.";
                 role_playMsg += "</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman1-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[woman1-1].id)){
                     role_playMsg += "(根旺 偏財格 財剋印) 사업 영역을 확보하기 위해 공격적 투자, 모 아니면 도 방식으로 일확천금 성향입니다."+"</br>";
@@ -2368,7 +2458,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             else{
                 if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
                     role_playMsg += "(根旺 偏財格 財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다."+"</br>";
-                    role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 偏財格 財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 偏財格 化財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 조직, 부서, 직급을 바꿔가며 수익을 높여갑니다.";
+                    role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D' || _wtypeRole.find(e => e=== 'D') !== undefined) !== undefined) ? "(根旺 偏財格 財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 偏財格 化財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 조직, 부서, 직급을 바꿔가며 수익을 높여갑니다.";
                     role_playMsg += "</br>";
                 }
             }
@@ -2383,7 +2473,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         if(_self !== true){
             role_playMsg += "(根弱 正財格) 조직에서 안정적인 활동을 중시합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根弱 正財格 財生官) 조직에 들어가 매뉴얼대로 행하며 배움을 가지고 " : "(根弱 正財格 化財生殺) 조직생활에서 점점 경쟁이 치열한 환경에 진입함으로써 수익과 신분을 높여서 ";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根弱 正財格 財生官) 조직에 들어가 매뉴얼대로 행하며 배움을 가지고 " : "(根弱 正財格 化財生殺) 조직생활에서 점점 경쟁이 치열한 환경에 진입함으로써 수익과 신분을 높여서 ";
                 role_playMsg += "자신의 꿈을 위한 과정을 거칩니다."+"</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[two-1].id)){
                     role_playMsg += "(根弱 正財格 制劫) 경쟁을 통해 영역을 확보해 함께할 뜻이 맞는 사람을 모아 더 큰 세상으로 뻗고자 합니다."+"</br>";
@@ -2405,7 +2495,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         else{
             role_playMsg += "(根旺 正財格) 자신의 실력으로 변화하는 시대를 리드 합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[b-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[b-1].type)){
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 正財格 傷官生財) 시대 변화에 맞춰 자신의 재능으로 미래를 위해 나아가 새로운 것을 개발 합니다." : "(根旺 正財格 化食神生財) 자신의 전문성과 적성 및 직종을 바꿔가며 사업가적 재능을 발휘합니다.";
+                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 正財格 傷官生財) 시대 변화에 맞춰 자신의 재능으로 미래를 위해 나아가 새로운 것을 개발 합니다." : "(根旺 正財格 化食神生財) 자신의 전문성과 적성 및 직종을 바꿔가며 사업가적 재능을 발휘합니다.";
                 role_playMsg += "</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman2-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[woman2-1].id)){
                     role_playMsg += "(根旺 正財格 傷官佩印) 경쟁력 있는 안전 자산 확보해 회사 지분 및 신제품 이익을 통한 안정적 수입 구축합니다."+"</br>";
@@ -2416,7 +2506,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             }
             else{
                 if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
-                    role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正財格 財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 正財格 化財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 점점 경쟁이 치열한 환경에 진입함으로써 수익을 높여갑니다.";
+                    role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 正財格 財生官) 혼자서도 할 수 있을 것 같아 독립합니다. 자영업에 뛰어듭니다." : "(根旺 正財格 化財生殺) 혼자서도 할 수 있을 것 같아 독립합니다. 점점 경쟁이 치열한 환경에 진입함으로써 수익을 높여갑니다.";
                     role_playMsg += "</br>";
                 }
             }
@@ -2433,7 +2523,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             role_playMsg += "(根弱 偏印格) 세상 논리에 동조하며 자신을 감추고 조직생활을 합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
                 role = true;
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 偏印格 殺印相生) 남들이 못하는 특수 임무를 수행하며 소수만이 할 수 있는 특수직입니다."+"</br>" : "";
+                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 偏印格 殺印相生) 남들이 못하는 특수 임무를 수행하며 소수만이 할 수 있는 특수직입니다."+"</br>" : "";
                 role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)) ? "(根弱 偏印格 化官印相生) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 수행하며 소수만이 할 수 있는 특수직입니다."+"</br>" : "";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[a-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[a-1].id)){
                     role_playMsg += "(根弱 偏印格 奪食) 직업재교육, 재수학원 등 실력부족으로 낙오된 사람을 이끌어 줘야합니다."+"</br>";
@@ -2466,7 +2556,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             else{
                 if(_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)){
                     role = true;
-                    role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 偏印格 殺印相生) 부여받은 특수 임무 수행에 불만이 있습니다."+"</br>" : "";
+                    role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 偏印格 殺印相生) 부여받은 특수 임무 수행에 불만이 있습니다."+"</br>" : "";
                     role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)) ? "(根旺 偏印格 化官印相生) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 임무 수행에 불만이 있습니다."+"</br>" : "";
                 }
             }
@@ -2496,7 +2586,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             role_playMsg += "(根弱 正印格) 조직에 잘 적응합니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man2-1].type)){
                 role = true;
-                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 正印格 官印相生) 자신에게 주어진 일을 수행하고 안정적인 생활을 중시합니다."+"</br>" : "";
+                role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根弱 正印格 官印相生) 자신에게 주어진 일을 수행하고 안정적인 생활을 중시합니다."+"</br>" : "";
                 role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)) ? "(根弱 正印格 化殺印相生) 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 자신에게 주어진 일을 수행합니다."+"</br>" : "";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[b-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[b-1].id)){
                     role_playMsg += "(根弱 正印格 傷官佩印) 오랜시간 경력자로서 전문가가 됩니다. 자격증 등으로 자신을 입증하는 것이 좋습니다."+"</br>";
@@ -2529,7 +2619,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
             else{
                 if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].type) || _mens.find(e => skyTag[e-1].id === skyTag[man2-1].type)){
                     role = true;
-                    role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 正印格 官印相生) 불로소득을 원하는데 규칙적인 업무와 경력 스트레스가 있습니다."+"</br>" : "";
+                    role_playMsg += (_typeRole.find(e => e === 'A') !== undefined || _stypeRole.find(e => e === 'A') !== undefined || _wtypeRole.find(e => e=== 'A') !== undefined) ? "(根旺 正印格 官印相生) 불로소득을 원하는데 규칙적인 업무와 경력 스트레스가 있습니다."+"</br>" : "";
                     role_playMsg += (_skys.find(e => skyTag[e-1].type === skyTag[man1-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[man1-1].type)) ? "(根旺 正印格 化殺印相生) 불로소득을 원하는데 잦은 조직, 소속, 직무, 담당 부서의 이동이나 순환 및 교대 근무형태로 업무와 경력 스트레스가 있습니다."+"</br>" : "";
                 }
             }
@@ -2577,7 +2667,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _skys, 
         else{
             role_playMsg += "(根旺 食神格) 자신을 믿고, 생존력이 있는 실력을 꾸준히 쌓아 재능을 직접 판매할 수 있습니다."+"</br>";
             if(_skys.find(e => skyTag[e-1].type === skyTag[c-1].type) || _mens.find(e => skyTag[e-1].type === skyTag[c-1].type)){
-                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 食神格 食神生財) 활용도 많은 인재로, 사업과 직장생활 가리지 않고 요구 사항 해결해줍니다." : "(根旺 食神格 化食神生財) 정해진 규정이 많거나 한정적인 영역에서 자신의 재능을 발휘합니다.";
+                role_playMsg += (_typeRole.find(e => e === 'D') !== undefined || _stypeRole.find(e => e === 'D') !== undefined || _wtypeRole.find(e => e=== 'D') !== undefined) ? "(根旺 食神格 食神生財) 활용도 많은 인재로, 사업과 직장생활 가리지 않고 요구 사항 해결해줍니다." : "(根旺 食神格 化食神生財) 정해진 규정이 많거나 한정적인 영역에서 자신의 재능을 발휘합니다.";
                 role_playMsg += "</br>";
                 if(_skys.find(e => skyTag[e-1].id === skyTag[woman1-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[woman1-1].id)){
                     role_playMsg += "(根旺 食神格 偏印到食) 편의성을 수익으로 만들어, 지적재산권을 확보하고, 건물주, 플랫폼 개발자 등 됩니다."+"</br>";

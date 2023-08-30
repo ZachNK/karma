@@ -296,6 +296,7 @@ $(mainBtn).on('click', function(){
     if(ycheck === true && mcheck === true && tcheck === true){
         Fortune_img(); 
         Divination();
+        
     }
     
 

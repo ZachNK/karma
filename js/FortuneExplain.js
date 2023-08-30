@@ -77,7 +77,7 @@ fetch('./js/framelucks.json')
 
 
 function Divination(){
-    FindElements();
+
     console.log("=======================================Divination=======================================");
     document.getElementById("debug2").innerHTML = "";
     document.getElementById("debug3").innerHTML = "";
@@ -353,14 +353,16 @@ function Divination(){
             
         }
         else{
-            if(pObj[i].id%3 !== 1 && (pObj[i].id%4 === pObj[0].id%4 || pObj[i].id%4 === pObj[1].id%4 || pObj[i].id%4 === pObj[3].id%4) && skyTag[pObj[i].id-1].type !== skyTag[days-1].type){
-                console.log("월지 중기", i, skyTag[pObj[i].id-1].type, skyTag[days-1].type)
+            if(pObj[i].id%3 !== 1 && (pObj[i].id%4 === pObj[0].id%4 || pObj[i].id%4 === pObj[1].id%4 || pObj[i].id%4 === pObj[3].id%4) && landTag[pObj[i].id-1].type !== skyTag[days-1].type){
+                //console.log("월지 중기", i, landTag[pObj[i].id-1].type, skyTag[days-1].type)
                 stage.push(pObj[i].duty[1].idN);
                 u.push(pObj[i].duty[1].idN);
             }
             
+            
             triUse.push(u);
         }
+        
        
 
 

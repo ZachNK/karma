@@ -128,7 +128,7 @@ let mdMsg = $('#monthday_msg');
 let tmMSg = $('#time_msg');
 let mainBtn = $('#btn');
 let navBtn = $('#nav');
-$(mainBtn).on('click', function(){
+$(mainBtn).on('click', function(e){
 
     cpnt.innerText = "";
     let ycheck = false;
@@ -193,8 +193,6 @@ $(mainBtn).on('click', function(){
     let pday = parseInt(plist[p]);
 
     if(xBirth === true){
-        
-        
         var aNum = xday;
         var dayReflect = false;
         let originDay = aNum;
@@ -203,10 +201,17 @@ $(mainBtn).on('click', function(){
         if(justGo === false){
             while(dayReflect === false){
                 aNum = window.prompt(`${x_msg} 절입일 (${mth}월 ${xday}일) → ${x_msg} (${mth}월 ${xday-3}일 ~ ${mth}월 ${xday+3} 기간 중 절입 날짜 입력)`, ``);
-                if(typeof aNum !== `number` && parseInt(aNum) >= originDay-3 && parseInt(aNum) <= originDay+3){
-                    aNum = parseInt(aNum);
+                if(aNum === null){
+                    aNum = xday;
                     dayReflect = true 
                     break;
+                }
+                else{
+                    if(typeof aNum !== `number` && parseInt(aNum) >= originDay-3 && parseInt(aNum) <= originDay+3){
+                        aNum = parseInt(aNum);
+                        dayReflect = true 
+                        break;
+                    }
                 }
             }
             
@@ -214,14 +219,8 @@ $(mainBtn).on('click', function(){
         point.splice(x, 1, aNum);
         //console.log(xday, aNum, point, fixpoint);
         cpnt.innerText = `${x_msg} (${mth}월 ${aNum}일) 기준`;
-        
-        
-        
-
     }
     else if(pBirth === true){
-        
-        
         var aNum = pday;
         var dayReflect = false;
         let originDay = aNum;
@@ -334,20 +333,45 @@ $('#switch2').on('click', function(){
 });
 
 $(document).ready(function() {
+    $('#name').keyup(function(e){
+        if(typeof $(this).val() === "string" ){
+            document.getElementById('name').style.backgroundColor = 'aliceblue';
+            document.getElementById('name').style.fontWeight = 'bold';
+        }
+        else{
+            document.getElementById('name').style.backgroundColor = null;
+            document.getElementById('name').style.fontWeight = 'normal';
+        }
+    });
+
     $('#year_msg').keyup(function(e) {
         if ($(this).val().length >= $(this).attr('maxlength') && (e.which !==9 && e.which !==16)){
+            document.getElementById('year_msg').style.backgroundColor = 'aliceblue';
+            document.getElementById('year_msg').style.fontWeight = 'bold';
             document.getElementById('monthday_msg').focus();
+        }
+        else if($(this).val().length < $(this).attr('maxlength')){
+            document.getElementById('year_msg').style.backgroundColor = null;
+            document.getElementById('year_msg').style.fontWeight = 'normal';
         }
     });
 
     $('#monthday_msg').keyup(function(e) {
         if ($(this).val().length >= $(this).attr('maxlength') && (e.which !==9 && e.which !==16)){
+            document.getElementById('monthday_msg').style.backgroundColor = 'aliceblue';
+            document.getElementById('monthday_msg').style.fontWeight = 'bold';
             document.getElementById('time_msg').focus();
+        }
+        else if($(this).val().length < $(this).attr('maxlength')){
+            document.getElementById('monthday_msg').style.backgroundColor = null;
+            document.getElementById('monthday_msg').style.fontWeight = 'normal';
         }
     });
 
     $('#time_msg').keyup(function(e) {
         if ($(this).val().length >= $(this).attr('maxlength') && (e.which !==9 && e.which !==16)){
+            document.getElementById('time_msg').style.backgroundColor = 'aliceblue';
+            document.getElementById('time_msg').style.fontWeight = 'bold';
             document.getElementById('btn').style.backgroundColor = 'blueviolet';
             if(e.which === 13){
                 $('#btn').click();
@@ -355,6 +379,8 @@ $(document).ready(function() {
             
         }
         else if($(this).val().length < $(this).attr('maxlength')){
+            document.getElementById('time_msg').style.backgroundColor = null;
+            document.getElementById('time_msg').style.fontWeight = 'normal';
             document.getElementById('btn').style.backgroundColor = null;
         }
     });
@@ -1218,23 +1244,17 @@ function Copy(){
     document.getElementById("debug6").innerText+
     document.getElementById("debug7").innerText+"\n\n";
 
-    inter +="※ 대운 (격국의 구응성패) ※\n";
+    inter +="※ 대운 ※\n";
     for(var i=0; i<TextRole().length; i++){
-        inter += TextRole()[i] + "\n"
+        inter += TextRole()[i] + "\n\n"
     }
 
     inter +="\n\n";
 
-    inter +="※ 세운 (용신의 희기신) ※\n";
+    inter +="※ 세운 ※\n";
     for(var i=0; i<TextUse().length; i++){
         inter += TextUse()[i] +"\n";
-    }
-
-    inter +="\n\n";
-
-    inter +="※ 세운 (육신의 생화극제) ※\n";
-    for(var i=0; i<TextYears().length; i++){
-        inter += TextYears()[i] +"\n";
+        inter += TextYears()[i] +"\n\n";
     }
 
     var str = fullName + "\n\n" +resultCopy + greatLuckCopy + "\n\n" + inter;
@@ -1252,8 +1272,6 @@ function CopyStringToClipboard (string) {
     document.execCommand('copy');
 }
 
-
-
 function savePDF(){
     //저장 영역 div id
     html2canvas($('#pdfArea')[0] ,{	
@@ -1269,24 +1287,27 @@ function savePDF(){
 
         var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
         var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
-        var imgHeight = canvas.height * imgWidth / canvas.width;
+        var imgHeight = canvas.height * (imgWidth / canvas.width);
         var heightLeft = imgHeight;
         var margin = 10; // 출력 페이지 여백설정
         var doc = new jsPDF('p', 'mm');
-        var position = 0;
+        var position = 10;
+
+        
 
         // 첫 페이지 출력
         doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
 
+        console.log(position, imgWidth, imgHeight, heightLeft)
+
         // 한 페이지 이상일 경우 루프 돌면서 출력
         while (heightLeft >= 20) {			// 35
-        position = heightLeft - imgHeight;
-        position = position - 20 ;		// -25
-
-        doc.addPage();
-        doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+            position = heightLeft - imgHeight;
+            doc.addPage();
+            doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+            position = position - 20 ;		// -25
+            heightLeft -= pageHeight;
         }
 
         

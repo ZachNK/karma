@@ -2024,7 +2024,8 @@ function TextYears(){
         let s = nowYear+57
         let iY = (s%10 === 0) ? 10 : s%10;
         let pY = (s%12 === 0) ? 12 : s%12;
-        result.push(`${(nowYear)}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin}運): ${str.join('')}`);
+        //result.push(`${(nowYear)}년 ${skyTag[iY-1].name}${landTag[pY-1].name} (${divin}運): ${str.join('')}`);
+        result.push(`(${divin}運): ${str.join('')}`);
 
     }
     

@@ -348,7 +348,11 @@ $(document).ready(function() {
 
     $('#time_msg').keyup(function(e) {
         if ($(this).val().length >= $(this).attr('maxlength') && (e.which !==9 && e.which !==16)){
+            if(e.which === 13){
+                $('#btn').click();
+            }
             document.getElementById('btn').focus();
+            
         }
     });
 });

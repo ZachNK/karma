@@ -229,10 +229,17 @@ $(mainBtn).on('click', function(e){
         if(justGo === false){
             while(dayReflect === false){
                 aNum = window.prompt(`${p_msg} 절입일 (${mth}월 ${pday}일) → ${p_msg} (${mth}월 ${pday-3}일 ~ ${mth}월 ${pday+3} 기간 중 절입 날짜 입력)`, ``);
-                if(typeof aNum !== `number` && parseInt(aNum) >= originDay-3 && parseInt(aNum) <= originDay+3){
-                    aNum = parseInt(aNum);
+                if(aNum === null){
+                    aNum = pday;
                     dayReflect = true 
                     break;
+                }
+                else{
+                    if(typeof aNum !== `number` && parseInt(aNum) >= originDay-3 && parseInt(aNum) <= originDay+3){
+                        aNum = parseInt(aNum);
+                        dayReflect = true 
+                        break;
+                    }
                 }
             }
             

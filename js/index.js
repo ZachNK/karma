@@ -348,11 +348,14 @@ $(document).ready(function() {
 
     $('#time_msg').keyup(function(e) {
         if ($(this).val().length >= $(this).attr('maxlength') && (e.which !==9 && e.which !==16)){
+            document.getElementById('btn').style.backgroundColor = 'blueviolet';
             if(e.which === 13){
                 $('#btn').click();
             }
-            document.getElementById('btn').focus();
             
+        }
+        else if($(this).val().length < $(this).attr('maxlength')){
+            document.getElementById('btn').style.backgroundColor = null;
         }
     });
 });

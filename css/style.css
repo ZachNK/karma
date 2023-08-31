@@ -50,8 +50,8 @@ body {
 }
 
 
-#header nav .option{display: flex; justify-content: center; align-items: center; padding: 0 0px; margin: 0px 0px;}
-#header nav .option li{display: inline-block; line-height: 30px; padding: 0px 50px; margin: 5px 0px 5px 0px;}
+#header nav .option{display: flex; justify-content: center; align-items: center; padding: 0 0px; margin: 15px 0px;}
+#header nav .option li{display: inline-block; line-height: 30px; padding: 0px 50px; margin: 20px 0px 20px 0px;}
 /* */
 #header nav .init-area{text-align: center; width: 70%; margin-left: auto; margin-right: auto; padding: 0 0px;} 
 
@@ -61,7 +61,7 @@ body {
 #header nav li a{display: flex; justify-content: center; padding: 0 8px; line-height: 50%; text-decoration: none; color: #262626;}
 
 #header nav .input-area{
-    display: flex; justify-content: center; width: 500px; height: 50px; margin: 8px; 
+    display: flex; justify-content: center; width: 400px; height: 40px; margin: 10px; 
 }
 
 #header nav .init-area li.warning {

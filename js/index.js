@@ -334,12 +334,23 @@ $('#switch2').on('click', function(){
 });
 
 $(document).ready(function() {
-    $("#time_msg").keyup(function(event) {
-        if (event.which === 13) {
-            $("#btn").click();
+    $('#year_msg').keyup(function(e) {
+        if ($(this).val().length >= $(this).attr('maxlength') && (e.which !==9 && e.which !==16)){
+            document.getElementById('monthday_msg').focus();
         }
     });
- 
+
+    $('#monthday_msg').keyup(function(e) {
+        if ($(this).val().length >= $(this).attr('maxlength') && (e.which !==9 && e.which !==16)){
+            document.getElementById('time_msg').focus();
+        }
+    });
+
+    $('#time_msg').keyup(function(e) {
+        if ($(this).val().length >= $(this).attr('maxlength') && (e.which !==9 && e.which !==16)){
+            document.getElementById('btn').focus();
+        }
+    });
 });
 
 function Fortune_img(){

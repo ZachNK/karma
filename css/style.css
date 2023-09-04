@@ -25,12 +25,21 @@ body {
     
 }
 
-#bar nav .home-title h1{display: flex; justify-content: center; align-items: center; }
+#update{
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    box-sizing: border-box;
+    left: 75%;
+    color: rgb(114, 114, 114);
+    background: rgba(255, 255, 255, 0);
+}
+
+#bar nav .home-title h1{display: flex; justify-content: center; align-items: center;} 
 
 .container{
     width: 100%;
     height: 500px;
-    
 }
 
 #header{
@@ -258,6 +267,17 @@ table.variety{
     table-layout: fixed;
 }
 
+.seasons tr ul{
+    list-style: none;
+    margin: auto;   
+    padding: 0 0;
+}
+
+.seasons tr ul li{
+    padding: auto;
+}
+
+
 table.tenyears{
     align-content: center;
     align-self: center;
@@ -267,6 +287,17 @@ table.tenyears{
     margin-right: 20%;
     table-layout: fixed;
 }
+
+.jupiters tr ul{
+    list-style: none;
+    margin: auto;   
+    padding: 0 0;
+}
+
+.jupiters tr ul li{
+    padding: auto;
+}
+
 
 th{
     text-align: center;

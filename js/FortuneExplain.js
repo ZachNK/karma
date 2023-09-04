@@ -339,10 +339,12 @@ function Divination(){
         if(i !== 2){
             if(pObj[i].id !== pObj[2].id && pObj[i].id%4 === pObj[2].id%4){
                 if(pObj[i].id%3 === 1){
+                    console.log("타 왕지")
                     u.push(pObj[2].duty[1].idN);
                     
                 }
                 else{
+                    console.log("타 생지, 고지")
                     u.push(pObj[i].duty[1].idN);
     
                 }
@@ -353,8 +355,8 @@ function Divination(){
             
         }
         else{
-            if(pObj[i].id%3 !== 1 && (pObj[i].id%4 === pObj[0].id%4 || pObj[i].id%4 === pObj[1].id%4 || pObj[i].id%4 === pObj[3].id%4) && landTag[pObj[i].id-1].type !== skyTag[days-1].type){
-                //console.log("월지 중기", i, landTag[pObj[i].id-1].type, skyTag[days-1].type)
+            if(pObj[i].id%3 !== 1 && ((pObj[i].id%4 === pObj[0].id%4 && pObj[i].id !== pObj[0].id) || (pObj[i].id%4 === pObj[1].id%4 && pObj[i].id !== pObj[1].id) || (pObj[i].id%4 === pObj[3].id%4 && pObj[i].id !== pObj[3].id)) && landTag[pObj[i].id-1].type !== skyTag[days-1].type){
+                console.log("월지 중기")
                 stage.push(pObj[i].duty[1].idN);
                 u.push(pObj[i].duty[1].idN);
             }

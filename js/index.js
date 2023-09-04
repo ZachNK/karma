@@ -9,6 +9,12 @@ var mensis = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 var mensis2 = [...mensis];
 mensis2.splice(1,1,29);
 
+// ================== 코드 업데이트 날짜 지정  ================== 
+var message=document.lastModified;
+var the_date=message.length-8;
+document.getElementById("update").innerHTML = `<h4>Updated: ${message.substring(the_date, 0)}</h4>`;
+// ================== 코드 업데이트 날짜 지정  ================== 
+
 
 //const listEl = document.querySelector('ul');
 fetch('./js/sky.json')
@@ -197,7 +203,7 @@ $(mainBtn).on('click', function(e){
         var dayReflect = false;
         let originDay = aNum;
 
-        var justGo = confirm(` 해당 명조는 24절기 ${x_msg} 기간 출생자입니다.\n 본 프로그램은 ${x_msg}: ${mth}월 ${xday}일로 설정 했습니다.\n [확인]: 변경하지 않음 / [취소]: 변경`);
+        var justGo = confirm(` 해당 명조는 24절기 ${x_msg} 기간 출생자입니다.\n 본 프로그램은 ${x_msg}: ${mth}월 ${xday}일로 설정 했습니다.\n 변경을 원한다면 [취소]를 클릭하세요.\n [확인]: 변경하지 않음 / [취소]: 변경`);
         if(justGo === false){
             while(dayReflect === false){
                 aNum = window.prompt(`${x_msg} 절입일 (${mth}월 ${xday}일) → ${x_msg} (${mth}월 ${xday-3}일 ~ ${mth}월 ${xday+3} 기간 중 절입 날짜 입력)`, ``);
@@ -225,7 +231,7 @@ $(mainBtn).on('click', function(e){
         var dayReflect = false;
         let originDay = aNum;
 
-        var justGo = confirm(` 해당 명조는 24절기 ${p_msg} 기간 출생자입니다.\n 본 프로그램은 ${p_msg}: ${mth}월 ${pday}일로 설정 했습니다.\n [확인]: 변경하지 않음 / [취소]: 변경`);
+        var justGo = confirm(` 해당 명조는 24절기 ${p_msg} 기간 출생자입니다.\n 본 프로그램은 ${p_msg}: ${mth}월 ${pday}일로 설정 했습니다.\n 변경을 원한다면 [취소]를 클릭하세요.\n [확인]: 변경하지 않음 / [취소]: 변경`);
         if(justGo === false){
             while(dayReflect === false){
                 aNum = window.prompt(`${p_msg} 절입일 (${mth}월 ${pday}일) → ${p_msg} (${mth}월 ${pday-3}일 ~ ${mth}월 ${pday+3} 기간 중 절입 날짜 입력)`, ``);
@@ -333,9 +339,13 @@ $('#switch2').on('click', function(){
     var labl = document.querySelector('label[for="switch2"]');
     if(chk.checked === true){
         labl.innerHTML = "<h1>남성</h1>";
+        console.log("남성입니다.");
+        document.getElementById('year_msg').focus();
     }
     else{
         labl.innerHTML = "<h1>여성</h1>";
+        console.log("여성입니다.");
+        document.getElementById('year_msg').focus();
     }
 });
 
@@ -501,15 +511,14 @@ function Fortune_img(){
     var resultLand = land[land_tag[h]-1] + " " + land[land_tag[f]-1] + " " + land[land_tag[d]-1] + " " + land[land_tag[b]-1];
     resultCopy = resultSky + "\n" + resultLand;
 
-    // 현재 년도 칠하기
+    // 현재 대운 칠하기
     for(i=0; i<12; i++){
-        var t_name = '#t' + String(i+1).padStart(2, '0');
+        var t_name = "#season" + String(i+1).padStart(2, '0');
+        console.log(t_name);
         $(t_name).click(function(){
-            var x = $(this).text();
-            
-            var picks = Number(Math.floor((parseInt(x)-1)/10))+1;
+            var picks = $(this)[0].id.toString().split("season")[1]*1;
             var stYear = 10*(picks-1) + starting[0];
-            //console.log(x, picks, stYear) // 대운 숫자, 년의 순서, 년도
+            //console.log(picks, stYear) // 대운 숫자, 년의 순서, 년도
             ten_years_refresh();
             tenyears_img_show(stYear);
             this_year_coloring(stYear, nowYear);
@@ -517,10 +526,10 @@ function Fortune_img(){
     }
 
     for(i=0; i<10; i++){
-        var t_name = '#j' + String(i+1).padStart(2, '0');
+        var t_name = '#jupiter' + String(i+1).padStart(2, '0');
         $(t_name).click(function(){
             
-            var x = $(this).attr('id').split('j')[1]*1;
+            var x = $(this)[0].id.toString().split("jupiter")[1]*1;
 
             var y = nowYear-(starting[2])+1;
             var ySky_tag = 'jsky0'+x.toString().padStart(2, '0');
@@ -535,15 +544,11 @@ function Fortune_img(){
             for(var i=0; i<10; i++){
                 let rSky = 'jsky0' + (i+1).toString().padStart(2, '0');
                 let rLand = 'jland0' + (i+1).toString().padStart(2, '0');
-
-
-
                 if(i !== x-1){
                     document.getElementById(rSky).style.backgroundColor = `rgba(${0}, ${0}, ${0}, ${0})`;
                     document.getElementById(rLand).style.backgroundColor = `rgba(${0}, ${0}, ${0}, ${0})`;
                 }
             }
-
             if(tex*1 === nowYear){
                 document.getElementById('jsky0' + y.toString().padStart(2, '0')).style.backgroundColor = `rgba(${100}, ${180}, ${230}, ${0.5})`;
                 document.getElementById('jland0' + y.toString().padStart(2, '0')).style.backgroundColor = `rgba(${100}, ${180}, ${230}, ${0.5})`;
@@ -557,18 +562,21 @@ function Fortune_img(){
 
     // 대운 클릭이벤트, 회색으로 칠하고 나머지는 rgba 0, 0, 0, 0
     for(i=0; i<12; i++){
-        var t_name = '#t' + String(i+1).padStart(2, '0');
+        var t_name = '#season' + String(i+1).padStart(2, '0');
+        
 
         var greatNum = 0;
         var clickNum = 0;
         $(t_name).click(function(){
+            var picks = $(this)[0].id.toString().split("season")[1]*1;
+            var stYear = 10*(picks-1) + starting[0];
+            //console.log(picks, stYear) // 대운 숫자, 년의 순서, 년도
             
-            var click = $(this).text();
             var blankNum = Array.from(new Array(12), (x, i) => i+1);
             greatNum = starting[1];
-            var picks = Number(Math.floor((parseInt(click)-1)/10))+1; // 클릭한 대운 순번
             clickNum = picks;
             blankNum.splice(clickNum-1, 1);
+            
             document.getElementById('sky' + clickNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${220}, ${220}, ${220}, ${1})`;
             document.getElementById('land' + clickNum.toString().padStart(3, '0')).style.backgroundColor = `rgba(${220}, ${220}, ${220}, ${1})`;
 
@@ -584,9 +592,6 @@ function Fortune_img(){
     }
     
     
-
-
-
 
     /****************************************************debugging***************************************************************/
     fullName = nameText + " " + yyyy+"년 "+mm+"월 "+dd+"일 "+hh+"시 "+min+"분생 "+starting[3]+"세 "+thisSex;

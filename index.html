@@ -26,6 +26,7 @@
                 </div>
             </nav>
         </div>
+        <div id="update"></div>
     </div>
     <div class="container">
         <div id="header">
@@ -134,30 +135,34 @@
         <table class="variety" id='testTable'>
             <thead>
                 <tr>
-                    <th id="t12" onclick="ClickRole(12)" style="vertical-align: center; height:5px;"></th><th id="t11" onclick="ClickRole(11)" style="vertical-align: center; height:5px;"></th>
-                    <th id="t10" onclick="ClickRole(10)" style="vertical-align: center; height:5px;"></th><th id="t09" onclick="ClickRole(9)" style="vertical-align: center; height:5px;"></th>
-                    <th id="t08" onclick="ClickRole(8)" style="vertical-align: center; height:5px;"></th><th id="t07" onclick="ClickRole(7)" style="vertical-align: center; height:5px;"></th>
-                    <th id="t06" onclick="ClickRole(6)" style="vertical-align: center; height:5px;"></th><th id="t05" onclick="ClickRole(5)" style="vertical-align: center; height:5px;"></th>
-                    <th id="t04" onclick="ClickRole(4)" style="vertical-align: center; height:5px;"></th><th id="t03" onclick="ClickRole(3)" style="vertical-align: center; height:5px;"></th>
-                    <th id="t02" onclick="ClickRole(2)" style="vertical-align: center; height:5px;"></th><th id="t01" onclick="ClickRole(1)" style="vertical-align: center; height:5px;"></th>
+                    <th id="t12" style="vertical-align: center; height:5px;"></th>
+                    <th id="t11" style="vertical-align: center; height:5px;"></th>
+                    <th id="t10" style="vertical-align: center; height:5px;"></th>
+                    <th id="t09" style="vertical-align: center; height:5px;"></th>
+                    <th id="t08" style="vertical-align: center; height:5px;"></th>
+                    <th id="t07" style="vertical-align: center; height:5px;"></th>
+                    <th id="t06" style="vertical-align: center; height:5px;"></th>
+                    <th id="t05" style="vertical-align: center; height:5px;"></th>
+                    <th id="t04" style="vertical-align: center; height:5px;"></th>
+                    <th id="t03" style="vertical-align: center; height:5px;"></th>
+                    <th id="t02" style="vertical-align: center; height:5px;"></th>
+                    <th id="t01" style="vertical-align: center; height:5px;"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="seasons">
                 <tr>
-                    <td id="sky012"><img id="012i" src=""/></td><td id="sky011"><img id="011i" src=""/></td>
-                    <td id="sky010"><img id="010i" src=""/></td><td id="sky009"><img id="009i" src=""/></td>
-                    <td id="sky008"><img id="008i" src=""/></td><td id="sky007"><img id="007i" src=""/></td>
-                    <td id="sky006"><img id="006i" src=""/></td><td id="sky005"><img id="005i" src=""/></td>
-                    <td id="sky004"><img id="004i" src=""/></td><td id="sky003"><img id="003i" src=""/></td>
-                    <td id="sky002"><img id="002i" src=""/></td><td id="sky001"><img id="001i" src=""/></td>
-                </tr>
-                <tr>
-                    <td id="land012"><img id="012p" src=""/></td><td id="land011"><img id="011p" src=""/></td>
-                    <td id="land010"><img id="010p" src=""/></td><td id="land009"><img id="009p" src=""/></td>
-                    <td id="land008"><img id="008p" src=""/></td><td id="land007"><img id="007p" src=""/></td>
-                    <td id="land006"><img id="006p" src=""/></td><td id="land005"><img id="005p" src=""/></td>
-                    <td id="land004"><img id="004p" src=""/></td><td id="land003"><img id="003p" src=""/></td>
-                    <td id="land002"><img id="002p" src=""/></td><td id="land001"><img id="001p" src=""/></td>
+                    <td id="season12" onclick="ClickRole(12)" ><ul><li id="sky012"><img id="012i" src=""/></li><li id="land012"><img id="012p" src=""/></li></ul></td>
+                    <td id="season11" onclick="ClickRole(11)" ><ul><li id="sky011"><img id="011i" src=""/></li><li id="land011"><img id="011p" src=""/></li></ul></td>
+                    <td id="season10" onclick="ClickRole(10)" ><ul><li id="sky010"><img id="010i" src=""/></li><li id="land010"><img id="010p" src=""/></li></ul></td>
+                    <td id="season09" onclick="ClickRole(9)" ><ul><li id="sky009"><img id="009i" src=""/></li><li id="land009"><img id="009p" src=""/></li></ul></td>
+                    <td id="season08" onclick="ClickRole(8)" ><ul><li id="sky008"><img id="008i" src=""/></li><li id="land008"><img id="008p" src=""/></li></ul></td>
+                    <td id="season07" onclick="ClickRole(7)" ><ul><li id="sky007"><img id="007i" src=""/></li><li id="land007"><img id="007p" src=""/></li></ul></td>
+                    <td id="season06" onclick="ClickRole(6)" ><ul><li id="sky006"><img id="006i" src=""/></li><li id="land006"><img id="006p" src=""/></li></ul></td>
+                    <td id="season05" onclick="ClickRole(5)" ><ul><li id="sky005"><img id="005i" src=""/></li><li id="land005"><img id="005p" src=""/></li></ul></td>
+                    <td id="season04" onclick="ClickRole(4)" ><ul><li id="sky004"><img id="004i" src=""/></li><li id="land004"><img id="004p" src=""/></li></ul></td>
+                    <td id="season03" onclick="ClickRole(3)" ><ul><li id="sky003"><img id="003i" src=""/></li><li id="land003"><img id="003p" src=""/></li></ul></td>
+                    <td id="season02" onclick="ClickRole(2)" ><ul><li id="sky002"><img id="002i" src=""/></li><li id="land002"><img id="002p" src=""/></li></ul></td>
+                    <td id="season01" onclick="ClickRole(1)" ><ul><li id="sky001"><img id="001i" src=""/></li><li id="land001"><img id="001p" src=""/></li></ul></td>
                 </tr>
             </tbody>
         </table>
@@ -165,21 +170,30 @@
         <table class="tenyears">
             <thead>
                 <tr>
-                    <th id="j10" onclick="ClickYears(10); ClickUse(10);"></th><th id="j09" onclick="ClickYears(9); ClickUse(9);"></th>
-                    <th id="j08" onclick="ClickYears(8); ClickUse(8);"></th><th id="j07" onclick="ClickYears(7); ClickUse(7);"></th>
-                    <th id="j06" onclick="ClickYears(6); ClickUse(6);"></th><th id="j05" onclick="ClickYears(5); ClickUse(5);"></th>
-                    <th id="j04" onclick="ClickYears(4); ClickUse(4);"></th><th id="j03" onclick="ClickYears(3); ClickUse(3);"></th>
-                    <th id="j02" onclick="ClickYears(2); ClickUse(2);"></th><th id="j01" onclick="ClickYears(1); ClickUse(1);"></th>
+                    <th id="j10"></th>
+                    <th id="j09"></th>
+                    <th id="j08"></th>
+                    <th id="j07"></th>
+                    <th id="j06"></th>
+                    <th id="j05"></th>
+                    <th id="j04"></th>
+                    <th id="j03"></th>
+                    <th id="j02"></th>
+                    <th id="j01"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="jupiters">
                 <tr>
-                    <td id="jsky010"><img id="010ji" src=""/></td><td id="jsky009"><img id="009ji" src=""/></td><td id="jsky008"><img id="008ji" src=""/></td><td id="jsky007"><img id="007ji" src=""/></td><td id="jsky006"><img id="006ji" src=""/></td>
-                    <td id="jsky005"><img id="005ji" src=""/></td><td id="jsky004"><img id="004ji" src=""/></td><td id="jsky003"><img id="003ji" src=""/></td><td id="jsky002"><img id="002ji" src=""/></td><td id="jsky001"><img id="001ji" src=""/></td>
-                </tr>
-                <tr>
-                    <td id="jland010"><img id="010jp" src=""/></td><td id="jland009"><img id="009jp" src=""/></td><td id="jland008"><img id="008jp" src=""/></td><td id="jland007"><img id="007jp" src=""/></td><td id="jland006"><img id="006jp" src=""/></td>
-                    <td id="jland005"><img id="005jp" src=""/></td><td id="jland004"><img id="004jp" src=""/></td><td id="jland003"><img id="003jp" src=""/></td><td id="jland002"><img id="002jp" src=""/></td><td id="jland001"><img id="001jp" src=""/></td> 
+                    <td id="jupiter10" onclick="ClickYears(10); ClickUse(10);"><ul><li id="jsky010"><img id="010ji" src=""/></li><li id="jland010"><img id="010jp" src=""/></li></ul></td>
+                    <td id="jupiter09" onclick="ClickYears(9); ClickUse(9);"><ul><li id="jsky009"><img id="009ji" src=""/></li><li id="jland009"><img id="009jp" src=""/></li></ul></td>
+                    <td id="jupiter08" onclick="ClickYears(8); ClickUse(8);"><ul><li id="jsky008"><img id="008ji" src=""/></li><li id="jland008"><img id="008jp" src=""/></li></ul></td>
+                    <td id="jupiter07" onclick="ClickYears(7); ClickUse(7);"><ul><li id="jsky007"><img id="007ji" src=""/></li><li id="jland007"><img id="007jp" src=""/></li></ul></td>
+                    <td id="jupiter06" onclick="ClickYears(6); ClickUse(6);"><ul><li id="jsky006"><img id="006ji" src=""/></li><li id="jland006"><img id="006jp" src=""/></li></ul></td>
+                    <td id="jupiter05" onclick="ClickYears(5); ClickUse(5);"><ul><li id="jsky005"><img id="005ji" src=""/></li><li id="jland005"><img id="005jp" src=""/></li></ul></td>
+                    <td id="jupiter04" onclick="ClickYears(4); ClickUse(4);"><ul><li id="jsky004"><img id="004ji" src=""/></li><li id="jland004"><img id="004jp" src=""/></li></ul></td>
+                    <td id="jupiter03" onclick="ClickYears(3); ClickUse(3);"><ul><li id="jsky003"><img id="003ji" src=""/></li><li id="jland003"><img id="003jp" src=""/></li></ul></td>
+                    <td id="jupiter02" onclick="ClickYears(2); ClickUse(2);"><ul><li id="jsky002"><img id="002ji" src=""/></li><li id="jland002"><img id="002jp" src=""/></li></ul></td>
+                    <td id="jupiter01" onclick="ClickYears(1); ClickUse(1);"><ul><li id="jsky001"><img id="001ji" src=""/></li><li id="jland001"><img id="001jp" src=""/></li></ul></td>
                 </tr>
             </tbody>
         </table>

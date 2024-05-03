@@ -883,19 +883,19 @@ function Divination(){
             let checkOriginSky = ideaRole.find(e => e === v);
             let checkOtherSky = ideaRole.find(e => e === h);
             if(checkOriginSky !== undefined){
-                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 주왕 "} ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `);
                 frameSet.push(v);
-                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 주왕 "} ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `;
             }
             else if(checkOriginSky === undefined && checkOtherSky !== undefined){
-                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === h))]} `);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 주왕 "} ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === h))]} `);
                 frameSet.push(h);
-                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === h))]} `;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 주왕 "} ${skyTag[h-1].name}${skyTag[h-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === h))]} `;
             }
             else{
-                console.log(`庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} `);
+                console.log(`庫支月${(mod_dty===0) ? " ":" 주왕 "} ${skyTag[v-1].name}${skyTag[v-1].type} `);
                 frameSet.push(v);
-                frameMsg = `庫支月${(mod_dty===0) ? " ":" 토왕 "}용사 ${skyTag[v-1].name}${skyTag[v-1].type} `;
+                frameMsg = `庫支月${(mod_dty===0) ? " ":" 주왕 "} ${skyTag[v-1].name}${skyTag[v-1].type} `;
             }
         }
     }

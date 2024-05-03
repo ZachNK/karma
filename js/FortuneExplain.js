@@ -808,14 +808,14 @@ function Divination(){
         console.log("生支月", `${landTag[mObj.id-1].duty[dty].name}${skyTag[landTag[mObj.id-1].duty[dty].idN-1].type} 사령 `);
         let checkOriginSky = ideaRole.find(e => e === fix);
         if(checkOriginSky !== undefined){
-            console.log(`生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === fix))]} `);
+            console.log(`生支月 용사 ${skyTag[fix-1].name}${skyTag[fix-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === fix))]} `);
             frameSet.push(fix);
-            frameMsg = `生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === fix))]} `;
+            frameMsg = `生支月 용사 ${skyTag[fix-1].name}${skyTag[fix-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === fix))]} `;
         }
         else{
-            console.log(`生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 `);
+            console.log(`生支月 용사 ${skyTag[fix-1].name}${skyTag[fix-1].type} `);
             frameSet.push(fix);
-            frameMsg = `生支月 ${skyTag[fix-1].name}${skyTag[fix-1].type} 용사 `;
+            frameMsg = `生支月 용사 ${skyTag[fix-1].name}${skyTag[fix-1].type} `;
         }
 
     }
@@ -825,15 +825,15 @@ function Divination(){
         let v = landTag[mObj.id-1].duty[dty].idN;
         console.log("旺支月 ", `${landTag[mObj.id-1].duty[dty].name}${skyTag[v-1].type} 사령 `);
         if(dty===0 && ideaRole.find(e => e === v) !== undefined && skyTag[myID-1].type !== skyTag[v-1].type){
-            console.log(`旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `);
+            console.log(`旺支月 용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `);
             frameSet.push(v);
-            frameMsg = `旺支月 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `;
+            frameMsg = `旺支月 용사 ${skyTag[v-1].name}${skyTag[v-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === v))]} `;
         }
         else{
             let k = landTag[mObj.id-1].duty[2].idN;
-            console.log(`旺支月 ${skyTag[k-1].name}${skyTag[k-1].type} 용사 `);
+            console.log(`旺支月 용사 ${skyTag[k-1].name}${skyTag[k-1].type} `);
             frameSet.push(k);
-            frameMsg = `旺支月 ${skyTag[k-1].name}${skyTag[k-1].type} 용사 `;
+            frameMsg = `旺支月 용사 ${skyTag[k-1].name}${skyTag[k-1].type} `;
         }
     }
 
@@ -850,19 +850,19 @@ function Divination(){
             let checkOtherSky = ideaRole.find(e => e === hcnt);
             //투간여부에 따른 용사 (숫자)
             if(checkOriginSky !== undefined){
-                console.log(`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === cnt))]} `);
+                console.log(`庫支月 中氣 용사 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === cnt))]} `);
                 frameSet.push(cnt);
-                frameMsg = `庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === cnt))]} `;
+                frameMsg = `庫支月 中氣 용사 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === cnt))]} `;
             }
             else if(checkOriginSky === undefined && checkOtherSky !== undefined){
-                console.log(`庫支月 中氣 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === hcnt))]} `);
+                console.log(`庫支月 中氣 용사 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === hcnt))]} `);
                 frameSet.push(hcnt);
-                frameMsg = `庫支月 中氣 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} 용사 ${posSky[ideaRole.indexOf(ideaRole.find(e => e === hcnt))]} `;
+                frameMsg = `庫支月 中氣 용사 ${skyTag[hcnt-1].name}${skyTag[hcnt-1].type} ${posSky[ideaRole.indexOf(ideaRole.find(e => e === hcnt))]} `;
             }
             else{
-                console.log(`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 `);
+                console.log(`庫支月 中氣 용사 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} `);
                 frameSet.push(cnt);
-                frameMsg =`庫支月 中氣 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} 용사 `;
+                frameMsg =`庫支月 中氣 용사 ${skyTag[cnt-1].name}${skyTag[cnt-1].type} `;
             }
         }
         else{

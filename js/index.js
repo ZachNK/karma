@@ -5,6 +5,7 @@ const land_tag = [];
 const sky = [];
 const land =[];
 
+document.getElementById("bgm").volume = 0.1; // Set volume to 10%
 var mensis = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 var mensis2 = [...mensis];
 mensis2.splice(1,1,29);
@@ -1308,6 +1309,7 @@ function savePDF(){
                 var imgWidth = 190; // 이미지 가로 길이(mm) / A4 기준 210mm
                 var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
                 var imgHeight = canvas.height * (imgWidth / canvas.width);
+                
                 var heightLeft = imgHeight;
                 var margin = 10; // 출력 페이지 여백설정
                 var doc = new jsPDF('p', 'mm');
@@ -1319,7 +1321,7 @@ function savePDF(){
                 doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
                 heightLeft -= pageHeight;
 
-                console.log(position, imgWidth, imgHeight, heightLeft)
+                console.log(position, canvas.height, canvas.width, imgWidth, imgHeight, heightLeft)
 
                 // 한 페이지 이상일 경우 루프 돌면서 출력
                 while (heightLeft >= 20) {			// 35

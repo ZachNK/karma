@@ -1239,7 +1239,7 @@ function Divination(){
     }
     
 
-    document.getElementById("debug2").innerHTML = "※ 타고난 재능 (용신과 희기신) ※" +"<br/>"+ 
+    document.getElementById("debug2").innerHTML = "※ 타고난 재능 (오행) ※" +"<br/>"+ 
     " (" + frontMsg + ") <br/>";
     
 
@@ -1302,7 +1302,7 @@ function Divination(){
         addArray[Math.floor(Math.random() * addArray.length)] + "주변 사람과 모의해 사적 관계에서 공적 관계로 만들어가지만, 관계 스트레스에 유념해야 합니다. " + "<br/>";
     }
 
-    document.getElementById("debug4").innerHTML = "※ 직업적 의지 (격국 구응성패) ※"+"<br/>"+  
+    document.getElementById("debug4").innerHTML = "※ 사회적 역할 (구응성패) ※"+"<br/>"+  
     "( " + frameSet[2] + roleMsg + uroleMsg  + " )" +"<br/>";
 
 
@@ -1456,7 +1456,7 @@ function Divination(){
     // console.log("orderID", orderID, "godAwake", godAwake);
 
 
-    document.getElementById("debug6").innerHTML = "※ 직무능력 및 직업 형태 (육신의 생화극제) ※"+"<br/>"+ 
+    document.getElementById("debug6").innerHTML = "※ 사회 관계력 (생화극제) ※"+"<br/>"+ 
     " (" + frameMsg + frameSet[2]+" " + ((self===false) ? "근약 " : "근왕 ") + `${skyTag[myID-1].name}${skyTag[myID-1].type} 일간` + ")" + "<br/>";
     document.getElementById("debug7").innerHTML = rp;
 
@@ -1504,7 +1504,7 @@ function ShowLucks(){
 function ClickRole(num){
     document.getElementById('GLucks').innerHTML = ""
     var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
+    var text = test.textContent.split("※ 사회적 역할 (구응성패) ※")[1].split(' ');
     var name = text[1];
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
 
@@ -1539,7 +1539,7 @@ function ClickRole(num){
 function TextRole(){
     
     var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
+    var text = test.textContent.split("※ 사회적 역할 (구응성패) ※")[1].split(' ');
     var name = text[1];
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
 
@@ -1748,7 +1748,7 @@ function TextUse(){
 function ClickYears(num){
     document.getElementById("year_lucks").innerText = "";
     var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
+    var text = test.textContent.split("※ 사회적 역할 (구응성패) ※")[1].split(' ');
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
     //=================================================================================================================
 
@@ -1881,7 +1881,7 @@ function ClickYears(num){
 
 function TextYears(){
     var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 직업적 의지 (격국 구응성패) ※")[1].split(' ');
+    var text = test.textContent.split("※ 사회적 역할 (구응성패) ※")[1].split(' ');
     text.shift()
     text.pop()
     
@@ -2152,7 +2152,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _stypeR
                     role_playMsg += "</br>";
                 }
                 else if(_mens.find(e => skyTag[e-1].type === skyTag[man1-2].type) === undefined){
-                    role_playMsg += `(根弱 傷官格 傷官傷盡) 직업능력이 무능력하며, 순진하고 선하며, 상대에 대한 배려심, 미안함, 임기응변 대처능력이 전혀 없습니다. `;
+                    role_playMsg += `(根弱 傷官格 傷官傷盡) 직업 경쟁력이 한정적이며 조직에 적합한 인재입니다.`;
                     if(_mens.find(e => skyTag[e-1].id === skyTag[man1-2].id) === undefined){
                         role_playMsg += `공임/납품/계약거래에 해지가 됩니다. `;
                     }
@@ -2172,7 +2172,7 @@ function RolePlay(_myID, _frameSet2, _typeRole, _wtypeRole, _untypeRole, _stypeR
                     role_playMsg += "(根弱 傷官格 傷官見官) 관행과 법규를 준하지 않고 허가 받지 않은 채, 하고 싶은 것을 하며 살아갑니다."+"</br>";
                 }
                 else if(_skys.find(e => skyTag[e-1].id === skyTag[man2-1].id) || _mens.find(e => skyTag[e-1].id === skyTag[man2-1].id)){
-                    role_playMsg += "(根弱 傷官格 傷官暇殺) 현장전문가로 일장당권, 많은 일을 감당합니다."+"</br>";
+                    role_playMsg += "(根弱 傷官格 傷官加殺/駕殺) 현장전문가로 일장당권, 많은 일을 감당합니다."+"</br>";
                 }
             }
         }

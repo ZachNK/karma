@@ -12,27 +12,28 @@ body {
 
 .title-area{
     width: 100%;
-    height: 50px;
-    background: rgba(241, 243, 244);
+    height: 60px;
 }
 
 #bgm{
     position: fixed;
-    width: 50%;
-    height: 50px;
+    width: 32%;
+    height: 60px;
     box-sizing: border-box;
     left: 0%;
+    margin: 0;
     color: rgb(114, 114, 114);
-    /* background: rgba(255, 0, 0); */
+    background: rgba(141, 143, 144, 0.13);
 }
 
 #title{
     position: fixed;
-    width: 40%;
-    height: 50px;
+    width: 32%;
+    height: 60px;
     box-sizing: border-box;
-    left: 30%;
-    /* background: rgba(255, 0, 0); */
+    left: 32%;
+    margin: 0;
+    background: rgba(141, 143, 144, 0.13);
     transition: .5s;
     
 }
@@ -40,11 +41,13 @@ body {
 #update{
     position: fixed;
     width: 100%;
-    height: 50px;
+    height: 60px;
     box-sizing: border-box;
-    left: 80%;
+    left: 64%;
+    margin: 0;
+    padding: 0 12.5%;
     color: rgb(114, 114, 114);
-    /* background: rgba(255, 0, 0); */
+    background: rgba(141, 143, 144, 0.13);
 }
 
 #bar nav .home-title h1{display: flex; justify-content: center; align-items: center;} 
@@ -60,7 +63,7 @@ body {
     width: 100%;
     height: 500px;
     box-sizing: border-box;
-    background: rgba(241, 243, 244);
+    background: rgba(141, 143, 144, 0.13);
     transition: .5s;
 }
 
@@ -186,7 +189,7 @@ input[type=checkbox]{
     
 }
   
-label{
+label.sexCheck {
     cursor: pointer;
     text-indent: -200px;
     width: 60px;
@@ -197,7 +200,7 @@ label{
     position: relative;
 }
   
-label:after{
+label.sexCheck:after{
     content: '';
     position: absolute;
     top: 2px;
@@ -209,11 +212,11 @@ label:after{
     transition: 0.15s;
 }
   
-input:checked + label {
+input[type=checkbox]:checked + label {
     background: #558ada;
 }
   
-input:checked + label:after {
+input[type=checkbox]:checked + label:after {
     left: calc(100% - 2px);
     transform: translateX(-100%);
 }
@@ -389,3 +392,50 @@ td.Content1{
     text-align: left;
     margin:0 auto;
 } 
+
+.specify{
+    position: relative;
+    width: 100%;
+    height: 80px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"] + label.tab_label {
+    position: absolute;  
+    display: inline-block; 
+    top: 0px; 
+    left: 0px; 
+    width: 33.3%;
+    height: 80px;
+    text-align: center;
+}
+
+input[type="radio"]#tab2 + label.tab_label {
+    left: 33.3%;
+    height: 80px;
+}
+
+input[type="radio"]#tab3 + label.tab_label {
+    left: 66.6%;
+    height: 80px;
+}
+
+.tab_content {
+    position: relative;
+    top: 80px;
+    width: 100%;
+    display: none;
+}
+
+input[type="radio"]:checked + label.tab_label {
+    /* background-color: rgba(169, 169, 169, 0.792); */
+    color: #da55c6;
+}
+
+input[type="radio"]:checked + label.tab_label + .tab_content {
+    display: block;
+    
+}

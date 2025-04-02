@@ -13,14 +13,26 @@ body {
 .title-area{
     width: 100%;
     height: 50px;
+    background: rgba(241, 243, 244);
 }
 
-#bar{
+#bgm{
     position: fixed;
-    width: 100%;
+    width: 50%;
     height: 50px;
     box-sizing: border-box;
-    background: rgba(128, 128, 128, 0.637);
+    left: 0%;
+    color: rgb(114, 114, 114);
+    /* background: rgba(255, 0, 0); */
+}
+
+#title{
+    position: fixed;
+    width: 40%;
+    height: 50px;
+    box-sizing: border-box;
+    left: 30%;
+    /* background: rgba(255, 0, 0); */
     transition: .5s;
     
 }
@@ -30,9 +42,9 @@ body {
     width: 100%;
     height: 50px;
     box-sizing: border-box;
-    left: 75%;
+    left: 80%;
     color: rgb(114, 114, 114);
-    background: rgba(255, 255, 255, 0);
+    /* background: rgba(255, 0, 0); */
 }
 
 #bar nav .home-title h1{display: flex; justify-content: center; align-items: center;} 
@@ -48,7 +60,7 @@ body {
     width: 100%;
     height: 500px;
     box-sizing: border-box;
-    background: rgba(128, 128, 128, 0.637);
+    background: rgba(241, 243, 244);
     transition: .5s;
 }
 
@@ -59,15 +71,32 @@ body {
 }
 
 
-#header nav .option{display: flex; justify-content: center; align-items: center; padding: 0 0px; margin: 15px 0px;}
-#header nav .option li{display: inline-block; line-height: 30px; padding: 0px 50px; margin: 20px 0px 20px 0px;}
+#header nav .option{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 0 0px; 
+    margin: 15px 0px;
+}
+#header nav .option li{
+    display: inline-block; 
+    line-height: 30px; 
+    padding: 0px 50px; 
+    margin: 20px 0px 20px 0px;
+}
 /* */
-#header nav .init-area{text-align: center; width: 70%; margin-left: auto; margin-right: auto; padding: 0 0px;} 
+#header nav .init-area{
+    text-align: center; 
+    width: 70%; 
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 0 0px;
+} 
 
 
 #header nav ul{text-align: center; padding: 50px;}
 #header nav ul li{list-style: none; }
-#header nav li a{display: flex; justify-content: center; padding: 0 8px; line-height: 50%; text-decoration: none; color: #262626;}
+#header nav li a{display: flex; justify-content: center; padding: 0 8px; line-height: 50%; text-decoration: none; color: rgba(169, 169, 169, 0.792);}
 
 #header nav .input-area{
     display: flex; justify-content: center; width: 400px; height: 40px; margin: 10px; 
@@ -144,7 +173,7 @@ button{
     border-radius: 25px;
     width: 350px;
     height: 50px;
-    background-color: gray;
+    background-color: rgba(169, 169, 169, 0.792);
     border: none;
 }
 
@@ -160,8 +189,8 @@ input[type=checkbox]{
 label{
     cursor: pointer;
     text-indent: -200px;
-    width: 100px;
-    height: 50px;
+    width: 60px;
+    height: 24px;
     background: #da55c6;
     display: block;
     border-radius: 50px;
@@ -171,12 +200,12 @@ label{
 label:after{
     content: '';
     position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 42px;
-    height: 42px;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
     background: #fff;
-    border-radius: 42px;
+    border-radius: 40px;
     transition: 0.15s;
 }
   
@@ -185,12 +214,12 @@ input:checked + label {
 }
   
 input:checked + label:after {
-    left: calc(100% - 4px);
+    left: calc(100% - 2px);
     transform: translateX(-100%);
 }
   
 label:active:after {
-    width: 80px;
+    width: 50px;
 }
 
 /* -------------------------- */

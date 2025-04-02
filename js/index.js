@@ -339,12 +339,12 @@ $('#switch2').on('click', function(){
     var chk = document.querySelector('input[name="sex"]');
     var labl = document.querySelector('label[for="switch2"]');
     if(chk.checked === true){
-        labl.innerHTML = "<h1>남성</h1>";
+        labl.innerHTML = "<h4 style=\"margin: 7px\">남성</h4>";
         console.log("남성입니다.");
         document.getElementById('year_msg').focus();
     }
     else{
-        labl.innerHTML = "<h1>여성</h1>";
+        labl.innerHTML = "<h4 style=\"margin: 7px\">여성</h4>";
         console.log("여성입니다.");
         document.getElementById('year_msg').focus();
     }
@@ -594,11 +594,11 @@ function Fortune_img(){
     
     
 
-    /****************************************************debugging***************************************************************/
+    //****************************************************debugging***************************************************************
     fullName = nameText + " " + yyyy+"년 "+mm+"월 "+dd+"일 "+hh+"시 "+min+"분생 "+starting[3]+"세 "+thisSex;
     document.getElementById("debug1").innerHTML = fullName;
     
-    /****************************************************debugging***************************************************************/
+    //****************************************************debugging***************************************************************
 
     pdfFileName = nameText + "_" + yyyy+"_"+mm+"_"+dd+"_"+hh+"_"+min+"_"+starting[3]+"_"+thisSex+".pdf";
 

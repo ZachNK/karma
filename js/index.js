@@ -12,8 +12,7 @@ mensis2.splice(1,1,29);
 
 // ================== 코드 업데이트 날짜 지정  ================== 
 var message=document.lastModified;
-var the_date=message.length-8;
-document.getElementById("update").innerHTML = `<h4>Updated: ${message.substring(the_date, 0)}</h4>`;
+document.getElementById("update").innerHTML = `<h4>Updated: ${message.substring(10, 19)}</h4>`;
 // ================== 코드 업데이트 날짜 지정  ================== 
 
 

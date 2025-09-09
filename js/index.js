@@ -5,7 +5,7 @@ const land_tag = [];
 const sky = [];
 const land =[];
 
-document.getElementById("bgm").volume = 0.1; // Set volume to 10%
+// document.getElementById("bgm").volume = 0.1; // Set volume to 10%
 var mensis = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 var mensis2 = [...mensis];
 mensis2.splice(1,1,29);
@@ -1338,3 +1338,4 @@ function savePDF(){
     }
     
 }
+

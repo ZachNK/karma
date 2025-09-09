@@ -15,7 +15,7 @@ body {
     height: 60px;
 }
 
-#bgm{
+/* #bgm{
     position: fixed;
     width: 32%;
     height: 60px;
@@ -24,15 +24,15 @@ body {
     margin: 0;
     color: rgb(114, 114, 114);
     background: rgba(141, 143, 144, 0.13);
-}
+} */
 
 #title{
     position: fixed;
     width: 32%;
     height: 60px;
     box-sizing: border-box;
-    left: 32%;
-    margin: 0;
+/*     left: 32%; */
+    margin: 0 auto;
     background: rgba(141, 143, 144, 0.13);
     transition: .5s;
     
@@ -47,7 +47,7 @@ body {
     margin: 0;
     padding: 0 12.5%;
     color: rgb(114, 114, 114);
-    background: rgba(141, 143, 144, 0.13);
+/*     background: rgba(141, 143, 144, 0.13); */
 }
 
 #bar nav .home-title h1{display: flex; justify-content: center; align-items: center;} 
@@ -439,5 +439,6 @@ input[type="radio"]:checked + label.tab_label + .tab_content {
     display: block;
     
 }
+
 
 

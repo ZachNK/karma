@@ -15,7 +15,7 @@ body {
     height: 60px;
 }
 
-#bgm{
+/* #bgm{
     position: fixed;
     width: 32%;
     height: 60px;
@@ -24,7 +24,7 @@ body {
     margin: 0;
     color: rgb(114, 114, 114);
     background: rgba(141, 143, 144, 0.13);
-}
+} */
 
 #title{
     position: fixed;
@@ -439,3 +439,4 @@ input[type="radio"]:checked + label.tab_label + .tab_content {
     display: block;
     
 }
+

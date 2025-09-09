@@ -28,7 +28,7 @@ body {
 
 #title{
     position: fixed;
-    width: 32%;
+    width: 100%;
     height: 60px;
     box-sizing: border-box;
 /*     left: 32%; */
@@ -439,6 +439,7 @@ input[type="radio"]:checked + label.tab_label + .tab_content {
     display: block;
     
 }
+
 
 
 

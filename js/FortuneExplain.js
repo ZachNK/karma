@@ -1302,7 +1302,7 @@ function Divination(){
         addArray[Math.floor(Math.random() * addArray.length)] + "주변 사람과 모의해 사적 관계에서 공적 관계로 만들어가지만, 관계 스트레스에 유념해야 합니다. " + "<br/>";
     }
 
-    document.getElementById("debug4").innerHTML = "※ 사회적 역할 (구응성패) ※"+"<br/>"+  
+    document.getElementById("debug4").innerHTML = "※ 직무/직능 (구응성패) ※"+"<br/>"+  
     "( " + frameSet[2] + roleMsg + uroleMsg  + " )" +"<br/>";
 
 
@@ -1504,7 +1504,7 @@ function ShowLucks(){
 function ClickRole(num){
     document.getElementById('GLucks').innerHTML = ""
     var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 사회적 역할 (구응성패) ※")[1].split(' ');
+    var text = test.textContent.split("※ 직무/직능 (구응성패) ※")[1].split(' ');
     var name = text[1];
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
 
@@ -1539,7 +1539,7 @@ function ClickRole(num){
 function TextRole(){
     
     var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 사회적 역할 (구응성패) ※")[1].split(' ');
+    var text = test.textContent.split("※ 직무/직능 (구응성패) ※")[1].split(' ');
     var name = text[1];
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
 
@@ -1748,7 +1748,7 @@ function TextUse(){
 function ClickYears(num){
     document.getElementById("year_lucks").innerText = "";
     var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 사회적 역할 (구응성패) ※")[1].split(' ');
+    var text = test.textContent.split("※ 직무/직능 (구응성패) ※")[1].split(' ');
     var myIds = document.getElementById("SKY1").src.split('img')[1].split('/')[2].split('.')[0].split('i')[1]*1;
     //=================================================================================================================
 
@@ -1881,7 +1881,7 @@ function ClickYears(num){
 
 function TextYears(){
     var test = document.getElementById("debug4")
-    var text = test.textContent.split("※ 사회적 역할 (구응성패) ※")[1].split(' ');
+    var text = test.textContent.split("※ 직무/직능 (구응성패) ※")[1].split(' ');
     text.shift()
     text.pop()
     
